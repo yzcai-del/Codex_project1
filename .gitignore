@@ -1,0 +1,17 @@
+# Development history, handoff notes and user feedback stay on this machine.
+/experiment/
+/.local/
+/AGENTS.md
+
+# Credentials, dependencies and disposable output.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+node_modules/
+/dist/
+/coverage/
+*.log
+.DS_Store
+Thumbs.db
