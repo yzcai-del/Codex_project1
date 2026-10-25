@@ -4,7 +4,7 @@ import {fileURLToPath} from 'node:url';
 import path from 'node:path';
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../dist');
-const allowed=new Set(['index.html','style.css','app.js','23-17.html']);
+const allowed=new Set(['index.html','style.css','rules.js','app.js','23-17.html']);
 const types={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8'};
 const port=Number(process.env.PORT||4173);
 http.createServer(async(req,res)=>{

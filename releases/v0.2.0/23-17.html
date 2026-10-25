@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#101714"><title>23:17 — 最后一条消息</title>
+  <style>:root{color-scheme:dark;--bg:#101714;--ink:#eeeae0;--muted:#939d91;--accent:#d7e8a0;--panel:#1d2620;--line:#344034;--mono:Consolas,'Courier New',monospace;--serif:Georgia,'Songti SC','SimSun',serif;--sans:'Segoe UI','Microsoft YaHei',sans-serif}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 52% 35%,#263326 0%,var(--bg) 68%);color:var(--ink);font-family:var(--sans);min-height:100vh}button,input{font:inherit}button{cursor:pointer;transition:background .15s,color .15s,transform .15s}button:hover{filter:brightness(1.13)}button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:4px}button:disabled{cursor:not-allowed;opacity:.4}.scene{max-width:1510px;margin:auto;min-height:100vh;padding:64px 64px 38px;display:grid;grid-template-columns:minmax(280px,1fr) 390px minmax(190px,.65fr);align-items:center;gap:65px}.edition{font:12px var(--mono);letter-spacing:3px;position:absolute;top:42px;color:var(--accent)}.edition span{display:block;font-size:9px;letter-spacing:1.3px;color:var(--muted);margin-top:8px}.eyebrow{font:10px var(--mono);letter-spacing:2px;color:var(--accent);margin-bottom:22px}.editorial h1{font:76px/1.15 var(--serif);letter-spacing:-3px;margin:0 0 35px;font-weight:400}.editorial em{color:var(--accent);font-style:normal}.intro{font-size:15px;line-height:2.1;color:#b9c1b5}.divider{height:1px;width:55px;background:#677258;margin:28px 0}.instruction{font-size:12px;line-height:2;color:var(--muted)}.meta{display:flex;gap:17px;margin-top:28px;font-size:10px;color:#acb3a2}.meta span+span:before{content:'·';margin-right:17px;color:#626f5e}.version{font:9px var(--mono);color:#74806f;margin-top:34px;line-height:1.8}.phone{height:746px;width:390px;display:flex;flex-direction:column;border:1px solid #55614d;border-radius:33px;background:#151c18;overflow:hidden;box-shadow:0 32px 100px #0008,0 0 0 7px #0a100c77}.statusbar{display:flex;justify-content:space-between;padding:17px 24px 11px;font:11px var(--mono);color:#c5cbbb}.statusbar>span+span{font-size:9px}.phonehead{padding:15px 23px 18px;display:flex;justify-content:space-between;align-items:center}.small-label{font:8px var(--mono);letter-spacing:2px;color:var(--muted)}.phonehead h2{font-size:17px;font-weight:500;margin:7px 0 0}.live-dot{display:inline-block;background:var(--accent);width:5px;height:5px;border-radius:50%;vertical-align:middle;margin-left:6px}.iconbutton{background:none;border:1px solid var(--line);border-radius:50%;color:var(--muted);font-size:21px;width:31px;height:31px}.tabs{display:flex;border-bottom:1px solid var(--line);padding:0 15px;gap:6px}.tabs button{position:relative;flex:1;border:0;background:none;color:var(--muted);font-size:12px;padding:12px 0 15px}.tabs button.active{color:var(--accent)}.tabs button.active:after{content:'';position:absolute;bottom:-1px;left:15px;right:15px;height:2px;background:var(--accent)}.tabs span{font:9px var(--mono);margin-left:2px}.screen{overflow-y:auto;flex:1;padding:20px;scrollbar-width:thin;scrollbar-color:#485340 transparent;overscroll-behavior:contain}.homebar{margin:12px auto 10px;background:#63715f;border-radius:5px;width:100px;height:4px;flex-shrink:0}.section-label{font:9px var(--mono);letter-spacing:1.6px;color:var(--muted);margin:3px 0 18px}.thread{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:14px;margin-bottom:13px}.thread-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.thread-head strong{font-size:12px;font-weight:500}.thread-head time{font:9px var(--mono);color:var(--muted)}.avatar{background:#364630;color:#d7e8a0;display:inline-grid;place-items:center;border-radius:8px;width:25px;height:25px;margin-right:8px;font-size:11px}.thread p{font-size:12px;line-height:1.9;color:#c5cdbf;margin:7px 0}.chat-time{text-align:center;color:#88917f;font:9px var(--mono);margin:18px 0 12px}.bubble{margin-left:26px;background:#34432e;border-radius:11px 11px 2px 11px;padding:11px 13px;color:#dbe4ce;font-size:12px;line-height:1.9}.me{background:#252f27;color:#aeb9a7;margin:10px 26px 0 0;border-radius:11px 11px 11px 2px}.inspect-button{display:block;width:100%;text-align:left;border:1px dashed #65704f;background:#263321;border-radius:8px;color:var(--accent);padding:11px 12px;font-size:11px;line-height:1.7;margin-top:12px}.inspect-button small{display:block;font:8px var(--mono);letter-spacing:1px;color:#91a079;margin-top:4px}.tip{color:var(--muted);font-size:11px;line-height:1.9}.photo{height:180px;position:relative;overflow:hidden;background:linear-gradient(#536153,#8c927d 63%,#445043 64%);border-radius:9px;display:grid;place-items:center;margin:13px 0}.photo:before{content:'';position:absolute;inset:35% 0 0;background:repeating-linear-gradient(90deg,transparent 0 44px,#2a382b 45px 51px);transform:perspective(130px) rotateX(18deg)}.station-sign{position:relative;background:#24372b;border:2px solid #afbaa1;padding:12px 30px;font:20px var(--serif);letter-spacing:8px;box-shadow:0 15px 30px #0005}.photo small{position:absolute;bottom:8px;right:10px;font:8px var(--mono);color:#d3dac6}.receipt{background:#c9cfb7;color:#263023;padding:20px 17px;margin:15px 0;font:11px/1.9 var(--mono);clip-path:polygon(0 0,100% 0,100% 97%,97% 100%,94% 97%,91% 100%,88% 97%,85% 100%,82% 97%,79% 100%,76% 97%,73% 100%,70% 97%,67% 100%,64% 97%,61% 100%,58% 97%,55% 100%,52% 97%,49% 100%,46% 97%,43% 100%,40% 97%,37% 100%,34% 97%,31% 100%,28% 97%,25% 100%,22% 97%,19% 100%,16% 97%,13% 100%,10% 97%,7% 100%,4% 97%,0 100%)}.receipt strong{font-size:17px}.receipt hr{border:0;border-top:1px dashed #66735f;margin:12px 0}.note{background:#242d23;border-left:2px solid #a6b77e;padding:18px;margin:12px 0;color:#c5cfbb;font-size:12px;line-height:2}.note h3{font-size:14px;color:var(--ink);margin-top:0}.evidence{border-bottom:1px solid var(--line);padding:12px 0}.evidence strong{font-size:12px;font-weight:500;color:var(--accent)}.evidence p{font-size:11px;line-height:1.8;color:#acb8a2;margin:6px 0 0}.empty{font-size:12px;line-height:2;color:var(--muted);padding:15px 0}.primary,.secondary{border:0;border-radius:8px;padding:12px 16px;font-size:12px}.primary{background:var(--accent);color:#25321d}.secondary{border:1px solid #596349;background:#2b3527;color:#dce6d0}.wide{width:100%;margin-top:16px}.choice{width:100%;text-align:left;border:1px solid #4b5841;background:#232f22;border-radius:9px;padding:13px;margin:8px 0;color:#d5dfc9;font-size:12px}.choice small{display:block;color:var(--muted);font-size:10px;margin-top:6px}.code{width:100%;background:#0e1510;border:1px solid #65724e;border-radius:8px;color:var(--accent);padding:13px;text-align:center;font:24px var(--mono);letter-spacing:14px;margin:8px 0}.error{color:#dfb3a2;font-size:11px;line-height:1.8;min-height:20px}.ending{text-align:left;padding-top:12px}.ending h3{font:31px/1.5 var(--serif);margin:20px 0;color:var(--accent)}.ending p{font-size:12px;line-height:2;color:#c0cbb5}.ending .ending-id{font:10px var(--mono);letter-spacing:2px;color:#8d9d78}.ending blockquote{margin:20px 0;padding-left:15px;border-left:2px solid var(--accent);font-size:13px;line-height:2;color:#d7e3c8}.case-sidebar{align-self:center}.case-sidebar h3{font:28px/1.5 var(--serif);font-weight:400;margin:0 0 20px}.case-sidebar p:not(.eyebrow){font-size:11px;line-height:2.1;color:var(--muted)}.case-progress{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:22px 0;margin:25px 0}.case-progress>span{font:32px var(--mono);color:var(--accent)}.case-progress small{display:block;font-size:10px;color:var(--muted);margin-top:9px}.quiet{font-size:10px!important}dialog{background:#202a20;color:var(--ink);border:1px solid #66714e;border-radius:16px;padding:29px;width:min(440px,calc(100vw - 32px));box-shadow:0 20px 90px #0009}dialog::backdrop{background:#060b08b8;backdrop-filter:blur(5px)}dialog h3{font:22px/1.5 var(--serif);margin:18px 0}dialog p{font-size:12px;line-height:2;color:#c0cbb5}dialog .primary{width:100%;margin-top:15px}.dialog-close{position:absolute;top:12px;right:15px;color:var(--muted);background:none;border:0;font-size:24px}.detail-row{display:flex;justify-content:space-between;gap:15px;border-bottom:1px solid #414d37;padding:11px 0;font-size:11px}.detail-row span{color:var(--muted)}.detail-row b{font-weight:400;text-align:right;color:var(--accent)}.actions{display:flex;gap:10px;align-items:stretch}.actions button{flex:1;margin-top:15px}.toast{position:fixed;bottom:28px;left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:#d7e8a0;color:#26351c;border-radius:30px;padding:12px 23px;z-index:20;font-size:12px;transition:opacity .2s,transform .2s}.toast.show{opacity:1;transform:translate(-50%,0)}@media(min-width:1550px){.scene{gap:95px}.phone{height:790px}}@media(max-width:1190px){.scene{grid-template-columns:1fr 390px;gap:45px;padding:70px 45px 35px}.case-sidebar{display:none}.editorial h1{font-size:65px}}@media(max-width:760px){body{background:#151c18}.scene{display:block;padding:0;min-height:100dvh}.editorial,.case-sidebar{display:none}.phone{width:100%;height:100dvh;min-height:550px;border:0;border-radius:0;box-shadow:none}.screen{padding:20px 22px}.phonehead{padding:14px 22px 18px}.statusbar{padding:15px 23px 9px}.thread{padding:15px}.thread p,.bubble{font-size:13px}.section-label{font-size:10px}.small-label{font-size:9px}.tabs button{font-size:13px}.homebar{margin-bottom:max(10px,env(safe-area-inset-bottom))}.toast{width:max-content;max-width:90vw;text-align:center}.ending{padding:12px 4px}.photo{height:210px}}@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+.question-title{font-size:15px;font-weight:500;line-height:1.9;margin:20px 0 10px}.deduction-panel{border-top:1px solid var(--line);margin-top:18px;padding-top:4px}.evidence-option{display:flex;align-items:center;gap:10px;padding:13px 10px;margin:7px 0;background:#263123;border:1px solid #47563c;border-radius:8px;font-size:12px;cursor:pointer;line-height:1.7}.evidence-option input{accent-color:var(--accent);width:18px;height:18px;flex-shrink:0}.deduction-done{color:var(--accent);font-size:11px;line-height:1.9}.hint-box{margin-top:18px;padding-bottom:8px}.hint-box .secondary{font-size:11px}.hint-box .tip{border-left:1px solid #65724c;padding-left:12px}
+.luggage{position:absolute;bottom:-8px;left:18px;width:48px;height:70px;border:2px solid #243127;border-radius:7px;background:repeating-linear-gradient(90deg,#495447 0 8px,#3c473b 9px 11px);transform:rotate(-7deg)}.luggage:before{content:"";position:absolute;left:13px;top:-26px;width:15px;height:24px;border:3px solid #27332a;border-bottom:0;border-radius:4px 4px 0 0}.luggage:after{content:"";position:absolute;top:-14px;left:12px;width:20px;height:7px;background:#bcae58}
+</style>
+</head>
+<body>
+  <main class="scene">
+    <aside class="editorial">
+      <div class="edition">AFTER HOURS <span>INTERACTIVE FICTION / 001</span></div>
+      <p class="eyebrow">一部留在手机里的悬疑短篇</p>
+      <h1>最后一条<br><em>消息。</em></h1>
+      <p class="intro">林遥的手机落在你家餐桌上。<br>她说下楼买包烟，十分钟就回来。<br>现在已经过去两个小时。</p>
+      <div class="divider"></div>
+      <p class="instruction">她的聊天记录同步在旧手机上。<br>刚收到的那句话，你读了两遍。</p>
+      <div class="meta"><span>证据推理</span><span>两个结局</span><span>无惊吓画面</span></div>
+      <p class="version">可体验版本 v0.2.0 · 全部人物与事件均为虚构</p>
+    </aside>
+    <section class="phone" aria-label="林遥的旧手机">
+      <div class="statusbar"><span>23:17</span><span>本地记录 <span aria-hidden="true">▂▄▆　▰</span></span></div>
+      <header class="phonehead"><div><span class="small-label">RECOVERED DEVICE</span><h2>林遥的手机 <span class="live-dot"></span></h2></div><button id="reset" class="iconbutton" aria-label="重新开始">↺</button></header>
+      <nav class="tabs" aria-label="手机应用">
+        <button class="active" data-tab="messages" aria-selected="true">消息 <span>3</span></button>
+        <button data-tab="album" aria-selected="false">相册</button>
+        <button data-tab="notes" aria-selected="false">便签</button>
+        <button data-tab="case" aria-selected="false">调查 <span id="count">0</span></button>
+      </nav>
+      <div id="screen" class="screen"></div>
+      <div class="homebar" aria-hidden="true"></div>
+    </section>
+    <aside class="case-sidebar"><p class="eyebrow">YOUR OBJECTIVE</p><h3>她说去了北站。<br>你能确定吗？</h3><p>检查原始记录，<br>用证据回答问题。</p><div class="case-progress"><span id="progress">00 / 03</span><small>地点材料已记录</small></div><p class="quiet">记录信息后，进入「调查」。<br>需要时可以逐步查看提示。<br>进度保存在当前浏览器。</p></aside>
+  </main>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <dialog id="inspect"><button id="close-dialog" class="dialog-close" aria-label="关闭检查">×</button><span class="small-label">INSPECT / 检查原始信息</span><h3 id="inspect-title"></h3><div id="inspect-content"></div><button id="record" class="primary">记录线索</button></dialog>
+  <dialog id="reset-dialog"><h3>重新开始这次调查？</h3><p>这会清除当前浏览器中的样片进度。</p><div class="actions"><button id="cancel-reset" class="secondary">继续调查</button><button id="confirm-reset" class="primary">重新开始</button></div></dialog>
+<script>// Shared by the browser and Node tests; no DOM or third-party dependencies.
+(function (root) {
+  'use strict';
+  const idSet = new Set(['scheduled', 'photo', 'receipt', 'promise', 'contact']);
+  const initial = () => ({tab:'messages', clues:[], stage:'investigate', ending:null, deduction:false, hints:{}});
+  const normalize = (raw) => {
+    const result=initial();
+    if (!raw || typeof raw!=='object') return result;
+    if (['messages','album','notes','case'].includes(raw.tab)) result.tab=raw.tab;
+    if (Array.isArray(raw.clues)) result.clues=[...new Set(raw.clues.filter(id=>idSet.has(id)))];
+    result.deduction=raw.deduction===true && ['scheduled','photo'].every(id=>result.clues.includes(id));
+    if (['locker','handoff','ending'].includes(raw.stage) && result.deduction && result.clues.includes('receipt')) result.stage=raw.stage;
+    if (['safe','lost'].includes(raw.ending)) result.ending=raw.ending;
+    if (result.stage==='ending'&&!result.ending) result.stage='handoff';
+    for(const key of ['investigate','locker','handoff']) result.hints[key]=Math.max(0,Math.min(3,Number.isFinite(raw.hints?.[key])?Math.floor(raw.hints[key]):0));
+    return result;
+  };
+  const evaluateDeduction = (selected) => {
+    const choices=[...new Set(selected)];
+    return choices.length===2 && choices.includes('scheduled') && choices.includes('photo');
+  };
+  const canVisitLocker = state => state.deduction===true && state.clues.includes('receipt');
+  const validCode = code => typeof code==='string' && /^\d{4}$/.test(code) && code==='2317';
+  const endingFor = recipient => recipient==='chen'?'safe':recipient==='courier'?'lost':null;
+  root.MidnightRules=Object.freeze({initial,normalize,evaluateDeduction,canVisitLocker,validCode,endingFor});
+})(globalThis);
+
+'use strict';
+(() => {
+ const R=globalThis.MidnightRules, KEY='after-hours-midnight-v02';
+ const definitions={
+  scheduled:{title:'消息发送记录',rows:[['发送时间','今天 23:17'],['发送方式','定时任务'],['任务建立','今天 19:02']],description:'北站消息在 23:17 发出；发送任务建立于 19:02。',location:true},
+  photo:{title:'北站照片的文件信息',rows:[['文件名','IMG_20240516_1829.jpg'],['拍摄日期','2024 年 5 月 16 日'],['存入相册','今天 18:54']],description:'照片拍摄于 2024-05-16，今天 18:54 存入相册。',location:true},
+  receipt:{title:'青禾洗衣电子凭证',rows:[['商户','青禾 24h 自助洗衣'],['交易时间','今天 21:06'],['项目','临时寄存'],['柜号','B17']],description:'今天 21:06 的凭证：青禾洗衣，临时寄存，柜号 B17。',location:true},
+  promise:{title:'2021 年的一段会话',rows:[['日期','2021 年 11 月 02 日'],['你：修好了，明天拿给你。','23:16'],['林遥：行，晚安。','23:17']],description:'修手机那天，林遥在 23:17 说了晚安。',location:false},
+  contact:{title:'一张未命名的便签',rows:[['修改时间','今天 18:36'],['接收人','陈默，档案组'],['补充','让他本人拿。收件凭证一并给他。']],description:'便签指定陈默本人取件，并要保留收件凭证。',location:false}
+ };
+ const hints={
+  investigate:['先区分一条记录显示的时间，和它原本产生的时间。','检查北站消息的发送方式，再比较照片的拍摄日期与存入日期。','第一问选「消息发送记录」和「北站照片的文件信息」。随后用当日寄存凭证判断地点。'],
+  locker:['便签里写了取码约定。再找找以前的会话。','林遥说「晚安」的时间值得留意。','输入 2317。'],
+  handoff:['取件人的身份，手机里有没有约定？','再看未命名便签，留意“本人”两个字。','陈默是指定接收人，陌生号码的身份尚未核实。']
+ };
+ let state=R.initial(),activeClue=null,toastTimer;
+ try{state=R.normalize(JSON.parse(localStorage.getItem(KEY)||'null'));}catch{}
+ const screen=document.querySelector('#screen');
+ const placeCount=()=>state.clues.filter(id=>definitions[id].location).length;
+ const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(state));}catch{}};
+ const action=(id,label)=>`<button class="inspect-button" data-clue="${id}">${state.clues.includes(id)?'✓ 已记录 · ':''}${label}<small>检查记录</small></button>`;
+ function notify(message){const el=document.querySelector('#toast');el.textContent=message;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2600);}
+ function hint(){const key=state.stage,level=state.hints[key]||0;return `<div class="hint-box"><button class="secondary wide" data-command="hint">${level===3?'提示已全部展开':level?'再给一点提示':'需要一点提示'}</button><div aria-live="polite">${(hints[key]||[]).slice(0,level).map(t=>`<p class="tip">${t}</p>`).join('')}</div></div>`;}
+ function messages(){return `<p class="section-label">消息 / 同步记录</p>
+  <article class="thread"><div class="thread-head"><strong><span class="avatar">遥</span>林遥</strong><time>今天</time></div>
+  <p>林遥把备用机留在你家充电，带着常用机下了楼。她的账号还登录在这台旧机上。</p>
+  <div class="chat-time">21:12 · 发给你</div><div class="bubble">下楼买包烟。门别反锁。</div>
+  <div class="chat-time">23:17 · 发给你</div><div class="bubble">到北站了。明早再说。</div>
+  <p>你打了两次电话，都没人接。旧机上也同步了刚才的发送记录。</p>${action('scheduled','查看发送详情')}</article>
+  <article class="thread"><div class="thread-head"><strong><span class="avatar">?</span>陌生号码</strong><time>23:16</time></div>
+  <p>你好，我替陈老师拿点材料。林遥手机一直占线。你要是见到她，麻烦跟她说一声。</p></article>
+  <article class="thread"><div class="thread-head"><strong>你与林遥</strong><time>2021</time></div>
+  <p>旧会话停在修手机那天。后来你们换了账号，这一段没有迁过去。</p>${action('promise','翻看那天的聊天')}</article>
+  <p class="tip">相册和便签也留在这台手机里。</p>`;}
+ function album(){return `<p class="section-label">相册 / 最近存入</p>
+  <article class="thread"><div class="thread-head"><strong>北站</strong><time>1 / 2</time></div>
+  <div class="photo" role="img" aria-label="北站候车厅示意图，左下方有贴黄色胶带的行李箱"><div class="station-sign">北 站</div><div class="luggage" aria-hidden="true"></div><small>场景示意</small></div>
+  <p>画面左下角有半只行李箱，拉杆贴着一圈黄胶带。林遥的箱子上也有。</p>${action('photo','查看文件信息')}</article>
+  <article class="thread"><div class="thread-head"><strong>电子凭证</strong><time>2 / 2</time></div>
+  <div class="receipt"><strong>青禾 24h</strong><br>自 助 洗 衣 · 临 时 寄 存<hr>DATE　今天 21:06<br>ITEM　寄存服务<br>BOX　 B17<hr>请保留凭证，取件时出示</div>${action('receipt','展开寄存凭证')}</article>`;}
+ function notes(){return `<p class="section-label">便签 / 未命名</p>
+  <article class="note"><h3>取件</h3>陈默，档案组。让他本人拿。<br>收件凭证别扔，他那边要留底。<br><br>柜码：修好旧手机那天，第一次说晚安的时间。<br>四位，不加冒号。${action('contact','记录接收人约定')}</article>
+  <p class="tip">页脚显示，这张便签最后改于今天 18:36。</p>`;}
+ function investigation(){
+  if(state.stage==='ending')return ending();
+  if(state.stage==='locker')return `<p class="section-label">青禾洗衣 / B17</p>
+   <article class="note"><h3>柜门</h3>烘干机还在转。收银台没人，玻璃上贴着店主的电话。<br><br>B17 在最下面一排。你蹲下去，按亮了数字面板。</article>
+   <form id="code-form"><label class="tip" for="locker-code">四位柜码</label><input id="locker-code" class="code" type="text" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" autocomplete="off" aria-describedby="code-error" required placeholder="····"><p id="code-error" class="error" role="status"></p><button class="primary wide" type="submit">开柜</button></form>${hint()}<button class="secondary wide" data-command="back">返回调查</button>`;
+  if(state.stage==='handoff')return `<p class="section-label">B17 / 文件袋</p>
+   <article class="note"><h3>原件</h3>封口没粘。最上面是巡检表，几栏数字被蓝笔圈过，旁边写着另一份报告的页码。<br><br>袋里还有一张签收单。接收人一栏空着。</article>
+   <p class="tip">陌生号码又发来消息：<br>「我让司机过去，车停路边，你把袋子给他就行。」</p><h3 class="question-title">你怎么交接？</h3>
+   <button class="choice" data-recipient="chen">联系陈默，等他本人来取<small>保留文件袋和寄存凭证。</small></button>
+   <button class="choice" data-recipient="courier">交给陌生号码安排的司机<small>让司机在签收单上留个名字。</small></button>${hint()}`;
+  const evidence=state.clues.length?state.clues.map(id=>`<article class="evidence"><strong>${definitions[id].title}</strong><p>${definitions[id].description}</p></article>`).join(''):'<p class="empty">还没有记录。<br>先翻看手机里的内容。</p>';
+  const question=state.deduction?`<p class="deduction-done">✓ 已核实：消息与照片都不能单独证明今晚的行程。</p>
+   <h3 class="question-title">当晚的记录支持去哪里取件？</h3>
+   ${state.clues.includes('receipt')?`<button class="choice" data-location="station">北站<small>23:17 消息提及的地点。</small></button><button class="choice" data-location="laundry">青禾洗衣店<small>寄存凭证上的商户。</small></button><button class="choice" data-location="home">林遥住处<small>通讯录中的家庭地址。</small></button><p id="location-feedback" class="error" role="status"></p>`:'<p class="tip">还需要一份当晚产生的记录。相册里是否还有别的材料？</p>'}`:
+   `<h3 class="question-title">找出两份看似指向北站、却不能确认当晚行程的材料。</h3><p class="tip">选两项。比较记录产生的时间和显示的时间。</p>
+   ${placeCount()>=2?`<form id="deduction-form">${state.clues.filter(id=>definitions[id].location).map(id=>`<label class="evidence-option"><input type="checkbox" name="evidence" value="${id}"><span>${definitions[id].title}</span></label>`).join('')}<p id="deduction-error" class="error" role="status"></p><button class="primary wide" type="submit">核对推断</button></form>`:'<p class="tip">至少记录两份有关地点的材料后，再作判断。</p>'}`;
+  return `<p class="section-label">调查 / 原始记录</p>${evidence}<div class="deduction-panel">${question}</div>${hint()}`;
+ }
+ function ending(){const safe=state.ending==='safe';return `<article class="ending"><span class="ending-id">结局 ${safe?'01 / 签收':'02 / 代收'}</span><h3>${safe?'签收单':'车已经开走了'}</h3>
+  ${safe?`<p>陈默到店时，裤脚湿了一截。他先报出林遥的工号，才伸手接文件袋。</p><p>翻到第三页，他把圈过的数字与手机里的一张表对了对。然后坐到塑料凳上，在签收单上写了名字。</p><blockquote>「凭证也给我。日期对得上。」</blockquote><p>你问林遥在哪儿。他摇了摇头，把文件放进包的内袋。<br><br>回到家，充电线还插着。你把门上的反锁拧开，给她留了灯。</p>`:
+  `<p>司机没有下车。他降下副驾车窗，在签收单上写了个姓，把文件袋放到后座。车牌最后两位沾着泥。</p><p>十一分钟后，陈默打来电话。你提起司机，他在那边停了一会儿。</p><blockquote>「我还在地铁上。没叫过车。」</blockquote><p>你再拨刚才的号码，无人接听。洗衣店的玻璃门映着马路，车已经看不见了。<br><br>口袋里只剩那张寄存凭证，纸边被汗浸软了一角。</p>`}
+  <div class="divider"></div><p class="tip">第一幕结束 · 林遥尚未归来</p><button class="primary wide" data-command="reconsider">回到交接之前</button><button class="secondary wide" data-command="show-clues">回看材料</button><p class="tip">v0.2.0 · 记录、推断与交接</p></article>`;}
+ function render(){document.querySelectorAll('[data-tab]').forEach(b=>{const on=b.dataset.tab===state.tab;b.classList.toggle('active',on);b.setAttribute('aria-selected',String(on));});document.querySelector('#count').textContent=state.clues.length;document.querySelector('#progress').textContent=`${String(placeCount()).padStart(2,'0')} / 03`;screen.innerHTML=({messages,album,notes,case:investigation})[state.tab]();save();}
+ function go(stage){state.stage=stage;render();screen.scrollTop=0;}
+ document.querySelector('.tabs').addEventListener('click',e=>{const b=e.target.closest('[data-tab]');if(!b)return;state.tab=b.dataset.tab;render();screen.scrollTop=0;});
+ screen.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+  if(b.dataset.clue){activeClue=b.dataset.clue;const d=definitions[activeClue];document.querySelector('#inspect-title').textContent=d.title;document.querySelector('#inspect-content').innerHTML=d.rows.map(([a,b])=>`<div class="detail-row"><span>${a}</span><b>${b}</b></div>`).join('');document.querySelector('#record').textContent=state.clues.includes(activeClue)?'已记录 · 返回':'记录材料';document.querySelector('#inspect').showModal();}
+  if(b.dataset.location&&R.canVisitLocker(state)){if(b.dataset.location==='laundry')go('locker');else document.querySelector('#location-feedback').textContent=b.dataset.location==='station'?'这两份北站记录都不能确定当晚行程。还有哪份记录发生在今晚？':'目前没有当晚去住处的记录。再核对凭证。';}
+  if(b.dataset.recipient&&state.stage==='handoff'){const result=R.endingFor(b.dataset.recipient);if(result){state.ending=result;go('ending');}}
+  if(b.dataset.command==='back'||b.dataset.command==='show-clues')go('investigate');
+  if(b.dataset.command==='reconsider')go('handoff');
+  if(b.dataset.command==='hint'){const key=state.stage,level=state.hints[key]||0,scroll=screen.scrollTop;if(level<3){state.hints[key]=level+1;render();screen.scrollTop=scroll;}else notify('全部提示已展开');}
+ });
+ screen.addEventListener('submit',e=>{e.preventDefault();
+  if(e.target.id==='deduction-form'){const selected=Array.from(screen.querySelectorAll('input[name="evidence"]:checked'),x=>x.value);if(R.evaluateDeduction(selected)){state.deduction=true;render();notify('推断已核实');}else document.querySelector('#deduction-error').textContent=selected.length!==2?'这次需要选择两份材料。':'再比较材料产生的时间。先不要把今天存入的照片，当成今天拍的照片。';}
+  if(e.target.id==='code-form'){if(R.validCode(document.querySelector('#locker-code').value))go('handoff');else document.querySelector('#code-error').textContent='柜门没开。可以回看旧会话，或逐步展开提示。';}
+ });
+ document.querySelector('#record').addEventListener('click',()=>{if(activeClue&&!state.clues.includes(activeClue)){state.clues.push(activeClue);notify('材料已记录');}document.querySelector('#inspect').close();render();});
+ document.querySelector('#close-dialog').addEventListener('click',()=>document.querySelector('#inspect').close());
+ document.querySelector('#reset').addEventListener('click',()=>document.querySelector('#reset-dialog').showModal());
+ document.querySelector('#cancel-reset').addEventListener('click',()=>document.querySelector('#reset-dialog').close());
+ document.querySelector('#confirm-reset').addEventListener('click',()=>{state=R.initial();document.querySelector('#reset-dialog').close();render();screen.scrollTop=0;notify('调查已重新开始');});
+ render();
+})();
+</script></body>
+</html>
