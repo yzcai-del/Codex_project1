@@ -5,12 +5,12 @@ import vm from 'node:vm';
 import {readFile} from 'node:fs/promises';
 const script=(await readFile(new URL('../app/rules.js',import.meta.url),'utf8'))+'\n'+
  await readFile(new URL('../app/app.js',import.meta.url),'utf8');
-const KEY='after-hours-midnight-v03-rc1';
+const KEY='after-hours-midnight-v03-rc3';
 function boot(saved){
  const storage=new Map(saved?[[KEY,JSON.stringify(saved)]]:[]);
  const elements=new Map();
  const element=selector=>{
-  if(!elements.has(selector))elements.set(selector,{listeners:{},innerHTML:'',textContent:'',value:'',scrollTop:0,classList:{toggle(){},add(){},remove(){}},addEventListener(type,fn){this.listeners[type]=fn;},setAttribute(){},showModal(){this.open=true;},close(){this.open=false;}});
+  if(!elements.has(selector))elements.set(selector,{listeners:{},dataset:{},innerHTML:'',textContent:'',value:'',scrollTop:0,classList:{toggle(){},add(){},remove(){}},addEventListener(type,fn){this.listeners[type]=fn;},setAttribute(){},showModal(){this.open=true;},close(){this.open=false;}});
   return elements.get(selector);
  };
  const tabs=['messages','album','notes','case'].map(tab=>({...element('tab:'+tab),dataset:{tab}}));
@@ -52,9 +52,9 @@ function collected(){
 }
 test('script compiles; evidence separates phone sources and avoids fictional scheduling logs',()=>{
  const b=boot();
- assert.match(b.view(),/工作号发给我/);
+ assert.match(b.view(),/工作号 → 你/);
  assert.match(b.view(),/个人号短信/);
- assert.match(b.view(),/她把手机放下时交代过/);
+ assert.match(b.view(),/相册里那张北站图也能看，别的先别翻/);
  b.click({clue:'scheduled'});
  assert.match(b.text('inspect-title'),/本地发送/);
  assert.doesNotMatch(script,/19:02|任务建立|同步了刚才/);
@@ -138,4 +138,23 @@ test('calling Chen after delivery does not rewrite the earlier scene',()=>{
  assert.equal(b.state().handoffKnowledge,'unverified');
  assert.match(b.view(),/哪个司机/);
  assert.doesNotMatch(b.view(),/你没给他吧/);
+});
+
+
+test('player-facing narrative uses you while each quoted speaker keeps their own pronouns',()=>{
+ const b=boot();
+ assert.match(b.view(),/你的身份 · 许岑/);
+ assert.match(b.view(),/你拨了她的工作号/);
+ assert.match(b.view(),/你好，我替陈老师/);
+ b.click({command:'call-chen'});
+ assert.match(b.view(),/我还在地铁上/);
+ b.tab('album'); assert.match(b.view(),/你翻到2024年/);
+ b.tab('messages'); b.click({clue:'promise'});
+ assert.match(b.text('inspect-title'),/你保留/);
+ const safe=collected();safe.click({route:'chen'});safe.code('2317');safe.click({recipient:'chen'});
+ assert.match(safe.view(),/你把孟雪打印的凭证递过去/);
+ assert.match(safe.view(),/原页别折。我夹一下/);
+ const lost=collected();lost.click({route:'stranger'});lost.code('2317');lost.click({recipient:'courier'});
+ assert.match(lost.view(),/你把纸袋递进去/);
+ assert.doesNotMatch(lost.view(),/我把袋子|我手上|我说袋子/);
 });
