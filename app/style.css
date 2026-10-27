@@ -30,3 +30,24 @@ dialog{background:#e9dfc8;color:#39362f;border:1px solid #9b8b70;border-radius:5
 @media(max-width:760px){body{background:var(--bg)}.scene{display:block;padding:0;min-height:100dvh}.editorial,.case-sidebar{display:none}.phone{width:100%;height:100dvh;max-height:none;min-height:0;border:0;border-radius:0;box-shadow:none}.screen{padding:20px 22px}.phonehead{padding:12px 22px 16px}.statusbar{padding:15px 23px 9px}.thread{padding:15px}.homebar{margin-bottom:max(10px,env(safe-area-inset-bottom))}.toast{width:max-content;max-width:90vw;text-align:center}.ending{padding:12px 4px}.photo{height:210px}.edition{position:static}}
 @media(max-width:360px){.screen{padding:16px}.thread{padding:12px}.thread-head{flex-wrap:wrap}.cabinet{right:10px;width:65px}.washer.one{left:10px}.washer.two{left:90px}.detail-row{grid-template-columns:1fr;gap:3px}.detail-row b{text-align:left}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* Act two: a conversation, a shop's own records, and a bounded conclusion. */
+.call-card{padding:19px 17px;background:linear-gradient(130deg,#24364d,#1b2637);border:1px solid #5b7290;border-top:3px solid #adcae5;border-radius:10px;margin:12px 0 23px}
+.call-card h3{font:22px/1.6 var(--serif);color:#e8cfaa;margin:15px 0}
+.call-card p,.conversation-record p{font-size:13px;line-height:2;color:#d6dfe9}
+.conversation-record{padding:4px 14px;margin:17px 0;border-left:2px solid #8c7658;background:#1c2839}
+.note .dialogue span{color:#685b46}.note .dialogue p{color:#39352f}.note .dialogue{border-color:#a67850}
+.field-label,fieldset legend{display:block;font-size:13px;line-height:1.9;margin:17px 0 9px;color:#d9e3ee}
+select{width:100%;max-width:100%;font:13px/1.7 var(--sans);padding:13px 10px;border:1px solid #6b809c;border-radius:6px;background:#202f43;color:#edf1f5;min-height:46px}
+select:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+fieldset{border:0;padding:0;margin:15px 0;min-width:0}
+.counter-scene{height:176px;position:relative;overflow:hidden;background:linear-gradient(175deg,#66808b66 0 47%,#92816a 48%,#493d34);border:1px solid #72808b;border-radius:4px;box-shadow:inset 0 0 30px #1b243a66;margin:14px 0 21px}
+.desk-book{position:absolute;left:19px;top:25px;width:53%;height:113px;background:repeating-linear-gradient(#d8ccb2 0 24px,#ada18c 25px 26px);border-left:8px solid #6e6556;color:#4b4438;padding:15px 10px;transform:rotate(-5deg);box-shadow:3px 7px 12px #0004;font:17px var(--serif)}
+.desk-book span{display:block;font:10px var(--mono);margin-top:17px}
+.desk-slip{position:absolute;right:22px;top:39px;padding:13px 17px;background:#f0e8d5;color:#3f4244;box-shadow:2px 5px 9px #0004;font:11px/1.7 var(--mono);transform:rotate(7deg)}
+.desk-slip b{font-size:21px;font-weight:400}.counter-scene>small{position:absolute;bottom:7px;right:9px;color:#e8dfcc;font:9px var(--mono);background:#2b2826b0;padding:3px}
+.event-strip{border-left:2px solid #aa8454;padding-left:18px;margin:24px 0}
+.event-strip div{position:relative;margin:22px 0}.event-strip div:before{content:'';position:absolute;left:-23px;top:4px;background:#e6bd82;width:8px;height:8px;border-radius:50%}
+.event-strip time{display:block;color:#b4c4d8;font:11px var(--mono);margin-bottom:8px}
+.event-strip b{display:block;font-size:13px;line-height:1.8;color:#e4dfd4;font-weight:400}
+@media(max-width:360px){.desk-book{left:11px;width:56%;font-size:15px}.desk-slip{right:12px;padding:12px}.call-card{padding:15px}}

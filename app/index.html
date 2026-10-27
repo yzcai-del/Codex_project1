@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#131b27"><title>23:17 — 最后一条消息</title>
-  <link rel="stylesheet" href="style.css"><script defer src="rules.js"></script><script defer src="app.js"></script>
+  <link rel="stylesheet" href="style.css"><script defer src="rules.js"></script><script defer src="chapter2.js"></script><script defer src="app.js"></script>
 </head>
 <body>
   <main class="scene">
@@ -15,10 +15,10 @@
       <div class="divider"></div>
       <p class="instruction">“到北站了。明早再说。”<br>你按亮桌上的旧机，<br>短信栏里也有这句话。</p>
       <div class="meta"><span>证据推理</span><span>两条交接分支</span><span>无惊吓画面</span></div>
-      <p class="version">候选版 v0.3.0-rc.3 · 浏览器验收待完成 · 全部人物与事件均为虚构</p>
+      <p class="version">候选版 v0.4.0-rc.1 · 浏览器验收待完成 · 全部人物与事件均为虚构</p>
     </aside>
     <section class="phone" aria-label="你的记录和林遥授权的旧机资料">
-      <div class="statusbar"><span>起点 23:17</span><span>本地记录 <span aria-hidden="true">▂▄▆　▰</span></span></div>
+      <div class="statusbar"><span id="story-time">10/25 23:17</span><span>本地记录 <span aria-hidden="true">▂▄▆　▰</span></span></div>
       <header class="phonehead"><div><span class="small-label">RECORDS / 23:17</span><h2>调查记录 <span class="live-dot"></span></h2></div><button id="reset" class="iconbutton" aria-label="重新开始">↺</button></header>
       <nav class="tabs" aria-label="调查资料">
         <button class="active" data-tab="messages" aria-selected="true">消息</button>
@@ -29,7 +29,7 @@
       <div id="screen" class="screen"></div>
       <div class="homebar" aria-hidden="true"></div>
     </section>
-    <aside class="case-sidebar"><div class="case-stamp" aria-hidden="true">待核对</div><p class="eyebrow">YOUR OBJECTIVE</p><h3>她说去了北站。<br>你能确定吗？</h3><p>检查原始记录，<br>用证据回答问题。</p><div class="case-progress"><span id="progress">00 / 03</span><small>地点材料已记录</small></div><p class="quiet">记录信息后，进入「调查」。<br>需要时可以逐步查看提示。<br>进度保存在当前浏览器。</p></aside>
+    <aside class="case-sidebar"><div class="case-stamp" aria-hidden="true">待核对</div><p class="eyebrow">YOUR OBJECTIVE</p><h3 id="objective-title">她说去了北站。<br>你能确定吗？</h3><p>检查原始记录，<br>用证据回答问题。</p><div class="case-progress"><span id="progress">00 / 03</span><small id="progress-label">地点材料已记录</small></div><p class="quiet">记录信息后，进入「调查」。<br>需要时可以逐步查看提示。<br>进度保存在当前浏览器。</p></aside>
   </main>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <dialog id="inspect"><button id="close-dialog" class="dialog-close" aria-label="关闭检查">×</button><span class="small-label">INSPECT / 检查原始信息</span><h3 id="inspect-title"></h3><div id="inspect-content"></div><button id="record" class="primary">记录线索</button></dialog>

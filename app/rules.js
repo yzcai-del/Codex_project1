@@ -1,11 +1,14 @@
 // Pure story rules shared by the browser and Node checks.
 (function (root) {
   'use strict';
-  const clueIds = new Set(['scheduled', 'photo', 'receipt', 'promise', 'contact']);
+  const baseClues = ['scheduled', 'photo', 'receipt', 'promise', 'contact'];
+  const laterClues = ['cabinetLog', 'counterNote', 'camera'];
+  const clueIds = new Set([...baseClues, ...laterClues]);
   const initial = () => ({
     tab: 'messages', clues: [], stage: 'investigate', ending: null,
     deduction: false, hints: {}, departureRoute: null,
-    contactVerified: false, lockerOpened: false, handoffKnowledge: null
+    contactVerified: false, lockerOpened: false, handoffKnowledge: null,
+    morningStarted: false, morningQuestions: [], counterVisited: false, videoChoice: null, counterConclusion: null
   });
   const canVisitLocker = s => s.deduction === true && s.clues.includes('receipt');
   const validCode = code => typeof code === 'string' && /^\d{4}$/.test(code) && code === '2317';
@@ -24,6 +27,18 @@
     ending: endingFor(recipient),
     handoffKnowledge: s.contactVerified ? 'verified' : 'unverified'
   } : null;
+  const canStartMorning = s => ['safe','lost'].includes(s.ending) && s.lockerOpened === true && canVisitLocker(s);
+  const canInspectClue = (s,id) => baseClues.includes(id) ||
+    (s.counterVisited === true && (id === 'cabinetLog' || id === 'counterNote' ||
+      (id === 'camera' && s.videoChoice === 'view')));
+  const evaluateCounter = (s,event,evidence,limit) => {
+    if (!s.counterVisited || event !== 'stored' || limit !== 'custody-gap' || !Array.isArray(evidence)) return null;
+    const ids=[...new Set(evidence)];
+    if (ids.length !== 2 || ids.some(id => !s.clues.includes(id) || !canInspectClue(s,id))) return null;
+    if (!ids.some(id => ['receipt','cabinetLog'].includes(id)) ||
+        !ids.some(id => ['counterNote','camera'].includes(id))) return null;
+    return {event:'stored',evidence:ids,limit:'custody-gap'};
+  };
   const normalize = raw => {
     const s = initial();
     if (!raw || typeof raw !== 'object') return s;
@@ -43,13 +58,28 @@
     if (s.stage !== 'investigate' && s.stage !== 'departure' && !s.departureRoute) s.stage = 'departure';
     if (['handoff', 'ending'].includes(s.stage) && !s.lockerOpened) s.stage = 'locker';
     if (s.stage === 'ending' && !s.ending) s.stage = 'handoff';
-    for (const key of ['investigate', 'departure', 'locker', 'handoff']) {
+    s.morningStarted = raw.morningStarted === true && canStartMorning(s);
+    if (s.morningStarted) {
+      s.morningQuestions = Array.isArray(raw.morningQuestions) ?
+        [...new Set(raw.morningQuestions.filter(id => ['station','where','silence'].includes(id)))] : [];
+      s.counterVisited = raw.counterVisited === true;
+      if (s.counterVisited && ['view','skip'].includes(raw.videoChoice)) s.videoChoice = raw.videoChoice;
+    }
+    s.clues = s.clues.filter(id => canInspectClue(s,id));
+    if (raw.counterConclusion && typeof raw.counterConclusion === 'object')
+      s.counterConclusion = evaluateCounter(s,raw.counterConclusion.event,raw.counterConclusion.evidence,raw.counterConclusion.limit);
+    if (s.morningStarted && ['morning','counter','chapter2end'].includes(raw.stage)) {
+      s.stage = raw.stage;
+      if (s.stage !== 'morning' && !s.counterVisited) s.stage = 'morning';
+      if (s.stage === 'chapter2end' && !s.counterConclusion) s.stage = 'counter';
+    }
+    for (const key of ['investigate', 'departure', 'locker', 'handoff', 'counter']) {
       const value = raw.hints?.[key];
       s.hints[key] = Number.isFinite(value) ? Math.max(0, Math.min(3, Math.floor(value))) : 0;
     }
     return s;
   };
   root.MidnightRules = Object.freeze({
-    initial, normalize, evaluateDeduction, canVisitLocker, validCode, endingFor, canHandoff, completeHandoff
+    initial, normalize, evaluateDeduction, canVisitLocker, validCode, endingFor, canHandoff, completeHandoff, canStartMorning, canInspectClue, evaluateCounter
   });
 })(globalThis);

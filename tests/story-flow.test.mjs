@@ -1,55 +1,8 @@
 
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import vm from 'node:vm';
-import {readFile} from 'node:fs/promises';
-const script=(await readFile(new URL('../app/rules.js',import.meta.url),'utf8'))+'\n'+
- await readFile(new URL('../app/app.js',import.meta.url),'utf8');
-const KEY='after-hours-midnight-v03-rc3';
-function boot(saved){
- const storage=new Map(saved?[[KEY,JSON.stringify(saved)]]:[]);
- const elements=new Map();
- const element=selector=>{
-  if(!elements.has(selector))elements.set(selector,{listeners:{},dataset:{},innerHTML:'',textContent:'',value:'',scrollTop:0,classList:{toggle(){},add(){},remove(){}},addEventListener(type,fn){this.listeners[type]=fn;},setAttribute(){},showModal(){this.open=true;},close(){this.open=false;}});
-  return elements.get(selector);
- };
- const tabs=['messages','album','notes','case'].map(tab=>({...element('tab:'+tab),dataset:{tab}}));
- let checked=[];
- element('#screen').querySelectorAll=()=>checked.map(value=>({value}));
- const context={document:{querySelector:element,querySelectorAll:selector=>{assert.equal(selector,'[data-tab]');return tabs;}},localStorage:{getItem:key=>storage.get(key)||null,setItem:(key,value)=>storage.set(key,value)},setTimeout:()=>1,clearTimeout(){}};
- vm.createContext(context);
- vm.runInContext(script,context,{timeout:1000});
- const dispatch=(selector,type,target)=>element(selector).listeners[type]({target,preventDefault(){}});
- const button=dataset=>({dataset,closest(){return this;}});
- return {
-  rules:context.MidnightRules,
-  state:()=>JSON.parse(storage.get(KEY)),
-  view:()=>element('#screen').innerHTML,
-  tab:tab=>dispatch('.tabs','click',button({tab})),
-  click:dataset=>dispatch('#screen','click',button(dataset)),
-  press:id=>dispatch('#'+id,'click',button({})),
-  record(id){this.click({clue:id});this.press('record');},
-  deduce(values){checked=values;dispatch('#screen','submit',{id:'deduction-form'});},
-  code(value){element('#locker-code').value=value;dispatch('#screen','submit',{id:'code-form'});},
-  text:id=>element('#'+id).textContent,
-  dialog:id=>element('#'+id).open
- };
-}
-function collected(){
- const b=boot();
- b.record('scheduled');
- b.tab('album');b.record('photo');b.record('receipt');
- b.tab('messages');b.record('promise');
- b.tab('notes');b.record('contact');
- b.tab('case');
- b.deduce(['scheduled','receipt']);
- assert.equal(b.state().deduction,false);
- b.deduce(['scheduled','photo']);
- assert.equal(b.state().deduction,true);
- b.click({location:'station'});assert.equal(b.state().stage,'investigate');
- b.click({location:'laundry'});assert.equal(b.state().stage,'departure');
- return b;
-}
+import {boot,collected,script} from './helpers/game.mjs';
+
 test('script compiles; evidence separates phone sources and avoids fictional scheduling logs',()=>{
  const b=boot();
  assert.match(b.view(),/工作号 → 你/);
