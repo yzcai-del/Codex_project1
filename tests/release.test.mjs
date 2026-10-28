@@ -7,7 +7,7 @@ test('current standalone release embeds scripts and styles and displays its vers
  const html=await readFile(new URL(`../releases/v${version}/23-17.html`,import.meta.url),'utf8');
  assert.ok(html.includes(`v${version}`));
  assert.ok(html.includes('MidnightRules'));
- const modules=await Promise.all(['rules.js','chapter2.js','app.js'].map(f=>readFile(new URL('../app/'+f,import.meta.url),'utf8')));
+ const modules=await Promise.all(['rules.js','chapter2.js','story-rules.js','story-content.js','story.js','app.js'].map(f=>readFile(new URL('../app/'+f,import.meta.url),'utf8')));
  assert.ok(html.includes('<script>'+modules.join('\n')+'</script>'),'release embeds all current executable modules in load order');
  assert.ok(html.includes('<style>')&&html.includes('<script>'));
  assert.equal(/<script[^>]*\bsrc\s*=/.test(html),false);

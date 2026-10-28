@@ -1,8 +1,8 @@
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
 import {readFile} from 'node:fs/promises';
-export const script=(await Promise.all(['rules.js','chapter2.js','app.js'].map(f=>readFile(new URL('../../app/'+f,import.meta.url),'utf8')))).join('\n');
-const KEY='after-hours-midnight-v04-rc3';
+export const script=(await Promise.all(['rules.js','chapter2.js','story-rules.js','story-content.js','story.js','app.js'].map(f=>readFile(new URL('../../app/'+f,import.meta.url),'utf8')))).join('\n');
+const KEY='after-hours-midnight-v05-rc1';
 export function boot(saved){
  const storage=new Map(saved?[[KEY,JSON.stringify(saved)]]:[]);
  const elements=new Map();
@@ -19,7 +19,8 @@ export function boot(saved){
  const dispatch=(selector,type,target)=>element(selector).listeners[type]({target,preventDefault(){}});
  const button=dataset=>({dataset,closest(){return this;}});
  return {
-  rules:context.MidnightRules,
+  rules:context.MidnightRules,storyRules:context.MidnightStoryRules,storyContent:context.MidnightStoryContent,
+  proof(value){checked=[value];dispatch('#screen','submit',{id:'story-proof-form'});},
   state:()=>JSON.parse(storage.get(KEY)),
   view:()=>element('#screen').innerHTML,
   tab:tab=>dispatch('.tabs','click',button({tab})),

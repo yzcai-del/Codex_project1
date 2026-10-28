@@ -9,7 +9,7 @@
     deduction: false, hints: {}, departureRoute: null,
     contactVerified: false, lockerOpened: false, handoffKnowledge: null, departureCheckpoint: null,
     morningStarted: false, morningQuestions: [], counterVisited: false, videoChoice: null, counterConclusion: null,
-    counterDraft: {event:"",evidence:[],limit:""}
+    counterDraft: {event:"",evidence:[],limit:""}, story:null
   });
   const canVisitLocker = s => s.deduction === true && s.clues.includes('receipt');
   const validCode = code => typeof code === 'string' && /^\d{4}$/.test(code) && code === '2317';
@@ -104,6 +104,11 @@
       s.stage = raw.stage;
       if (s.stage !== 'morning' && !s.counterVisited) s.stage = 'morning';
       if (s.stage === 'chapter2end' && !s.counterConclusion) s.stage = 'counter';
+    }
+    if (root.MidnightStoryRules && s.morningStarted && s.counterConclusion) {
+      s.story=root.MidnightStoryRules.restore(s,raw.story);
+      if(raw.stage==='story'&&s.story)s.stage='story';
+      else if(raw.stage==='story')s.stage='chapter2end';
     }
     for (const key of ['investigate', 'departure', 'locker', 'handoff', 'counter']) {
       const value = raw.hints?.[key];

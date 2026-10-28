@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#131b27"><title>23:17 — 最后一条消息</title>
-  <link rel="stylesheet" href="style.css"><script defer src="rules.js"></script><script defer src="chapter2.js"></script><script defer src="app.js"></script>
+  <link rel="stylesheet" href="style.css"><script defer src="rules.js"></script><script defer src="chapter2.js"></script><script defer src="story-rules.js"></script><script defer src="story-content.js"></script><script defer src="story.js"></script><script defer src="app.js"></script>
 </head>
 <body>
   <main class="scene">
@@ -14,8 +14,8 @@
       <p class="intro">林遥的旧手机还在餐桌边充电。<br>她说下楼买包烟。<br>两小时后，你收到她的短信。</p>
       <div class="divider"></div>
       <p class="instruction">“到北站了。明早再说。”<br>你按亮桌上的旧机，<br>短信栏里也有这句话。</p>
-      <div class="meta"><span>证据推理</span><span>两条交接分支</span><span>无惊吓画面</span></div>
-      <p class="version">候选版 v0.4.0-rc.3 · 浏览器验收待完成 · 全部人物与事件均为虚构</p>
+      <div class="meta"><span>证据推理</span><span>16种常规结局＋隐藏结局</span><span>无惊吓画面</span></div>
+      <p class="version">候选版 v0.5.0-rc.1 · 浏览器验收待完成 · 全部人物与事件均为虚构</p>
     </aside>
     <section class="phone" aria-label="你的记录和林遥授权的旧机资料">
       <div class="statusbar"><span id="story-time">10/25 23:17</span><span>本地记录 <span aria-hidden="true">▂▄▆　▰</span></span></div>
@@ -26,7 +26,7 @@
         <button data-tab="notes" aria-selected="false">便签</button>
         <button data-tab="case" aria-selected="false">调查 <span id="count">0</span></button>
       </nav>
-      <div id="screen" class="screen"></div>
+      <div id="screen" class="screen" tabindex="-1"></div>
       <div class="homebar" aria-hidden="true"></div>
     </section>
     <aside class="case-sidebar"><div class="case-stamp" aria-hidden="true">待核对</div><p class="eyebrow">YOUR OBJECTIVE</p><h3 id="objective-title">她说去了北站。<br>你能确定吗？</h3><p>检查原始记录，<br>用证据回答问题。</p><div class="case-progress"><span id="progress">00 / 03</span><small id="progress-label">地点材料已记录</small></div><p class="quiet">记录信息后，进入「调查」。<br>需要时可以逐步查看提示。<br>进度保存在当前浏览器。</p></aside>
@@ -34,6 +34,7 @@
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <dialog id="inspect"><button id="close-dialog" class="dialog-close" aria-label="关闭检查">×</button><span class="small-label">INSPECT / 检查原始信息</span><h3 id="inspect-title"></h3><div id="inspect-content"></div><button id="record" class="primary">记录线索</button></dialog>
   <dialog id="reset-dialog"><h3>重新开始这次调查？</h3><p>这会清除当前浏览器中的样片进度。</p><div class="actions"><button id="cancel-reset" class="secondary">继续调查</button><button id="confirm-reset" class="primary">重新开始</button></div></dialog>
-  <dialog id="replay-dialog" aria-labelledby="replay-title" aria-describedby="replay-detail"><h3 id="replay-title">重选昨夜的交接？</h3><p id="replay-detail">这会清除本轮交接结果、次日问答和柜台核对，回到出门前。那时已记录的材料与联系情况会保留。</p><div class="actions"><button id="cancel-replay" class="secondary" autofocus>保留当前进度</button><button id="confirm-replay" class="primary">回到出门前</button></div></dialog>
+  <dialog id="replay-dialog" aria-labelledby="replay-title" aria-describedby="replay-detail"><h3 id="replay-title">重选昨夜的交接？</h3><p id="replay-detail">这会清除本轮交接结果、次日问答、柜台核对以及之后的全部剧情、材料与结局，回到出门前。那时已记录的材料与联系情况会保留。</p><div class="actions"><button id="cancel-replay" class="secondary" autofocus>保留当前进度</button><button id="confirm-replay" class="primary">回到出门前</button></div></dialog>
+<dialog id="story-replay-dialog" aria-labelledby="story-replay-title"><h3 id="story-replay-title">回到这次选择之前？</h3><p>将清除这次选择及之后的后续知情、材料、说明与结局。昨夜交接和柜台核对保留。</p><div class="actions"><button id="cancel-story-replay" class="secondary" autofocus>保留当前进度</button><button id="confirm-story-replay" class="primary">确认回退</button></div></dialog>
 </body>
 </html>

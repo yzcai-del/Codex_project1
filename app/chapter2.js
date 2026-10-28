@@ -65,11 +65,11 @@
    <p>你问她，柜台里边这段时间，袋子有没有被人动过。</p><blockquote>“我还要看机器、收衣服。没法一直盯着。”</blockquote>
    ${s.ending==='safe'?'<p>原页已经交给陈默。你给他发消息，说明小票上的21:06需要按入柜记录理解。</p>':'<p>你的笔记停在“带袋出店”之后。孟雪不能替你补上车里那段，你也没有那张签收单。</p>'}
    <p>离约好的时间还有一会儿。你把小票折回原来的折痕，林遥发来的见面地点压在通知栏上。</p>
-   <div class="divider"></div><p class="tip">第二幕停点 / 会面尚未开始。过去的记录已收窄，后续仍需核对原件与交接。</p>
-   <button class="primary wide" data-command="review-counter">回看这次核对与材料</button>
-   <button class="secondary wide" data-command="replay-morning">回看08:10那通电话</button>
+   <div class="divider"></div><p class="tip">第二幕核对完成 / 继续会面、材料取证与后续选择。</p>
+   <button class="primary wide" data-command="start-story">继续 / 09:30的会面与后续调查</button>
+   ${s.story?'<p class="tip">后续进度已保存。继续按钮返回当前场景；若要改写昨夜交接，请使用下方带确认的入口。</p>':'<button class="secondary wide" data-command="review-counter">回看这次核对与材料</button><button class="secondary wide" data-command="replay-morning">回看08:10那通电话</button>'}
    <button class="secondary wide" data-command="request-night-replay">重选昨夜交接…</button>
-   <p class="tip">候选版 v0.4.0-rc.3 / 真实浏览器验收待完成</p></article>`;
+   <p class="tip">候选版 v0.5.0-rc.1 / 真实浏览器验收待完成</p></article>`;
  }
  root.MidnightChapter2=Object.freeze({clues,questionAnswers,isStage,render:(s,helpers)=>s.stage==='morning'?morning(s):s.stage==='chapter2end'?outcome(s):counter(s,helpers)});
 })(globalThis);
