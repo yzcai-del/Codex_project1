@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import vm from 'node:vm';
 import {readFile} from 'node:fs/promises';
 export const script=(await Promise.all(['rules.js','chapter2.js','app.js'].map(f=>readFile(new URL('../../app/'+f,import.meta.url),'utf8')))).join('\n');
-const KEY='after-hours-midnight-v04-rc2';
+const KEY='after-hours-midnight-v04-rc3';
 export function boot(saved){
  const storage=new Map(saved?[[KEY,JSON.stringify(saved)]]:[]);
  const elements=new Map();
@@ -28,6 +28,7 @@ export function boot(saved){
   record(id){this.click({clue:id});this.press('record');},
   deduce(values){checked=values;dispatch('#screen','submit',{id:'deduction-form'});},
   code(value){element('#locker-code').value=value;dispatch('#screen','submit',{id:'code-form'});},
+  draft(event,evidence,limit){element('#counter-event').value=event;element('#counter-limit').value=limit;checked=evidence;dispatch('#screen','change',{closest:selector=>selector==='#counter-form'?{id:'counter-form'}:null});},
   counter(event,evidence,limit){element('#counter-event').value=event;element('#counter-limit').value=limit;checked=evidence;dispatch('#screen','submit',{id:'counter-form'});},
   details:()=>element('#inspect-content').innerHTML,
   text:id=>element('#'+id).textContent,

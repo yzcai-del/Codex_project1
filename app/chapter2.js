@@ -31,6 +31,7 @@
    <p class="tip">可以不问完就继续。已问过的对话保留在记录里。</p>`;
  }
  function counter(s,{action,hint}){
+  const draft=s.counterDraft;
   const evidence=['receipt','cabinetLog','counterNote','camera'].filter(id=>seen(s,id));
   const options={receipt:'当晚收到的电子凭证',cabinetLog:clues.cabinetLog.title,counterNote:clues.counterNote.title,camera:clues.camera.title};
   return `<p class="section-label">10月26日 · 09:00 / 青禾柜台</p>
@@ -46,13 +47,13 @@
    `<button class="secondary wide" data-video-choice="view">只看这单的两段，不复制</button><button class="secondary wide" data-video-choice="skip">先不看画面，核对业务单和简记</button>${s.videoChoice==='skip'?'<p class="tip">你没有查看视频。可以依据业务记录和孟雪的说明整理，结论要注明来源。</p>':''}`}</article>
    <article class="memory"><span class="small-label">昨夜你能确认的部分</span>${s.ending==='safe'?'<p>你取袋、清点，再交给陈默。孟雪没见证袋内八张纸的内容；那是你与陈默核对的。</p>':'<p>孟雪只记得你带着袋子走出店。她没看清车里的人，也没有司机姓名或车牌可补给你。签过姓的单子仍随袋离开。</p>'}</article>
    ${s.counterConclusion?'<button class="secondary wide" data-command="return-counter-result">返回已保存的核对结果</button>':''}<div class="deduction-panel"><h3 class="question-title">把这单的过程写清楚</h3>
-   <p class="tip">先检查并记录材料。可回看原始信息；电子凭证和店内操作行来自同一笔业务。</p>
+   <p class="tip">先检查并记录材料。回看原始信息不会清除当前选择；电子凭证和店内操作行来自同一笔业务。</p>
    <form id="counter-form"><label class="field-label" for="counter-event">21:06对应哪一步？</label>
-   <select id="counter-event" name="event" required><option value="">请选择</option><option value="arrival">林遥本人到店交袋</option><option value="stored">孟雪将暂存袋转入柜并出票</option><option value="collected">你从B17领取文件袋</option></select>
+   <select id="counter-event" name="event" required><option value="">请选择</option><option value="arrival" ${draft.event==='arrival'?'selected':''}>林遥本人到店交袋</option><option value="stored" ${draft.event==='stored'?'selected':''}>孟雪将暂存袋转入柜并出票</option><option value="collected" ${draft.event==='collected'?'selected':''}>你从B17领取文件袋</option></select>
    <fieldset><legend>选两份能连起“先收柜台 → 后入柜”的材料</legend>
-   ${evidence.map(id=>`<label class="evidence-option"><input type="checkbox" name="counter-evidence" value="${id}"><span>${options[id]}</span></label>`).join('')}</fieldset>
+   ${evidence.map(id=>`<label class="evidence-option"><input type="checkbox" name="counter-evidence" value="${id}" ${draft.evidence.includes(id)?'checked':''}><span>${options[id]}</span></label>`).join('')}</fieldset>
    <label class="field-label" for="counter-limit">哪一栏仍不能填成“已经确认”？</label>
-   <select id="counter-limit" name="limit" required><option value="">请选择</option><option value="box">本单入的是哪只柜子</option><option value="custody-gap">暂存全程无人接触，袋内未变</option><option value="safety">林遥现在是否已经主动报平安</option></select>
+   <select id="counter-limit" name="limit" required><option value="">请选择</option><option value="box" ${draft.limit==='box'?'selected':''}>本单入的是哪只柜子</option><option value="custody-gap" ${draft.limit==='custody-gap'?'selected':''}>暂存全程无人接触，袋内未变</option><option value="safety" ${draft.limit==='safety'?'selected':''}>林遥现在是否已经主动报平安</option></select>
    <p id="counter-error" class="error" role="status"></p><button class="primary wide" type="submit">保存本次核对</button></form></div>${hint()}`;
  }
  function outcome(s){
@@ -68,7 +69,7 @@
    <button class="primary wide" data-command="review-counter">回看这次核对与材料</button>
    <button class="secondary wide" data-command="replay-morning">回看08:10那通电话</button>
    <button class="secondary wide" data-command="request-night-replay">重选昨夜交接…</button>
-   <p class="tip">候选版 v0.4.0-rc.2 / 真实浏览器验收待完成</p></article>`;
+   <p class="tip">候选版 v0.4.0-rc.3 / 真实浏览器验收待完成</p></article>`;
  }
  root.MidnightChapter2=Object.freeze({clues,questionAnswers,isStage,render:(s,helpers)=>s.stage==='morning'?morning(s):s.stage==='chapter2end'?outcome(s):counter(s,helpers)});
 })(globalThis);

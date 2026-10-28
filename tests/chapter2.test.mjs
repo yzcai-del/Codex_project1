@@ -142,3 +142,47 @@ test('invalid departure checkpoint cannot introduce invented evidence or future 
  assert.deepEqual(loaded.state().clues,['scheduled','photo','receipt']);
  const noNight=boot();noNight.click({command:'reconsider'});assert.equal(noNight.state().stage,'investigate');
 });
+
+test('unfinished counter choices survive hints, material recording, tab review and reload',()=>{
+ const b=counter();b.record('counterNote');b.draft('arrival',['receipt','counterNote'],'box');
+ const draft=b.state().counterDraft;
+ b.click({command:'hint'});b.record('cabinetLog');b.tab('album');b.tab('case');
+ assert.deepEqual(b.state().counterDraft,draft);assert.equal(b.state().counterConclusion,null);
+ const loaded=boot(b.state());assert.deepEqual(loaded.state().counterDraft,draft);
+ assert.match(loaded.view(),/<option value="arrival" selected>/);
+ assert.match(loaded.view(),/<option value="box" selected>/);
+ assert.match(loaded.view(),/name="counter-evidence" value="counterNote" checked/);
+ assert.doesNotMatch(loaded.view(),/<option value="stored" selected>/);
+});
+test('a correct-looking draft never becomes a conclusion without explicit submission',()=>{
+ for(const recipient of ['chen','courier']){
+  const b=counter(recipient);b.record('counterNote');b.draft('stored',['receipt','counterNote'],'custody-gap');
+  const loaded=boot(b.state());assert.equal(loaded.state().stage,'counter');assert.equal(loaded.state().counterConclusion,null);
+  assert.match(loaded.view(),/<option value="stored" selected>/);
+  loaded.counter('stored',['receipt','counterNote'],'custody-gap');assert.equal(loaded.state().stage,'chapter2end');
+ }
+});
+test('draft restoration filters unknown, unrecorded and unauthorized evidence without adding progress',()=>{
+ const b=counter();const loaded=boot({...b.state(),counterDraft:{event:'<script>',limit:9,evidence:['receipt','receipt','camera','counterNote','promise','fake']}});
+ assert.deepEqual(loaded.state().counterDraft,{event:'',evidence:['receipt'],limit:''});
+ assert.equal(loaded.state().counterConclusion,null);
+ const noVisit=boot({counterDraft:{event:'stored',evidence:['receipt'],limit:'custody-gap'}});
+ assert.deepEqual(noVisit.state().counterDraft,{event:'',evidence:[],limit:''});
+ const changed=boot({...b.state(),videoChoice:'skip',clues:[...b.state().clues,'camera'],counterDraft:{event:'stored',evidence:['receipt','camera'],limit:'custody-gap'}});
+ assert.deepEqual(changed.state().counterDraft.evidence,['receipt']);
+});
+test('optional footage does not erase unrelated drafts or an already valid record-based conclusion',()=>{
+ const b=counter();b.record('counterNote');b.counter('stored',['receipt','counterNote'],'custody-gap');
+ const proof=b.state().counterConclusion;b.click({command:'review-counter'});b.draft('arrival',['receipt'],'box');
+ const draft=b.state().counterDraft;b.click({videoChoice:'view'});b.record('camera');
+ assert.deepEqual(b.state().counterDraft,draft);assert.deepEqual(b.state().counterConclusion,proof);
+ b.click({command:'return-counter-result'});assert.equal(b.state().stage,'chapter2end');
+});
+test('reset and replay cancel preserve counter drafts; confirmed actions clear them',()=>{
+ const b=counter();b.record('counterNote');b.draft('stored',['receipt','counterNote'],'custody-gap');
+ b.press('reset');b.press('cancel-reset');assert.equal(b.state().counterDraft.event,'stored');
+ b.counter('stored',['receipt','counterNote'],'custody-gap');b.click({command:'request-night-replay'});b.press('cancel-replay');
+ assert.equal(b.state().counterDraft.event,'stored');
+ b.click({command:'request-night-replay'});b.press('confirm-replay');assert.deepEqual(b.state().counterDraft,{event:'',evidence:[],limit:''});
+ b.press('reset');b.press('confirm-reset');assert.deepEqual(b.state().counterDraft,{event:'',evidence:[],limit:''});
+});

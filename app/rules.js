@@ -8,7 +8,8 @@
     tab: 'messages', clues: [], stage: 'investigate', ending: null,
     deduction: false, hints: {}, departureRoute: null,
     contactVerified: false, lockerOpened: false, handoffKnowledge: null, departureCheckpoint: null,
-    morningStarted: false, morningQuestions: [], counterVisited: false, videoChoice: null, counterConclusion: null
+    morningStarted: false, morningQuestions: [], counterVisited: false, videoChoice: null, counterConclusion: null,
+    counterDraft: {event:"",evidence:[],limit:""}
   });
   const canVisitLocker = s => s.deduction === true && s.clues.includes('receipt');
   const validCode = code => typeof code === 'string' && /^\d{4}$/.test(code) && code === '2317';
@@ -31,6 +32,15 @@
   const canInspectClue = (s,id) => baseClues.includes(id) ||
     (s.counterVisited === true && (id === 'cabinetLog' || id === 'counterNote' ||
       (id === 'camera' && s.videoChoice === 'view')));
+  const normalizeCounterDraft = (s,raw) => {
+    const draft={event:'',evidence:[],limit:''};
+    if (!s.counterVisited || !raw || typeof raw!=='object') return draft;
+    if (['arrival','stored','collected'].includes(raw.event)) draft.event=raw.event;
+    if (['box','custody-gap','safety'].includes(raw.limit)) draft.limit=raw.limit;
+    if (Array.isArray(raw.evidence)) draft.evidence=[...new Set(raw.evidence.filter(id=>
+      ['receipt','cabinetLog','counterNote','camera'].includes(id)&&s.clues.includes(id)&&canInspectClue(s,id)))];
+    return draft;
+  };
   const evaluateCounter = (s,event,evidence,limit) => {
     if (!s.counterVisited || event !== 'stored' || limit !== 'custody-gap' || !Array.isArray(evidence)) return null;
     const ids=[...new Set(evidence)];
@@ -87,6 +97,7 @@
       if (s.counterVisited && ['view','skip'].includes(raw.videoChoice)) s.videoChoice = raw.videoChoice;
     }
     s.clues = s.clues.filter(id => canInspectClue(s,id));
+    s.counterDraft = normalizeCounterDraft(s,raw.counterDraft);
     if (raw.counterConclusion && typeof raw.counterConclusion === 'object')
       s.counterConclusion = evaluateCounter(s,raw.counterConclusion.event,raw.counterConclusion.evidence,raw.counterConclusion.limit);
     if (s.morningStarted && ['morning','counter','chapter2end'].includes(raw.stage)) {
@@ -101,6 +112,6 @@
     return s;
   };
   root.MidnightRules = Object.freeze({
-    initial, normalize, evaluateDeduction, canVisitLocker, validCode, endingFor, canHandoff, completeHandoff, canStartMorning, canInspectClue, evaluateCounter, departureCheckpoint, rewindToDeparture
+    initial, normalize, evaluateDeduction, canVisitLocker, validCode, endingFor, canHandoff, completeHandoff, canStartMorning, canInspectClue, evaluateCounter, departureCheckpoint, rewindToDeparture, normalizeCounterDraft
   });
 })(globalThis);
