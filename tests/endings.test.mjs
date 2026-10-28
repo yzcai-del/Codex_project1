@@ -19,11 +19,14 @@ function prepared(path){
 function choose(b,node,choice){
  const r=b.storyRules;
  assert.equal(r.model.nodes[b.state().story.index].id,node);
+ b.click({storyPane:'decision'});
  assert.match(b.view(),new RegExp('data-story-choice="'+choice+'"'));
  b.click({storyChoice:choice});assert.equal(b.state().story.pending,choice);
  const before=b.state().story.facts;
  const challenge=r.challenge(node,choice);
  if(challenge){
+  assert.match(b.view(),/data-story-view="source"/);
+  b.click({storyPane:'check'});
   assert.match(b.view(),/id="story-proof-form"/);
   b.proof('invalid');assert.deepEqual(b.state().story.facts,before);
   assert.match(b.text('story-proof-error'),/超出/);b.proof(challenge);
@@ -43,6 +46,7 @@ for(const [id,path] of Object.entries(paths))test('actual app events reach '+id+
  assert.ok(b.view().includes(b.storyRules.model.endings[id].title));
  assert.equal((b.view().match(/class="ending-id"/g)||[]).length,1);
  const ending=b.state().story.ending;
+ b.click({storyPane:'relationship'});
  for(const relationship of ['continue','bounded','distance']){
   b.click({storyRelationship:relationship});assert.equal(b.state().story.ending,ending);
   const c=boot(b.state());assert.equal(c.state().story.relationship,relationship);
@@ -75,7 +79,7 @@ test('every reachable scene choice has substantive consequence prose and each ma
  for(const text of [...bodies,...Object.values(c.nodes).map(n=>n.intro)])assert.equal(text.includes('\ufffd'),false);
 });
 test('a proposed action has no effect until its result is confirmed, and may be cancelled or reloaded',()=>{
- let b=prepared(paths.H01);b.click({storyChoice:'full'});
+ let b=prepared(paths.H01);b.click({storyPane:'decision'});b.click({storyChoice:'full'});
  const prior=b.state().story.facts;assert.equal(prior.participation,'unknown');
  b=boot(b.state());assert.equal(b.state().story.pending,'full');b.tab('case');
  b.click({storyCommand:'cancel'});assert.deepEqual(b.state().story.facts,prior);
@@ -92,7 +96,7 @@ test('forged facts, ending, impossible choices and missing proof cannot create f
 test('replay cancellation preserves all progress and confirmation restores the exact pre-choice state',()=>{
  let b=prepared(paths.H02);
  for(const step of paths.H02.slice(5)){const [n,c]=step.split('.');choose(b,n,c);}
- const before=b.state();b.click({storyReplay:'1'});assert.equal(b.dialog('story-replay-dialog'),true);
+ b.click({storyPane:'archive'});const before=b.state();b.click({storyReplay:'1'});assert.equal(b.dialog('story-replay-dialog'),true);
  b.press('cancel-story-replay');assert.deepEqual(b.state(),before);
  b.click({storyReplay:'1'});b.press('confirm-story-replay');
  assert.equal(b.state().story.ending,null);assert.equal(b.state().story.log.length,1);
@@ -142,7 +146,7 @@ test('reading earlier records preserves later progress, while confirmed night re
  b.click({storyCommand:'review-start'});assert.equal(b.state().stage,'chapter2end');
  assert.doesNotMatch(b.view(),/data-command="review-counter"/);
  b.click({command:'start-story'});assert.deepEqual(b.state().story,before);
- assert.match(b.view(),/回看当时所见/);
+ b.click({storyPane:'archive'});assert.match(b.view(),/回看当时所见/);
  b.click({storyCommand:'review-start'});b.click({command:'request-night-replay'});b.press('confirm-replay');
  assert.equal(b.state().story,null);assert.equal(b.state().stage,'departure');assert.equal(b.state().morningStarted,false);
 });

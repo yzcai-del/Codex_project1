@@ -1,6 +1,6 @@
 'use strict';
 (() => {
- const R=globalThis.MidnightRules, C2=globalThis.MidnightChapter2, SR=globalThis.MidnightStoryRules, S=globalThis.MidnightStory, KEY='after-hours-midnight-v05-rc1';
+ const R=globalThis.MidnightRules, C2=globalThis.MidnightChapter2, SR=globalThis.MidnightStoryRules, S=globalThis.MidnightStory, KEY='after-hours-midnight-v06-rc1';
  const definitions={
   scheduled:{title:'旧机的本地发送记录',rows:[['来源','餐桌上的林遥旧机'],['号码','林遥的个人号'],['发出时间','10月25日23:17'],['收件人','你（许岑）'],['短信','到北站了。明早再说。']],description:'你在23:17收到短信；留在餐桌上的旧机里有同一条已发送记录。',location:true},
   photo:{title:'照片与你2024年的会话',rows:[['相册文件','IMG_20240516_1829.jpg'],['文件显示拍摄日','2024-05-16'],['最近保存','10月25日18:54'],['另一处记录','你保存的2024-05-16会话'],['当时收到的附件','同一幅候车厅照片']],description:'旧机相册在10月25日存入这幅图。你2024年的会话里，也有同一幅候车厅照片。',location:true},
@@ -17,7 +17,8 @@
   handoff:['取件人的身份，手机里有没有约定？','再看未命名便签，留意“本人”两个字。','陈默是指定接收人，陌生号码的身份尚未核实。']
  };
  let state=R.initial(),activeClue=null,toastTimer,storyReplayIndex=null;
- try{state=R.normalize(JSON.parse(localStorage.getItem(KEY)||'null'));}catch{}
+ let continued=false;
+ try{const saved=localStorage.getItem(KEY);const previous=saved?null:localStorage.getItem('after-hours-midnight-v05-rc1');state=R.normalize(JSON.parse(saved||previous||'null'));continued=!!previous;}catch{}
  const screen=document.querySelector('#screen');
  const placeCount=()=>state.clues.filter(id=>definitions[id].location).length;
  const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(state));}catch{}};
@@ -90,10 +91,11 @@
   <button class="primary wide" data-command="start-morning">继续 / 次日08:10的来电</button>
   <button class="secondary wide" data-command="reconsider">重看通知对象与交接选择</button>
   <button class="secondary wide" data-command="show-clues">回看材料</button>
-  <p class="tip">候选版 v0.5.0-rc.1 · 实际浏览器验收待完成</p></article>`;
+  <p class="tip">候选版 v0.6.0-rc.1 · 实际浏览器验收待完成</p></article>`;
  }
- function render(){const later=state.morningStarted;document.querySelector('#story-time').textContent=later?(state.stage==='morning'?'10/26 08:10':'10/26 09:00'):'10/25 23:17';document.querySelector('#objective-title').innerHTML=later?'21:06记下了什么？<br>把人的行程与柜台操作分开。':'她说去了北站。<br>你能确定吗？';document.querySelector('#progress-label').textContent=later?'本单新材料 / 画面可选':'地点材料已记录';document.querySelectorAll('[data-tab]').forEach(b=>{const on=b.dataset.tab===state.tab;b.classList.toggle('active',on);b.setAttribute('aria-selected',String(on));});document.querySelector('#count').textContent=state.clues.length;document.querySelector('#progress').textContent=`${String(later?state.clues.filter(id=>Object.hasOwn(C2.clues,id)).length:placeCount()).padStart(2,'0')} / 03`;if(state.stage==='story'&&state.story){document.querySelector('#story-time').textContent=state.story.ending?'后续 / 尾声':SR.date(state.story,!!state.story.pending);document.querySelector('#objective-title').textContent=state.story.ending?'本轮结束，可回看选择':SR.model.nodes[state.story.index].id==='N06'?'你愿意参与到哪里？':'核对来源，再决定下一步';document.querySelector('#progress-label').textContent='本轮后续已确认选择';document.querySelector('#progress').textContent=String(state.story.log.length).padStart(2,'0');}screen.dataset.view=state.tab;screen.dataset.stage=state.stage;screen.innerHTML=({messages,album,notes,case:investigation})[state.tab]();save();}
- function go(stage){state.stage=stage;render();screen.scrollTop=0;screen.focus?.({preventScroll:true});}
+ function render(){const later=state.morningStarted;document.querySelector('#story-time').textContent=later?(state.stage==='morning'?'10/26 08:10':'10/26 09:00'):'10/25 23:17';document.querySelector('#objective-title').innerHTML=later?'21:06记下了什么？<br>把人的行程与柜台操作分开。':'她说去了北站。<br>你能确定吗？';document.querySelector('#progress-label').textContent=later?'本单新材料 / 画面可选':'地点材料已记录';document.querySelectorAll('[data-tab]').forEach(b=>{const on=b.dataset.tab===state.tab;b.classList.toggle('active',on);b.setAttribute('aria-selected',String(on));});document.querySelector('#count').textContent=state.clues.length;document.querySelector('#progress').textContent=`${String(later?state.clues.filter(id=>Object.hasOwn(C2.clues,id)).length:placeCount()).padStart(2,'0')} / 03`;if(state.stage==='story'&&state.story){document.querySelector('#story-time').textContent=state.story.ending?'后续 / 尾声':SR.date(state.story,!!state.story.pending);document.querySelector('#objective-title').textContent=state.story.ending?'本轮结束，可回看选择':SR.model.nodes[state.story.index].id==='N06'?'你愿意参与到哪里？':'核对来源，再决定下一步';document.querySelector('#progress-label').textContent='本轮后续已确认选择';document.querySelector('#progress').textContent=String(state.story.log.length).padStart(2,'0');}screen.dataset.view=state.tab;screen.dataset.stage=state.stage;const content=({messages,album,notes,case:investigation})[state.tab]();const art=globalThis.MidnightArt.current(state);const cover=state.stage!=='story'&&art&&(state.tab==='messages'||state.tab==='case')?globalThis.MidnightArt.figure(art,true):'';screen.innerHTML=cover+content;save();}
+ function focusScreen(){screen.scrollTop=0;screen.scrollIntoView?.({block:'start',behavior:'instant'});screen.focus?.({preventScroll:true});}
+ function go(stage){state.stage=stage;render();focusScreen();}
  function captureCounterDraft(){
   if(state.stage!=='counter'||state.tab!=='case'||!state.counterVisited)return;
   state.counterDraft=R.normalizeCounterDraft(state,{
@@ -102,18 +104,20 @@
    limit:document.querySelector('#counter-limit').value});
   save();
  }
- screen.addEventListener('change',e=>{if(e.target.closest('#counter-form'))captureCounterDraft();});
- document.querySelector('.tabs').addEventListener('click',e=>{const b=e.target.closest('[data-tab]');if(!b)return;state.tab=b.dataset.tab;render();screen.scrollTop=0;});
+ screen.addEventListener('change',e=>{if(e.target.closest('#counter-form'))captureCounterDraft();if(e.target.closest('#story-proof-form')&&state.story?.pending){state.storyAnswer=screen.querySelectorAll('input[name="story-proof"]:checked')[0]?.value||'';save();}});
+ document.querySelector('.tabs').addEventListener('click',e=>{const b=e.target.closest('[data-tab]');if(!b)return;state.tab=b.dataset.tab;render();focusScreen();});
  screen.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
-  if(b.dataset.command==='start-story'&&SR.eligible(state)){state.story=state.story||SR.begin(state);state.tab='case';go('story');return;}
+  if(b.dataset.command==='start-story'&&SR.eligible(state)){if(!state.story){state.story=SR.begin(state);state.storyView='scene';}state.tab='case';go('story');return;}
+  if(b.dataset.sceneImage&&globalThis.MidnightArt.scenes[b.dataset.sceneImage]){const art=globalThis.MidnightArt.scenes[b.dataset.sceneImage];const img=document.querySelector('#art-image');img.src=art.src;img.alt=art.alt;document.querySelector('#art-title').textContent=art.title;document.querySelector('#art-dialog').showModal();return;}
   if(state.stage==='story'&&state.story){
    const run=state.story;
-   if(b.dataset.storyChoice&&SR.choices(run).some(o=>o.id===b.dataset.storyChoice)){run.pending=b.dataset.storyChoice;render();screen.scrollTop=0;screen.focus?.({preventScroll:true});return;}
-   if(b.dataset.storyCommand==='cancel'){run.pending=null;render();screen.scrollTop=0;screen.focus?.({preventScroll:true});return;}
-   if(b.dataset.storyCommand==='confirm'&&run.pending){const updated=SR.commit(run,run.pending);if(updated){state.story=updated;render();screen.scrollTop=0;}return;}
+   if(b.dataset.storyPane&&S.panes(state).includes(b.dataset.storyPane)){state.storyView=b.dataset.storyPane;render();focusScreen();return;}
+   if(S.pane(state)==='decision'&&b.dataset.storyChoice&&SR.choices(run).some(o=>o.id===b.dataset.storyChoice)){run.pending=b.dataset.storyChoice;state.storyView='source';state.storyAnswer='';render();focusScreen();return;}
+   if(b.dataset.storyCommand==='cancel'){run.pending=null;state.storyView='decision';state.storyAnswer='';render();focusScreen();return;}
+   if(b.dataset.storyCommand==='confirm'&&run.pending){const updated=SR.commit(run,run.pending);if(updated){state.story=updated;state.storyView=updated.ending?'ending':'scene';state.storyAnswer='';render();focusScreen();}return;}
    if(b.dataset.storyCommand==='review-start'){go('chapter2end');return;}
-   if(b.dataset.storyRelationship&&run.ending&&['continue','bounded','distance'].includes(b.dataset.storyRelationship)){run.relationship=b.dataset.storyRelationship;render();return;}
-   if(b.dataset.storyReplay!==undefined&&/^\d+$/.test(b.dataset.storyReplay)){const i=Number(b.dataset.storyReplay);if(i<run.log.length){storyReplayIndex=i;document.querySelector('#story-replay-dialog').showModal();}return;}
+   if(S.pane(state)==='relationship'&&b.dataset.storyRelationship&&run.ending&&['continue','bounded','distance'].includes(b.dataset.storyRelationship)){run.relationship=b.dataset.storyRelationship;render();return;}
+   if(S.pane(state)==='archive'&&b.dataset.storyReplay!==undefined&&/^\d+$/.test(b.dataset.storyReplay)){const i=Number(b.dataset.storyReplay);if(i<run.log.length){storyReplayIndex=i;document.querySelector('#story-replay-dialog').showModal();}return;}
   }
   if(b.dataset.clue&&definitions[b.dataset.clue]&&R.canInspectClue(state,b.dataset.clue)){activeClue=b.dataset.clue;const d=definitions[activeClue];document.querySelector('#inspect-title').textContent=d.title;document.querySelector('#inspect-content').innerHTML=d.rows.map(([a,b])=>`<div class="detail-row"><span>${a}</span><b>${b}</b></div>`).join('');document.querySelector('#record').textContent=state.clues.includes(activeClue)?'已记录 · 返回':'记录材料';document.querySelector('#inspect').showModal();}
   if(b.dataset.location&&R.canVisitLocker(state)){if(b.dataset.location==='laundry')go('departure');else document.querySelector('#location-feedback').textContent=b.dataset.location==='station'?'这两份北站记录都不能确定当晚行程。还有哪份记录发生在今晚？':'目前没有当晚去住处的记录。再核对凭证。';}
@@ -148,7 +152,7 @@
   if(b.dataset.command==='hint'){const key=state.stage,level=state.hints[key]||0,scroll=screen.scrollTop;if(level<3){state.hints[key]=level+1;render();screen.scrollTop=scroll;}else notify('全部提示已展开');}
  });
  screen.addEventListener('submit',e=>{e.preventDefault();
-  if(e.target.id==='story-proof-form'&&state.stage==='story'&&state.story?.pending){const answer=screen.querySelectorAll('input[name="story-proof"]:checked')[0]?.value;const updated=SR.commit(state.story,state.story.pending,answer);if(updated){state.story=updated;render();screen.scrollTop=0;}else document.querySelector('#story-proof-error').textContent='这项结论超出了所见来源。请对照材料与边界，再选一次。';return;}
+  if(e.target.id==='story-proof-form'&&state.stage==='story'&&state.story?.pending&&S.pane(state)==='check'){const answer=screen.querySelectorAll('input[name="story-proof"]:checked')[0]?.value;state.storyAnswer=answer||'';save();const updated=SR.commit(state.story,state.story.pending,answer);if(updated){state.story=updated;state.storyView=updated.ending?'ending':'scene';state.storyAnswer='';render();focusScreen();}else document.querySelector('#story-proof-error').textContent='这项结论超出了所见来源。请对照材料与边界，再选一次。';return;}
   if(e.target.id==='deduction-form'){const selected=Array.from(screen.querySelectorAll('input[name="evidence"]:checked'),x=>x.value);if(R.evaluateDeduction(selected)){state.deduction=true;render();notify('推断已核实');}else document.querySelector('#deduction-error').textContent=selected.length!==2?'这次需要选择两份材料。':'再核对发送记录来自哪部设备，以及你2024年旧会话里的同一幅照片。';}
   if(e.target.id==='counter-form'&&state.stage==='counter'){
    captureCounterDraft();
@@ -174,9 +178,11 @@
   if(replay){state=replay;render();screen.scrollTop=0;notify('已回到昨夜出门前');}
  });
  document.querySelector('#cancel-story-replay').addEventListener('click',()=>{storyReplayIndex=null;document.querySelector('#story-replay-dialog').close();});
- document.querySelector('#confirm-story-replay').addEventListener('click',()=>{const dialog=document.querySelector('#story-replay-dialog');if(!dialog.open||storyReplayIndex===null||!state.story)return;state.story=SR.rewind(state,state.story,storyReplayIndex);storyReplayIndex=null;dialog.close();go('story');});
+ document.querySelector('#confirm-story-replay').addEventListener('click',()=>{const dialog=document.querySelector('#story-replay-dialog');if(!dialog.open||storyReplayIndex===null||!state.story)return;state.story=SR.rewind(state,state.story,storyReplayIndex);storyReplayIndex=null;state.storyView='scene';state.storyAnswer='';dialog.close();go('story');});
+ document.querySelector('#close-art').addEventListener('click',()=>document.querySelector('#art-dialog').close());
  document.querySelector('#reset').addEventListener('click',()=>document.querySelector('#reset-dialog').showModal());
  document.querySelector('#cancel-reset').addEventListener('click',()=>document.querySelector('#reset-dialog').close());
  document.querySelector('#confirm-reset').addEventListener('click',()=>{state=R.initial();document.querySelector('#reset-dialog').close();render();screen.scrollTop=0;notify('调查已重新开始');});
  render();
+ if(continued)notify('已接着此前的调查继续');
 })();

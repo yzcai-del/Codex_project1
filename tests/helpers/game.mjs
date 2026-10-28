@@ -1,10 +1,10 @@
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
 import {readFile} from 'node:fs/promises';
-export const script=(await Promise.all(['rules.js','chapter2.js','story-rules.js','story-content.js','story.js','app.js'].map(f=>readFile(new URL('../../app/'+f,import.meta.url),'utf8')))).join('\n');
-const KEY='after-hours-midnight-v05-rc1';
-export function boot(saved){
- const storage=new Map(saved?[[KEY,JSON.stringify(saved)]]:[]);
+export const script=(await Promise.all(['rules.js','chapter2.js','story-rules.js','story-content.js','art.js','story.js','app.js'].map(f=>readFile(new URL('../../app/'+f,import.meta.url),'utf8')))).join('\n');
+const KEY='after-hours-midnight-v06-rc1';
+export function boot(saved,legacy){
+ const storage=new Map(saved?[[KEY,JSON.stringify(saved)]]:legacy?[['after-hours-midnight-v05-rc1',JSON.stringify(legacy)]]:[]);
  const elements=new Map();
  const element=selector=>{
   if(!elements.has(selector))elements.set(selector,{listeners:{},dataset:{},innerHTML:'',textContent:'',value:'',scrollTop:0,classList:{toggle(){},add(){},remove(){}},addEventListener(type,fn){this.listeners[type]=fn;},setAttribute(){},showModal(){this.open=true;},close(){this.open=false;}});
@@ -20,6 +20,9 @@ export function boot(saved){
  const button=dataset=>({dataset,closest(){return this;}});
  return {
   rules:context.MidnightRules,storyRules:context.MidnightStoryRules,storyContent:context.MidnightStoryContent,
+  proofDraft(value){checked=[value];dispatch('#screen','change',{closest:selector=>selector==='#story-proof-form'?{}:null});},
+  property:(id,key)=>element('#'+id)[key],
+  stored:key=>storage.get(key),
   proof(value){checked=[value];dispatch('#screen','submit',{id:'story-proof-form'});},
   state:()=>JSON.parse(storage.get(KEY)),
   view:()=>element('#screen').innerHTML,

@@ -9,7 +9,7 @@
     deduction: false, hints: {}, departureRoute: null,
     contactVerified: false, lockerOpened: false, handoffKnowledge: null, departureCheckpoint: null,
     morningStarted: false, morningQuestions: [], counterVisited: false, videoChoice: null, counterConclusion: null,
-    counterDraft: {event:"",evidence:[],limit:""}, story:null
+    counterDraft: {event:"",evidence:[],limit:""}, story:null, storyView:'scene', storyAnswer:''
   });
   const canVisitLocker = s => s.deduction === true && s.clues.includes('receipt');
   const validCode = code => typeof code === 'string' && /^\d{4}$/.test(code) && code === '2317';
@@ -110,6 +110,8 @@
       if(raw.stage==='story'&&s.story)s.stage='story';
       else if(raw.stage==='story')s.stage='chapter2end';
     }
+    if(s.story && root.MidnightStory?.panes(s).includes(raw.storyView))s.storyView=raw.storyView;
+    if(s.story?.pending){const challenge=root.MidnightStoryRules.challenge(root.MidnightStoryRules.model.nodes[s.story.index].id,s.story.pending);const quiz=root.MidnightStoryContent?.quizzes[challenge];if(quiz?.options.some(([id])=>id===raw.storyAnswer))s.storyAnswer=raw.storyAnswer;}
     for (const key of ['investigate', 'departure', 'locker', 'handoff', 'counter']) {
       const value = raw.hints?.[key];
       s.hints[key] = Number.isFinite(value) ? Math.max(0, Math.min(3, Math.floor(value))) : 0;
