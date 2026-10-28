@@ -102,3 +102,43 @@ test('reviewing evidence returns to the stored counter result without solving it
  b.record('receipt');b.click({command:'return-counter-result'});
  assert.equal(b.state().stage,'chapter2end');assert.deepEqual(b.state().counterConclusion,stored);
 });
+
+test('visible second-act replay entry preserves every saved field when cancelled',()=>{
+ for(const recipient of ['chen','courier']){
+  const b=counter(recipient);b.record('counterNote');b.counter('stored',['receipt','counterNote'],'custody-gap');
+  assert.match(b.view(),/data-command="request-night-replay"/);
+  const saved=b.state();b.click({command:'request-night-replay'});
+  assert.equal(b.dialog('replay-dialog'),true);assert.deepEqual(b.state(),saved);
+  b.press('cancel-replay');assert.equal(b.dialog('replay-dialog'),false);assert.deepEqual(b.state(),saved);
+  b.press('confirm-replay');assert.deepEqual(b.state(),saved);
+ }
+});
+test('confirmed replay after reload clears next-day work and restores contact before departure',()=>{
+ const b=counter();b.record('counterNote');b.counter('stored',['receipt','counterNote'],'custody-gap');
+ assert.equal(b.state().contactVerified,true);
+ const loaded=boot(b.state());loaded.click({command:'request-night-replay'});loaded.press('confirm-replay');
+ assert.equal(loaded.state().stage,'departure');assert.equal(loaded.state().contactVerified,false);
+ assert.equal(loaded.state().ending,null);assert.equal(loaded.state().counterConclusion,null);
+ assert.equal(loaded.state().morningStarted,false);assert.equal(loaded.state().counterVisited,false);
+ assert.equal(loaded.state().videoChoice,null);assert.deepEqual(loaded.state().morningQuestions,[]);
+ assert.equal(loaded.state().clues.includes('counterNote'),false);
+ loaded.click({route:'stranger'});loaded.code('2317');loaded.click({recipient:'courier'});
+ assert.equal(loaded.state().handoffKnowledge,'unverified');assert.match(loaded.view(),/哪个司机/);
+});
+test('replay retains a call actually made before departure and keeps later-acquired clues out',()=>{
+ const b=boot();for(const id of ['scheduled','photo','receipt'])b.record(id);
+ b.tab('case');b.deduce(['scheduled','photo']);b.click({location:'laundry'});b.click({command:'call-chen'});
+ b.click({route:'stranger'});b.record('contact');b.code('2317');b.click({recipient:'courier'});
+ assert.ok(b.state().clues.includes('contact'));b.click({command:'reconsider'});
+ assert.equal(b.state().contactVerified,true);assert.equal(b.state().clues.includes('contact'),false);
+ b.click({route:'stranger'});b.code('2317');b.click({recipient:'courier'});
+ assert.equal(b.state().handoffKnowledge,'verified');assert.match(b.view(),/你没给他吧/);
+});
+test('invalid departure checkpoint cannot introduce invented evidence or future knowledge',()=>{
+ const s=counter().state();
+ const loaded=boot({...s,departureCheckpoint:{clues:['camera','counterNote','fake'],contactVerified:true,hints:{counter:3}}});
+ assert.equal(loaded.state().departureCheckpoint,null);
+ loaded.click({command:'reconsider'});assert.equal(loaded.state().contactVerified,false);
+ assert.deepEqual(loaded.state().clues,['scheduled','photo','receipt']);
+ const noNight=boot();noNight.click({command:'reconsider'});assert.equal(noNight.state().stage,'investigate');
+});

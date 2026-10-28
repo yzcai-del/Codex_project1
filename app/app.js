@@ -1,6 +1,6 @@
 'use strict';
 (() => {
- const R=globalThis.MidnightRules, C2=globalThis.MidnightChapter2, KEY='after-hours-midnight-v04-rc1';
+ const R=globalThis.MidnightRules, C2=globalThis.MidnightChapter2, KEY='after-hours-midnight-v04-rc2';
  const definitions={
   scheduled:{title:'旧机的本地发送记录',rows:[['来源','餐桌上的林遥旧机'],['号码','林遥的个人号'],['发出时间','10月25日23:17'],['收件人','你（许岑）'],['短信','到北站了。明早再说。']],description:'你在23:17收到短信；留在餐桌上的旧机里有同一条已发送记录。',location:true},
   photo:{title:'照片与你2024年的会话',rows:[['相册文件','IMG_20240516_1829.jpg'],['文件显示拍摄日','2024-05-16'],['最近保存','10月25日18:54'],['另一处记录','你保存的2024-05-16会话'],['当时收到的附件','同一幅候车厅照片']],description:'旧机相册在10月25日存入这幅图。你2024年的会话里，也有同一幅候车厅照片。',location:true},
@@ -89,7 +89,7 @@
   <button class="primary wide" data-command="start-morning">继续 / 次日08:10的来电</button>
   <button class="secondary wide" data-command="reconsider">重看通知对象与交接选择</button>
   <button class="secondary wide" data-command="show-clues">回看材料</button>
-  <p class="tip">候选版 v0.4.0-rc.1 · 实际浏览器验收待完成</p></article>`;
+  <p class="tip">候选版 v0.4.0-rc.2 · 实际浏览器验收待完成</p></article>`;
  }
  function render(){const later=state.morningStarted;document.querySelector('#story-time').textContent=later?(state.stage==='morning'?'10/26 08:10':'10/26 09:00'):'10/25 23:17';document.querySelector('#objective-title').innerHTML=later?'21:06记下了什么？<br>把人的行程与柜台操作分开。':'她说去了北站。<br>你能确定吗？';document.querySelector('#progress-label').textContent=later?'本单新材料 / 画面可选':'地点材料已记录';document.querySelectorAll('[data-tab]').forEach(b=>{const on=b.dataset.tab===state.tab;b.classList.toggle('active',on);b.setAttribute('aria-selected',String(on));});document.querySelector('#count').textContent=state.clues.length;document.querySelector('#progress').textContent=`${String(later?state.clues.filter(id=>Object.hasOwn(C2.clues,id)).length:placeCount()).padStart(2,'0')} / 03`;screen.dataset.view=state.tab;screen.dataset.stage=state.stage;screen.innerHTML=({messages,album,notes,case:investigation})[state.tab]();save();}
  function go(stage){state.stage=stage;render();screen.scrollTop=0;}
@@ -98,7 +98,7 @@
   if(b.dataset.clue&&definitions[b.dataset.clue]&&R.canInspectClue(state,b.dataset.clue)){activeClue=b.dataset.clue;const d=definitions[activeClue];document.querySelector('#inspect-title').textContent=d.title;document.querySelector('#inspect-content').innerHTML=d.rows.map(([a,b])=>`<div class="detail-row"><span>${a}</span><b>${b}</b></div>`).join('');document.querySelector('#record').textContent=state.clues.includes(activeClue)?'已记录 · 返回':'记录材料';document.querySelector('#inspect').showModal();}
   if(b.dataset.location&&R.canVisitLocker(state)){if(b.dataset.location==='laundry')go('departure');else document.querySelector('#location-feedback').textContent=b.dataset.location==='station'?'这两份北站记录都不能确定当晚行程。还有哪份记录发生在今晚？':'目前没有当晚去住处的记录。再核对凭证。';}
   if(b.dataset.command==='call-chen'){state.contactVerified=true;render();notify('陈默说没有委托别人取件');}
-  if(b.dataset.route&&state.stage==='departure'&&['chen','stranger'].includes(b.dataset.route)){state.departureRoute=b.dataset.route;state.ending=null;state.handoffKnowledge=null;state.lockerOpened=false;go('locker');}
+  if(b.dataset.route&&state.stage==='departure'&&['chen','stranger'].includes(b.dataset.route)){state.departureCheckpoint=R.departureCheckpoint(state);state.departureRoute=b.dataset.route;state.ending=null;state.handoffKnowledge=null;state.lockerOpened=false;go('locker');}
   if(b.dataset.recipient&&state.stage==='handoff'){
    if(b.dataset.recipient==='chen')state.contactVerified=true;
    const result=R.completeHandoff(state,b.dataset.recipient);
@@ -115,11 +115,12 @@
    if(state.videoChoice!=='view')state.clues=state.clues.filter(id=>id!=='camera');
    state.counterConclusion=null;const scroll=screen.scrollTop;render();screen.scrollTop=scroll;
   }
+  if(b.dataset.command==='request-night-replay'&&C2.isStage(state)&&R.canStartMorning(state))document.querySelector('#replay-dialog').showModal();
   if(b.dataset.command==='return-counter-result'&&state.counterConclusion)go('chapter2end');
   if(b.dataset.command==='review-counter'&&state.counterVisited)go('counter');
   if(b.dataset.command==='replay-morning'&&state.morningStarted)go('morning');
   if(b.dataset.command==='back'||b.dataset.command==='show-clues')go('investigate');
-  if(b.dataset.command==='reconsider'){Object.assign(state,{morningStarted:false,morningQuestions:[],counterVisited:false,videoChoice:null,counterConclusion:null});state.clues=state.clues.filter(id=>!Object.hasOwn(C2.clues,id));state.ending=null;state.departureRoute=null;state.lockerOpened=false;state.handoffKnowledge=null;go('departure');}
+  if(b.dataset.command==='reconsider'){const replay=R.rewindToDeparture(state);if(replay){state=replay;render();screen.scrollTop=0;}}
   if(b.dataset.command==='return-ending'&&state.ending)go('ending');
   if(b.dataset.command==='hint'){const key=state.stage,level=state.hints[key]||0,scroll=screen.scrollTop;if(level<3){state.hints[key]=level+1;render();screen.scrollTop=scroll;}else notify('全部提示已展开');}
  });
@@ -139,6 +140,14 @@
  });
  document.querySelector('#record').addEventListener('click',()=>{if(activeClue&&R.canInspectClue(state,activeClue)&&!state.clues.includes(activeClue)){state.clues.push(activeClue);notify('材料已记录');}document.querySelector('#inspect').close();render();});
  document.querySelector('#close-dialog').addEventListener('click',()=>document.querySelector('#inspect').close());
+ document.querySelector('#cancel-replay').addEventListener('click',()=>document.querySelector('#replay-dialog').close());
+ document.querySelector('#confirm-replay').addEventListener('click',()=>{
+  const dialog=document.querySelector('#replay-dialog');
+  if(!dialog.open)return;
+  const replay=R.rewindToDeparture(state);
+  dialog.close();
+  if(replay){state=replay;render();screen.scrollTop=0;notify('已回到昨夜出门前');}
+ });
  document.querySelector('#reset').addEventListener('click',()=>document.querySelector('#reset-dialog').showModal());
  document.querySelector('#cancel-reset').addEventListener('click',()=>document.querySelector('#reset-dialog').close());
  document.querySelector('#confirm-reset').addEventListener('click',()=>{state=R.initial();document.querySelector('#reset-dialog').close();render();screen.scrollTop=0;notify('调查已重新开始');});

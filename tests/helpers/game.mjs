@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import vm from 'node:vm';
 import {readFile} from 'node:fs/promises';
 export const script=(await Promise.all(['rules.js','chapter2.js','app.js'].map(f=>readFile(new URL('../../app/'+f,import.meta.url),'utf8')))).join('\n');
-const KEY='after-hours-midnight-v04-rc1';
+const KEY='after-hours-midnight-v04-rc2';
 export function boot(saved){
  const storage=new Map(saved?[[KEY,JSON.stringify(saved)]]:[]);
  const elements=new Map();

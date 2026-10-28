@@ -7,7 +7,7 @@
   const initial = () => ({
     tab: 'messages', clues: [], stage: 'investigate', ending: null,
     deduction: false, hints: {}, departureRoute: null,
-    contactVerified: false, lockerOpened: false, handoffKnowledge: null,
+    contactVerified: false, lockerOpened: false, handoffKnowledge: null, departureCheckpoint: null,
     morningStarted: false, morningQuestions: [], counterVisited: false, videoChoice: null, counterConclusion: null
   });
   const canVisitLocker = s => s.deduction === true && s.clues.includes('receipt');
@@ -39,6 +39,16 @@
         !ids.some(id => ['counterNote','camera'].includes(id))) return null;
     return {event:'stored',evidence:ids,limit:'custody-gap'};
   };
+  const departureCheckpoint = s => ({
+    clues:s.clues.filter(id=>baseClues.includes(id)), contactVerified:s.contactVerified===true,
+    hints:Object.fromEntries(['investigate','departure'].map(k=>[k,s.hints[k]||0]))
+  });
+  const rewindToDeparture = s => {
+    if (!canStartMorning(s)) return null;
+    const checkpoint=s.departureCheckpoint || {clues:s.clues.filter(id=>['scheduled','photo','receipt'].includes(id)),contactVerified:false,hints:{}};
+    return {...initial(),tab:'case',stage:'departure',deduction:true,
+      clues:[...checkpoint.clues],contactVerified:checkpoint.contactVerified,hints:{...checkpoint.hints}};
+  };
   const normalize = raw => {
     const s = initial();
     if (!raw || typeof raw !== 'object') return s;
@@ -58,6 +68,17 @@
     if (s.stage !== 'investigate' && s.stage !== 'departure' && !s.departureRoute) s.stage = 'departure';
     if (['handoff', 'ending'].includes(s.stage) && !s.lockerOpened) s.stage = 'locker';
     if (s.stage === 'ending' && !s.ending) s.stage = 'handoff';
+    const checkpoint=raw.departureCheckpoint;
+    if (checkpoint && typeof checkpoint==='object' && Array.isArray(checkpoint.clues)) {
+      const ids=[...new Set(checkpoint.clues.filter(id=>baseClues.includes(id)&&s.clues.includes(id)))];
+      if (['scheduled','photo','receipt'].every(id=>ids.includes(id))) {
+        s.departureCheckpoint={clues:ids,contactVerified:checkpoint.contactVerified===true&&s.contactVerified,
+          hints:Object.fromEntries(['investigate','departure'].map(k=>{
+            const v=checkpoint.hints?.[k];
+            return [k,Number.isFinite(v)?Math.max(0,Math.min(3,Math.floor(v))):0];
+          }))};
+      }
+    }
     s.morningStarted = raw.morningStarted === true && canStartMorning(s);
     if (s.morningStarted) {
       s.morningQuestions = Array.isArray(raw.morningQuestions) ?
@@ -80,6 +101,6 @@
     return s;
   };
   root.MidnightRules = Object.freeze({
-    initial, normalize, evaluateDeduction, canVisitLocker, validCode, endingFor, canHandoff, completeHandoff, canStartMorning, canInspectClue, evaluateCounter
+    initial, normalize, evaluateDeduction, canVisitLocker, validCode, endingFor, canHandoff, completeHandoff, canStartMorning, canInspectClue, evaluateCounter, departureCheckpoint, rewindToDeparture
   });
 })(globalThis);

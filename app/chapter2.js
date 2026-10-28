@@ -67,7 +67,8 @@
    <div class="divider"></div><p class="tip">第二幕停点 / 会面尚未开始。过去的记录已收窄，后续仍需核对原件与交接。</p>
    <button class="primary wide" data-command="review-counter">回看这次核对与材料</button>
    <button class="secondary wide" data-command="replay-morning">回看08:10那通电话</button>
-   <p class="tip">候选版 v0.4.0-rc.1 / 真实浏览器验收待完成</p></article>`;
+   <button class="secondary wide" data-command="request-night-replay">重选昨夜交接…</button>
+   <p class="tip">候选版 v0.4.0-rc.2 / 真实浏览器验收待完成</p></article>`;
  }
  root.MidnightChapter2=Object.freeze({clues,questionAnswers,isStage,render:(s,helpers)=>s.stage==='morning'?morning(s):s.stage==='chapter2end'?outcome(s):counter(s,helpers)});
 })(globalThis);
