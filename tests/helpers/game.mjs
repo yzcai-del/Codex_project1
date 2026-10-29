@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import vm from 'node:vm';
 import {readFile} from 'node:fs/promises';
 export const script=(await Promise.all(['rules.js','chapter2.js','story-rules.js','story-content.js','art.js','story.js','app.js'].map(f=>readFile(new URL('../../app/'+f,import.meta.url),'utf8')))).join('\n');
-const KEY='after-hours-midnight-v06-rc2';
+const KEY='after-hours-midnight-v07-rc1';
 export function boot(saved,legacy,legacyKey='after-hours-midnight-v05-rc1'){
  const storage=new Map(saved?[[KEY,JSON.stringify(saved)]]:legacy?[[legacyKey,JSON.stringify(legacy)]]:[]);
  const elements=new Map();
@@ -11,8 +11,8 @@ export function boot(saved,legacy,legacyKey='after-hours-midnight-v05-rc1'){
   return elements.get(selector);
  };
  const tabs=['messages','album','notes','case'].map(tab=>({...element('tab:'+tab),dataset:{tab}}));
- let checked=[];
- element('#screen').querySelectorAll=()=>checked.map(value=>({value}));
+ let checked=[],proofSources=[];
+ element('#screen').querySelectorAll=selector=>(selector.includes('story-source')?proofSources:checked).map(value=>({value}));
  const context={document:{querySelector:element,querySelectorAll:selector=>{assert.equal(selector,'[data-tab]');return tabs;}},localStorage:{getItem:key=>storage.get(key)||null,setItem:(key,value)=>storage.set(key,value)},setTimeout:()=>1,clearTimeout(){}};
  vm.createContext(context);
  vm.runInContext(script,context,{timeout:1000});
@@ -20,10 +20,10 @@ export function boot(saved,legacy,legacyKey='after-hours-midnight-v05-rc1'){
  const button=dataset=>({dataset,closest(){return this;}});
  return {
   rules:context.MidnightRules,storyRules:context.MidnightStoryRules,storyContent:context.MidnightStoryContent,
-  proofDraft(value){checked=[value];dispatch('#screen','change',{closest:selector=>selector==='#story-proof-form'?{}:null});},
+  proofDraft(value,evidence=[]){checked=[value];proofSources=evidence;dispatch('#screen','change',{closest:selector=>selector==='#story-proof-form'?{}:null});},
   property:(id,key)=>element('#'+id)[key],
   stored:key=>storage.get(key),
-  proof(value){checked=[value];dispatch('#screen','submit',{id:'story-proof-form'});},
+  proof(value,evidence=value==='backfill'?['han','sun']:[]){checked=[value];proofSources=evidence;dispatch('#screen','submit',{id:'story-proof-form'});},
   state:()=>JSON.parse(storage.get(KEY)),
   view:()=>element('#screen').innerHTML,
   tab:tab=>dispatch('.tabs','click',button({tab})),

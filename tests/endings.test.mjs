@@ -58,7 +58,7 @@ test('exhaustive production rule traversal reaches every option and exactly the 
   if(run.ending){counts[run.ending]=(counts[run.ending]||0)+1;total++;return;}
   const n=r.model.nodes[run.index];assert.ok(n);
   const opts=r.choices(run);assert.ok(opts.length);
-  for(const o of opts){edges.add(n.id+'.'+o.id);const t=r.commit(run,o.id,r.challenge(n.id,o.id));assert.ok(t);walk(t);}
+  for(const o of opts){edges.add(n.id+'.'+o.id);const t=r.commit(run,o.id,r.challenge(n.id,o.id),r.requiredEvidence(n.id,o.id));assert.ok(t);walk(t);}
  }
  for(const early_call of [false,true])for(const address of ['chen','stranger'])for(const custody of ['chen','luo']){
   if(address==='chen'&&custody==='luo')continue;
@@ -128,7 +128,7 @@ test('every production option has an actual event path, including recovery and c
    for(const o of r.choices(run)){
     const key=n.id+'.'+o.id,p=[...prefix,key];
     if(!examples.has(key))examples.set(key,{night:path,path:p});
-    visit(r.commit(run,o.id,r.challenge(n.id,o.id)),p);
+    visit(r.commit(run,o.id,r.challenge(n.id,o.id),r.requiredEvidence(n.id,o.id)),p);
    }
   }
   visit(b.state().story,[]);
@@ -168,4 +168,32 @@ test('December site response has its own month after both voluntary and formal s
 test('formal contact response uses the actual October event date instead of calling it last night',()=>{
  const b=prepared(paths.E03);choose(b,'N06','trace');b.click({storyPane:'decision'});b.click({storyChoice:'formal'});
  assert.match(b.view(),/11月06日/);assert.match(b.view(),/10月25日晚/);assert.doesNotMatch(b.view(),/昨夜没有/);
+});
+
+test('closure interviews are optional, scoped and restore without granting a conclusion',()=>{
+ let b=prepared(paths.H01);choose(b,'N06','full');choose(b,'N08','compare');
+ b.click({interview:'fill'});assert.deepEqual(b.state().storyQuestions,[]);
+ b.click({storyPane:'decision'});b.click({storyChoice:'voluntary'});const before=b.state().story;
+ for(const interview of ['barrier','clock','fill','notebook'])b.click({interview});
+ assert.equal(b.state().storyQuestions.length,4);assert.match(b.view(),/是我写的/);assert.deepEqual(b.state().story,before);
+ b=boot(b.state());assert.equal(b.state().storyQuestions.length,4);
+ b.click({storyPane:'check'});b.proof('backfill',[]);assert.equal(b.state().story.facts.time,false);
+ b.proof('backfill',['register','photo']);assert.equal(b.state().story.facts.time,false);
+ b.click({storyPane:'source'});b.click({storyPane:'check'});assert.match(b.view(),/value="register" checked/);
+ b.proof('backfill',['han','sun']);assert.equal(b.state().story.facts.time,true);
+ assert.deepEqual(b.state().story.log.at(-1).evidence,['han','sun']);assert.deepEqual(b.state().storyQuestions,[]);
+});
+test('formal closure sources use the same source check without pretending to conduct a new interview',()=>{
+ const b=prepared(paths.H01);choose(b,'N06','full');choose(b,'N08','compare');
+ b.click({storyPane:'decision'});b.click({storyChoice:'formal'});assert.doesNotMatch(b.view(),/data-interview=/);
+ b.click({interview:'fill'});assert.deepEqual(b.state().storyQuestions,[]);
+ b.click({storyPane:'check'});b.proof('backfill',['han','han']);assert.equal(b.state().story.facts.time,false);
+ b.proof('backfill',['han','sun']);assert.equal(b.state().story.facts.time,true);assert.equal(b.state().story.facts.delay,true);
+});
+test('legacy confirmed conclusions migrate, while a new-format save missing its source check stops there',()=>{
+ const b=prepared(paths.H01);for(const x of paths.H01.slice(5)){const [n,c]=x.split('.');choose(b,n,c);}
+ const legacy=b.state();delete legacy.story.format;for(const x of legacy.story.log)delete x.evidence;
+ assert.equal(boot(legacy).state().story.ending,'H01');
+ const damaged=b.state();delete damaged.story.log.find(x=>x.node==='N09').evidence;
+ const c=boot(damaged);assert.equal(c.state().story.ending,null);assert.equal(c.state().story.facts.time,false);
 });

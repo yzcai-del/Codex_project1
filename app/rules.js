@@ -9,7 +9,7 @@
     deduction: false, hints: {}, departureRoute: null,
     contactVerified: false, lockerOpened: false, handoffKnowledge: null, departureCheckpoint: null,
     morningStarted: false, morningQuestions: [], counterVisited: false, videoChoice: null, counterConclusion: null,
-    counterDraft: {event:"",evidence:[],limit:""}, story:null, storyView:'scene', storyAnswer:''
+    counterDraft: {event:"",evidence:[],limit:""}, story:null, storyView:'scene', storyAnswer:'', storyEvidence:[], storyQuestions:[]
   });
   const canVisitLocker = s => s.deduction === true && s.clues.includes('receipt');
   const validCode = code => typeof code === 'string' && /^\d{4}$/.test(code) && code === '2317';
@@ -112,6 +112,10 @@
     }
     if(s.story && root.MidnightStory?.panes(s).includes(raw.storyView))s.storyView=raw.storyView;
     if(s.story?.pending){const challenge=root.MidnightStoryRules.challenge(root.MidnightStoryRules.model.nodes[s.story.index].id,s.story.pending);const quiz=root.MidnightStoryContent?.quizzes[challenge];if(quiz?.options.some(([id])=>id===raw.storyAnswer))s.storyAnswer=raw.storyAnswer;}
+    if(s.story?.pending&&root.MidnightStoryRules.model.nodes[s.story.index].id==='N09'){
+      if(Array.isArray(raw.storyEvidence))s.storyEvidence=[...new Set(raw.storyEvidence.filter(x=>['han','sun','register','photo'].includes(x)))];
+      if(s.story.pending==='voluntary'&&Array.isArray(raw.storyQuestions))s.storyQuestions=[...new Set(raw.storyQuestions.filter(x=>Object.hasOwn(root.MidnightStoryContent.nodes.N09.interviews,x)))];
+    }
     for (const key of ['investigate', 'departure', 'locker', 'handoff', 'counter']) {
       const value = raw.hints?.[key];
       s.hints[key] = Number.isFinite(value) ? Math.max(0, Math.min(3, Math.floor(value))) : 0;

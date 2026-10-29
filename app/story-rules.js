@@ -18,13 +18,16 @@
   'N06T.scoped':'contact','N06T.formal':'contact','N08.compare':'outside',
   'N09.voluntary':'backfill','N09.formal':'backfill','N09R.originals':'gap','N10.complete':'separate'
  })[node+'.'+choice]||null;
- function begin(s){return {facts:seed(s),index:0,log:[],pending:null,ending:null,relationship:null};}
+ const requiredEvidence=(node,choice)=>challenge(node,choice)==='backfill'?['han','sun']:[];
+ function begin(s){return {format:1,facts:seed(s),index:0,log:[],pending:null,ending:null,relationship:null};}
  function choices(run){return run.ending?[]:model.nodes[run.index].options.filter(o=>match(o.requires,run.facts));}
- function commit(run,id,answer){
+ function commit(run,id,answer,evidence=[]){
   if(run.ending)return null;
   const node=model.nodes[run.index],option=choices(run).find(o=>o.id===id);
   if(!option||challenge(node.id,id)&&answer!==challenge(node.id,id))return null;
-  const facts={...run.facts,...option.set},log=[...run.log,{node:node.id,choice:id,answer:answer||null}];
+  const required=requiredEvidence(node.id,id);
+  if(required.length&&(!Array.isArray(evidence)||evidence.length!==2||!required.every(x=>evidence.includes(x))))return null;
+  const facts={...run.facts,...option.set},log=[...run.log,{node:node.id,choice:id,answer:answer||null,evidence:required.length?[...evidence]:[]}];
   return {...run,facts,log,pending:null,index:option.end?run.index:next(run.index+1,facts),ending:option.end?terminal(option.end,facts):null,relationship:null};
  }
  function restore(s,raw){
@@ -32,7 +35,7 @@
   let run=begin(s);
   if(Array.isArray(raw.log))for(const step of raw.log.slice(0,model.nodes.length)){
    if(!step||run.ending||model.nodes[run.index]?.id!==step.node)break;
-   const updated=commit(run,step.choice,step.answer);if(!updated)break;run=updated;
+   const updated=commit(run,step.choice,step.answer,step.evidence===undefined&&raw.format!==1?requiredEvidence(step.node,step.choice):step.evidence);if(!updated)break;run=updated;
   }
   if(!run.ending&&choices(run).some(o=>o.id===raw.pending))run.pending=raw.pending;
   if(run.ending&&['continue','bounded','distance'].includes(raw.relationship))run.relationship=raw.relationship;
@@ -51,5 +54,5 @@
   if(pending&&n==='N09'&&run.pending==='voluntary')return '10月27—28日 / 分别核对';
   return ['N06'].includes(n)?'10月26日 09:30':n==='N06T'?'10月27日 / 联络核对':n==='N07'?'10月26日下午':n==='N08'?'10月26日 14:30':n==='N09'?'10月27日': '10月28日';
  }
- root.MidnightStoryRules=Object.freeze({model,match,eligible,begin,choices,commit,restore,rewind,challenge,date});
+ root.MidnightStoryRules=Object.freeze({model,match,eligible,begin,choices,commit,restore,rewind,challenge,date,requiredEvidence});
 })(globalThis);
