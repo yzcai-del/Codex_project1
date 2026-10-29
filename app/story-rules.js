@@ -41,6 +41,7 @@
  function rewind(s,run,count){return restore(s,{log:run.log.slice(0,Math.max(0,Math.min(count,run.log.length)))});}
  function date(run,pending=false){
   const n=model.nodes[run.index]?.id;
+  if(n==='N17'&&pending&&run.pending==='site')return '12月 / 专业复核与整改';
   const upcoming=pending?model.nodes[run.index]?.options.find(o=>o.id===run.pending):null;
   if(run.facts.delay||upcoming?.set.delay)return '11月06日 / 资料核对';
   if(n==='N17')return '11月 / 更正后的后续';

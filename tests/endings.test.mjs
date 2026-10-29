@@ -150,3 +150,22 @@ test('reading earlier records preserves later progress, while confirmed night re
  b.click({storyCommand:'review-start'});b.click({command:'request-night-replay'});b.press('confirm-replay');
  assert.equal(b.state().story,null);assert.equal(b.state().stage,'departure');assert.equal(b.state().morningStarted,false);
 });
+
+test('December site response has its own month after both voluntary and formal source routes',()=>{
+ for(const timeChoice of ['voluntary','formal']){
+  const b=prepared(paths.E16);
+  for(const step of paths.E16.slice(5)){
+   const [n,c]=step.split('.');
+   if(n==='N17'){
+    b.click({storyPane:'decision'});b.click({storyChoice:'site'});
+    assert.match(b.view(),/12月 \/ 专业复核与整改/);
+    assert.doesNotMatch(b.view(),/11月06日 \/ 资料核对/);break;
+   }
+   choose(b,n,n==='N09'?timeChoice:c);
+  }
+ }
+});
+test('formal contact response uses the actual October event date instead of calling it last night',()=>{
+ const b=prepared(paths.E03);choose(b,'N06','trace');b.click({storyPane:'decision'});b.click({storyChoice:'formal'});
+ assert.match(b.view(),/11月06日/);assert.match(b.view(),/10月25日晚/);assert.doesNotMatch(b.view(),/昨夜没有/);
+});

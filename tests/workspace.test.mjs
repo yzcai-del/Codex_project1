@@ -71,3 +71,8 @@ test('night locations use their own artwork and opening them never grants a futu
  c.click({sceneImage:'laundry-night'});assert.match(c.property('art-image','src'),/laundry-night.webp/);c.press('close-art');
  assert.equal(c.state().lockerOpened,false);assert.equal(c.state().deduction,true);
 });
+
+test('the immediately previous visual candidate save is copied without overwriting it',()=>{
+ const prior=scope().state(),key='after-hours-midnight-v06-rc1';
+ const b=boot(undefined,prior,key);assert.equal(b.state().story.pending,'compare');assert.deepEqual(JSON.parse(b.stored(key)),prior);
+});

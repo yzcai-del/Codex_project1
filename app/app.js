@@ -1,6 +1,6 @@
 'use strict';
 (() => {
- const R=globalThis.MidnightRules, C2=globalThis.MidnightChapter2, SR=globalThis.MidnightStoryRules, S=globalThis.MidnightStory, KEY='after-hours-midnight-v06-rc1';
+ const R=globalThis.MidnightRules, C2=globalThis.MidnightChapter2, SR=globalThis.MidnightStoryRules, S=globalThis.MidnightStory, KEY='after-hours-midnight-v06-rc2';
  const definitions={
   scheduled:{title:'旧机的本地发送记录',rows:[['来源','餐桌上的林遥旧机'],['号码','林遥的个人号'],['发出时间','10月25日23:17'],['收件人','你（许岑）'],['短信','到北站了。明早再说。']],description:'你在23:17收到短信；留在餐桌上的旧机里有同一条已发送记录。',location:true},
   photo:{title:'照片与你2024年的会话',rows:[['相册文件','IMG_20240516_1829.jpg'],['文件显示拍摄日','2024-05-16'],['最近保存','10月25日18:54'],['另一处记录','你保存的2024-05-16会话'],['当时收到的附件','同一幅候车厅照片']],description:'旧机相册在10月25日存入这幅图。你2024年的会话里，也有同一幅候车厅照片。',location:true},
@@ -18,7 +18,7 @@
  };
  let state=R.initial(),activeClue=null,toastTimer,storyReplayIndex=null;
  let continued=false;
- try{const saved=localStorage.getItem(KEY);const previous=saved?null:localStorage.getItem('after-hours-midnight-v05-rc1');state=R.normalize(JSON.parse(saved||previous||'null'));continued=!!previous;}catch{}
+ try{const saved=localStorage.getItem(KEY);const previous=saved?null:(localStorage.getItem('after-hours-midnight-v06-rc1')||localStorage.getItem('after-hours-midnight-v05-rc1'));state=R.normalize(JSON.parse(saved||previous||'null'));continued=!!previous;}catch{}
  const screen=document.querySelector('#screen');
  const placeCount=()=>state.clues.filter(id=>definitions[id].location).length;
  const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(state));}catch{}};
@@ -91,7 +91,7 @@
   <button class="primary wide" data-command="start-morning">继续 / 次日08:10的来电</button>
   <button class="secondary wide" data-command="reconsider">重看通知对象与交接选择</button>
   <button class="secondary wide" data-command="show-clues">回看材料</button>
-  <p class="tip">候选版 v0.6.0-rc.1 · 实际浏览器验收待完成</p></article>`;
+  <p class="tip">候选版 v0.6.0-rc.2 · 实际浏览器验收待完成</p></article>`;
  }
  function render(){const later=state.morningStarted;document.querySelector('#story-time').textContent=later?(state.stage==='morning'?'10/26 08:10':'10/26 09:00'):'10/25 23:17';document.querySelector('#objective-title').innerHTML=later?'21:06记下了什么？<br>把人的行程与柜台操作分开。':'她说去了北站。<br>你能确定吗？';document.querySelector('#progress-label').textContent=later?'本单新材料 / 画面可选':'地点材料已记录';document.querySelectorAll('[data-tab]').forEach(b=>{const on=b.dataset.tab===state.tab;b.classList.toggle('active',on);b.setAttribute('aria-selected',String(on));});document.querySelector('#count').textContent=state.clues.length;document.querySelector('#progress').textContent=`${String(later?state.clues.filter(id=>Object.hasOwn(C2.clues,id)).length:placeCount()).padStart(2,'0')} / 03`;if(state.stage==='story'&&state.story){document.querySelector('#story-time').textContent=state.story.ending?'后续 / 尾声':SR.date(state.story,!!state.story.pending);document.querySelector('#objective-title').textContent=state.story.ending?'本轮结束，可回看选择':SR.model.nodes[state.story.index].id==='N06'?'你愿意参与到哪里？':'核对来源，再决定下一步';document.querySelector('#progress-label').textContent='本轮后续已确认选择';document.querySelector('#progress').textContent=String(state.story.log.length).padStart(2,'0');}screen.dataset.view=state.tab;screen.dataset.stage=state.stage;const content=({messages,album,notes,case:investigation})[state.tab]();const art=globalThis.MidnightArt.current(state);const cover=state.stage!=='story'&&art&&(state.tab==='messages'||state.tab==='case')?globalThis.MidnightArt.figure(art,true):'';screen.innerHTML=cover+content;save();}
  function focusScreen(){screen.scrollTop=0;screen.scrollIntoView?.({block:'start',behavior:'instant'});screen.focus?.({preventScroll:true});}

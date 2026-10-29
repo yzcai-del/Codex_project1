@@ -69,7 +69,7 @@
    <button class="primary wide" data-command="start-story">继续 / 09:30的会面与后续调查</button>
    ${s.story?'<p class="tip">后续进度已保存。继续按钮返回当前场景；若要改写昨夜交接，请使用下方带确认的入口。</p>':'<button class="secondary wide" data-command="review-counter">回看这次核对与材料</button><button class="secondary wide" data-command="replay-morning">回看08:10那通电话</button>'}
    <button class="secondary wide" data-command="request-night-replay">重选昨夜交接…</button>
-   <p class="tip">候选版 v0.6.0-rc.1 / 真实浏览器验收待完成</p></article>`;
+   <p class="tip">候选版 v0.6.0-rc.2 / 真实浏览器验收待完成</p></article>`;
  }
  root.MidnightChapter2=Object.freeze({clues,questionAnswers,isStage,render:(s,helpers)=>s.stage==='morning'?morning(s):s.stage==='chapter2end'?outcome(s):counter(s,helpers)});
 })(globalThis);
