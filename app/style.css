@@ -84,3 +84,7 @@ body{background:radial-gradient(ellipse at 4% 15%,#4b3b2f77,transparent 55%),#11
 
 .case-sidebar{background:transparent;color:#d6dde7;box-shadow:none;transform:none;display:block}.case-sidebar:before{display:none}.case-sidebar h3{color:#e6d4b5}.case-sidebar p:not(.eyebrow){color:#acbbcf}.case-sidebar .eyebrow{color:#c2a977}.case-progress>span{color:#ded6c7}.case-progress small{color:#acbbcf}#art-dialog .secondary{color:#e3e9f2;background:#24354a;border-color:#77899e}.story-workspace .reading-sheet.ending .small-label{color:#afc1d6}
 @media(max-width:760px){.case-sidebar{display:none}}
+
+/* Notebook index and a separate, read-only record window. */
+.record-index{list-style:none;padding:0;margin:0}.history-entry h4{font:20px/1.7 var(--serif);margin:8px 0}.record-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-end}.choice-history>h4{font-size:18px;margin:0 0 12px}.confirmed-conclusion{margin:28px 0 0;padding:22px 0 0;border-top:1px solid #af9671}.confirmed-conclusion h4{color:#51402c}.pending-record{border:1px solid #bca16d;background:#243246;color:#e3eaf3;margin:24px auto 32px}.pending-record .small-label{color:#e1c68f}.pending-record .window-actions{margin:18px 0 0}.pending-record h4{font:21px/1.8 var(--serif);margin:12px 0}.pending-record p{font-size:14px}
+@media(max-width:760px){.record-index .history-row{display:block}.record-actions{margin-top:18px;justify-content:flex-start}.record-actions button{flex:1}.confirmed-conclusion{padding-top:18px}.history-entry h4{font-size:19px}}

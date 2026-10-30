@@ -79,6 +79,55 @@ test('the immediately previous visual candidate save is copied without overwriti
 
 test('the prior interview candidate source draft is copied with questions and source selection intact',()=>{
  const b=meeting();decide(b,'full');b.click({storyCommand:'confirm'});decide(b,'compare');b.click({storyPane:'check'});b.proof('outside');decide(b,'voluntary');b.click({interview:'fill'});b.click({storyPane:'check'});b.proofDraft('backfill',['han','photo']);
- const prior=b.state(),key='after-hours-midnight-v07-rc1',c=boot(undefined,prior,key);
- assert.deepEqual(c.state().storyQuestions,['fill']);assert.deepEqual(c.state().storyEvidence,['han','photo']);assert.equal(c.state().story.facts.time,false);assert.deepEqual(JSON.parse(c.stored(key)),prior);
+ const prior=b.state();delete prior.storyRecord;
+ for(const key of ['after-hours-midnight-v07-rc1','after-hours-midnight-v07-rc2']){const c=boot(undefined,prior,key);assert.deepEqual(c.state().storyQuestions,['fill']);assert.deepEqual(c.state().storyEvidence,['han','photo']);assert.equal(c.state().story.facts.time,false);assert.equal(c.state().storyRecord,null);assert.deepEqual(JSON.parse(c.stored(key)),prior);}
+});
+
+
+test('notebook opens one past record while retaining the current unconfirmed source draft',()=>{
+ let b=scope();b.click({storyPane:'check'});b.proof('outside');decide(b,'voluntary');b.click({storyPane:'check'});b.proofDraft('motive',['han','photo']);
+ const before=b.state();b.click({storyPane:'archive'});
+ assert.match(b.view(),/本项尚未确认/);assert.doesNotMatch(b.view(),/class="scope-map"|class="confirmed-conclusion"/);
+ assert.doesNotMatch(b.view(),/data-story-record="2"/); // pending N09 is not a confirmed record
+ b.click({storyRecord:'1'});assert.match(b.view(),/data-story-view="record"/);
+ assert.match(b.view(),/A-02范围图/);assert.match(b.view(),/你确认的结论/);
+ assert.match(b.view(),/A区实际边线不含S1/);assert.doesNotMatch(b.view(),/核对来源：韩|可以确定所有人预谋/);
+ assert.deepEqual(b.state().story,before.story);assert.equal(b.state().storyAnswer,'motive');
+ assert.deepEqual(b.state().storyEvidence,['han','photo']);
+ b=boot(b.state());assert.match(b.view(),/data-story-view="record"/);
+ b.click({storyRecord:'0'});assert.doesNotMatch(b.view(),/class="scope-map"|你确认的结论/);
+ b.click({storyRecord:'1'});b.click({storyPane:'archive'});b.click({storyPane:'check'});
+ assert.match(b.view(),/value="motive" checked/);assert.match(b.view(),/value="photo" checked/);assert.equal(b.state().story.facts.time,false);
+});
+
+test('record addresses cannot open unconfirmed or future material, including after save truncation',()=>{
+ const b=scope();b.click({storyPane:'archive'});const before=b.state();
+ for(const storyRecord of ['-1','1','2','0.5','999999999999999999999','invalid'])b.click({storyRecord});
+ assert.deepEqual(b.state(),before);assert.doesNotMatch(b.view(),/data-story-view="record"/);
+ for(const storyRecord of [-1,1,1.5,'0',null]){
+  const bad={...before,storyView:'record',storyRecord},c=boot(bad);
+  assert.equal(c.state().storyRecord,null);assert.doesNotMatch(c.view(),/data-story-view="record"/);
+ }
+ const bad={...before,storyView:'record',storyRecord:0,story:{...before.story,log:[]}};
+ const c=boot(bad);assert.equal(c.state().storyRecord,null);assert.doesNotMatch(c.view(),/data-story-view="record"/);
+});
+
+test('confirmed voluntary and formal records retain their own dates, sources and conclusions',()=>{
+ for(const choice of ['voluntary','formal']){
+  const b=scope();b.click({storyPane:'check'});b.proof('outside');decide(b,choice);b.click({storyPane:'check'});b.proof('backfill',['sun','han']);
+  b.click({storyPane:'archive'});b.click({storyRecord:'2'});
+  assert.match(b.view(),choice==='formal'?/11月06日/:/10月27—28日/);
+  assert.match(b.view(),/实际封闭与17:10补录分开/);
+  assert.match(b.view(),/核对来源：孙原接收的17:10指令与本人说明；韩的实际封闭上报消息与本人说明/);
+  assert.doesNotMatch(b.view(),/data-interview=|id="story-proof-form"/);
+  b.click({storyRecord:'1'});assert.match(b.view(),/10月26日 14:30/);assert.doesNotMatch(b.view(),/11月06日|核对来源：孙/);
+ }
+});
+
+test('record replay requires confirmation, and confirmed rewind invalidates the opened future record',()=>{
+ const b=scope();b.click({storyPane:'check'});b.proof('outside');b.click({storyPane:'archive'});b.click({storyRecord:'1'});
+ const before=b.state();b.click({storyReplay:'1'});b.press('cancel-story-replay');assert.deepEqual(b.state(),before);
+ b.click({storyReplay:'1'});b.press('confirm-story-replay');assert.equal(b.state().storyRecord,null);
+ assert.equal(b.state().story.facts.scope,false);assert.equal(b.state().story.log.length,1);
+ b.click({storyPane:'archive'});b.click({storyRecord:'1'});assert.doesNotMatch(b.view(),/data-story-view="record"/);
 });

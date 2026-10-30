@@ -33,22 +33,31 @@
   if(id==='N10'&&run.pending==='gaps')html+=`<div class="fact-summary"><p>范围：${run.facts.scope?'已核实，可请求更正':'缺范围图／目录交叉来源'}</p><p>补录：${run.facts.time?'已有交叉来源':'指令来源待核，不能确认罗下令'}</p></div>`;
   return html;
  }
+ const sourceNames={han:'韩的实际封闭上报消息与本人说明',sun:'孙原接收的17:10指令与本人说明'};
  function history(run,s){
   if(!run.log.length)return '';
-  return `<details class="choice-history"><summary>本轮选择记录 / 回到此前场景</summary><p class="tip">回退会清除所选场景之后的后续知情、材料与结局。确认前保留当前进度。</p>${run.log.map((x,i)=>`<div class="history-row"><div class="history-entry">${esc(C.nodes[x.node].title)}<small>${esc(C.nodes[x.node].options[x.choice].label)}</small>${x.evidence?.length?'<p class="tip">核对来源：韩的实际封闭上报、孙原接收的指令。</p>':''}<details><summary>回看当时所见</summary>${result({...R.restore(s,{log:run.log.slice(0,i)}),pending:x.choice},s)}</details></div><button class="secondary" data-story-replay="${i}">重选</button></div>`).join('')}</details>`;
+  return `<section class="choice-history" aria-label="本轮选择记录"><h4>本轮选择记录</h4><p class="tip">选一条记录，单独回看当时所见与已确认的结论。</p><ol class="record-index">${run.log.map((x,i)=>`<li class="history-row"><div class="history-entry"><span class="small-label">记录 ${i+1} / 已确认</span><h4>${esc(C.nodes[x.node].title)}</h4><small>${esc(C.nodes[x.node].options[x.choice].label)}</small></div><div class="record-actions"><button class="secondary" data-story-record="${i}" aria-label="回看记录${i+1}：${esc(C.nodes[x.node].title)}">回看当时所见</button><button class="secondary" data-story-replay="${i}">重选</button></div></li>`).join('')}</ol><p class="tip">重选需要确认，会清除该条及之后的知情、材料与结局。</p></section>`;
+ }
+ function record(run,s){
+  const i=s.storyRecord,x=run.log[i],before=R.restore(s,{format:1,log:run.log.slice(0,i)}),seen={...before,pending:x.choice},c=C.nodes[x.node];
+  const q=C.quizzes[R.challenge(x.node,x.choice)],answer=q?.options.find(([id])=>id===x.answer)?.[1];
+  return `<header class="window-heading"><span class="small-label">记录 ${i+1} / ${run.log.length} · 已确认</span><h3>${esc(c.title)}</h3><p>${esc(R.date(seen,true))} / ${esc(c.place)}</p>${paneButton('archive','返回手记目录')}</header><article class="note reading-sheet"><h4>你当时的选择</h4><p>${esc(c.options[x.choice].label)}</p><h4>当时所见</h4>${result(seen,s)}${answer?`<section class="confirmed-conclusion"><h4>你确认的结论</h4><p>${esc(answer)}</p>${x.evidence.length?`<p>核对来源：${x.evidence.map(id=>esc(sourceNames[id])).join('；')}。</p>`:''}</section>`:''}</article><nav class="window-actions" aria-label="记录翻页">${i>0?`<button class="secondary" data-story-record="${i-1}">上一条记录</button>`:''}${i+1<run.log.length?`<button class="secondary" data-story-record="${i+1}">下一条记录</button>`:''}${paneButton('archive','返回手记目录')}<button class="secondary" data-story-replay="${i}">从这条重选…</button></nav>`;
  }
 
  const relationships={continue:'你答应以后还可以来往。要你承担风险的事，林遥得事先说明；这次的记录不会因此改写。',bounded:'你告诉林遥，必要事项仍可联系，私人往来先缓一缓。她把这个约定记下来，没有再让陈默替她劝你。',distance:'你约好交还手机和物品，随后各自生活。她仍要完成自己的说明，你也不再替她保管新的材料。'};
- const panes=s=>s.story.ending?['ending','relationship','archive']:s.story.pending?(R.challenge(R.model.nodes[s.story.index].id,s.story.pending)?['source','check','archive']:['source','archive']):['scene','decision','archive'];
+ const basePanes=s=>s.story.ending?['ending','relationship','archive']:s.story.pending?(R.challenge(R.model.nodes[s.story.index].id,s.story.pending)?['source','check','archive']:['source','archive']):['scene','decision','archive'];
+ const validRecord=s=>Number.isInteger(s.storyRecord)&&s.storyRecord>=0&&s.storyRecord<s.story.log.length;
+ const panes=s=>[...basePanes(s),...(validRecord(s)?['record']:[])];
  const pane=s=>panes(s).includes(s.storyView)?s.storyView:panes(s)[0];
- const paneNames={scene:'现场与对话',decision:'下一步选择',source:'所见材料与回应',check:'核对桌',archive:'调查手记',ending:'本轮尾声',relationship:'与林遥的往来'};
+ const paneNames={scene:'现场与对话',decision:'下一步选择',source:'所见材料与回应',check:'核对桌',archive:'调查手记',ending:'本轮尾声',relationship:'与林遥的往来',record:'记录详情'};
  const paneButton=(id,label)=>`<button class="secondary" data-story-pane="${id}">${label||paneNames[id]}</button>`;
  function ending(run,s){
   const e=R.model.endings[run.ending];let epilogue=C.endings[run.ending];
   if(run.ending==='E03')epilogue=epilogue.replace('姚斌只与实际发生的本单有关，保住袋子的路线没有他的订单。',s.ending==='lost'?'姚斌只确认自己这一单收送，不替罗保证授权。':'当夜没有发生司机取送，你核对的仍只是罗本人联络和孙的转号。');
   return `<article class="ending reading-sheet"><span class="ending-id">${e.hidden?'隐藏结局':'本轮结局'} ${esc(run.ending)}</span><h3>${esc(e.title)}</h3>${epilogue}<div class="divider"></div><p class="tip">本轮已结束。可在手记回看所见，也可重选此前场景。</p><div class="window-actions">${paneButton('relationship','决定之后怎样来往')}${paneButton('archive','翻开本轮手记')}</div></article>`;
  }
- function archive(run,s){return `<header class="window-heading"><span class="small-label">NOTEBOOK / 仅本轮所见</span><h3>调查手记</h3><p>按场景回看原话与材料。阅读不会推进剧情；重选时才清除后续进展。</p></header>${history(run,s)||'<p class="empty">你还没有确认后续选择。</p>'}<details class="fact-summary"><summary>已核对与尚缺的部分</summary><p>报告范围：${run.facts.scope?'已核实':'尚未核实／未参与'}</p><p>补录：${run.facts.time?'有交叉来源':'尚未核实／未参与'}</p><p>${custody(run.facts)}</p></details>${btn('review-start','回看第二幕核对处',true)}`;}
+ function archive(run,s){return `<header class="window-heading"><span class="small-label">NOTEBOOK / 仅本轮所见</span><h3>调查手记</h3><p>按场景回看原话与材料。阅读不会推进剧情；重选时才清除后续进展。</p></header>${run.pending?`<aside class="pending-record reading-sheet"><span class="small-label">本项尚未确认</span><h4>${esc(C.nodes[R.model.nodes[run.index].id].options[run.pending].label)}</h4><p>所见材料仍可回看。草稿还没有记入下方已确认记录。</p><div class="window-actions">${paneButton('source','返回本次材料')}${R.challenge(R.model.nodes[run.index].id,run.pending)?paneButton('check','继续本次核对'):''}</div></aside>`:''}${history(run,s)||'<p class="empty">你还没有确认后续选择。</p>'}<details class="fact-summary"><summary>已核对与尚缺的部分</summary><p>报告范围：${run.facts.scope?'已核实':'尚未核实／未参与'}</p><p>补录：${run.facts.time?'有交叉来源':'尚未核实／未参与'}</p><p>${custody(run.facts)}</p></details>${btn('review-start','回看第二幕核对处',true)}`;}
+
  function render(s){
   const run=s.story,view=pane(s),node=R.model.nodes[run.index],c=C.nodes[node.id];
   const nav=`<nav class="story-windows" aria-label="本场窗口">${panes(s).map(id=>`<button data-story-pane="${id}" aria-current="${id===view?'page':'false'}"><span>${id==='archive'?'▤':id==='source'?'▱':id==='check'?'⌁':id==='decision'?'↗':'◌'}</span>${paneNames[id]}</button>`).join('')}</nav>`;
@@ -56,6 +65,7 @@
   if(view==='ending')body=(root.MidnightArt.figure(root.MidnightArt.current(s),true))+ending(run,s);
   if(view==='relationship')body=`<article class="note reading-sheet"><span class="small-label">AFTERWARDS / 关系尾声</span><h3>与林遥的往来</h3><p>往来方式与你查清的事分开。这里的选择不改本轮调查结局。</p>${Object.entries(relationships).map(([id,text])=>`<button class="choice" data-story-relationship="${id}" aria-pressed="${run.relationship===id}">${id==='continue'?'继续来往，风险先说':id==='bounded'?'只保留必要联系':'交还物品，各自生活'}</button>${run.relationship===id?`<p class="relationship-note">${text}</p>`:''}`).join('')}${paneButton('ending','回到本轮尾声')}</article>`;
   if(view==='archive')body=archive(run,s);
+  if(view==='record')body=record(run,s);
   if(view==='scene')body=`${root.MidnightArt.figure(root.MidnightArt.current(s))}<article class="note reading-sheet"><span class="small-label">${esc(R.date(run))} / ${esc(c.place)}</span><h3>${esc(c.title)}</h3>${intro(run,s)}<div class="window-actions">${paneButton('decision','想好后，决定下一步')}${paneButton('archive','回看手记')}</div></article>`;
   if(view==='decision')body=`<header class="window-heading"><span class="small-label">YOUR NEXT STEP / ${esc(c.place)}</span><h3>${esc(c.question)}</h3><p>选择后进入回应或材料窗口。阅读实际结果后，再确认推进。</p>${paneButton('scene','回到现场与对话')}</header><div class="story-choices decision-grid">${node.options.map(o=>{const yes=R.match(o.requires,run.facts),v=c.options[o.id];return `<button class="choice" data-story-choice="${o.id}" ${yes?'':'disabled'}>${esc(v.label)}<small>${esc(yes?v.note:requirement(node.id,o,run.facts))}</small></button>`;}).join('')}</div>`;
   if(view==='source'){

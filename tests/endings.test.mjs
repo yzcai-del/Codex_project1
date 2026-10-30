@@ -45,7 +45,13 @@ for(const [id,path] of Object.entries(paths))test('actual app events reach '+id+
  assert.match(b.view(),new RegExp('本轮结局|隐藏结局'));
  assert.ok(b.view().includes(b.storyRules.model.endings[id].title));
  assert.equal((b.view().match(/class="ending-id"/g)||[]).length,1);
- const ending=b.state().story.ending;
+ const ending=b.state().story.ending,completed=b.state().story;
+ b.click({storyPane:'archive'});
+ for(let i=0;i<completed.log.length;i++){
+  b.click({storyRecord:String(i)});assert.match(b.view(),/data-story-view="record"/);
+  assert.equal((b.view().match(/<h4>当时所见<\/h4>/g)||[]).length,1);
+  assert.equal(b.state().story.ending,ending);assert.deepEqual(b.state().story,completed);
+ }
  b.click({storyPane:'relationship'});
  for(const relationship of ['continue','bounded','distance']){
   b.click({storyRelationship:relationship});assert.equal(b.state().story.ending,ending);
