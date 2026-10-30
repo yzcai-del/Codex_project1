@@ -197,3 +197,20 @@ test('legacy confirmed conclusions migrate, while a new-format save missing its 
  const damaged=b.state();delete damaged.story.log.find(x=>x.node==='N09').evidence;
  const c=boot(damaged);assert.equal(c.state().story.ending,null);assert.equal(c.state().story.facts.time,false);
 });
+
+test('unrecognized save format cannot be treated as legacy proof of a closure conclusion',()=>{
+ const b=prepared(paths.H01);for(const x of paths.H01.slice(5)){const [n,c]=x.split('.');choose(b,n,c);}
+ for(const format of [2,'1',null]){
+  const bad=b.state();bad.story.format=format;delete bad.story.log.find(x=>x.node==='N09').evidence;
+  const c=boot(bad);assert.equal(c.state().story,null);assert.equal(c.state().stage,'chapter2end');
+  assert.deepEqual(c.state().storyEvidence,[]);assert.deepEqual(c.state().storyQuestions,[]);
+ }
+});
+test('cancel and confirmed replay clear current interview and source draft, cancellation of replay preserves them',()=>{
+ const b=prepared(paths.H01);choose(b,'N06','full');choose(b,'N08','compare');
+ b.click({storyPane:'decision'});b.click({storyChoice:'voluntary'});b.click({interview:'fill'});b.click({storyPane:'check'});b.proofDraft('backfill',['han','register']);
+ b.click({storyPane:'archive'});const before=b.state();b.click({storyReplay:'1'});b.press('cancel-story-replay');assert.deepEqual(b.state(),before);
+ b.click({storyReplay:'1'});b.press('confirm-story-replay');assert.deepEqual(b.state().storyEvidence,[]);assert.deepEqual(b.state().storyQuestions,[]);assert.equal(b.state().story.facts.time,false);
+ const c=prepared(paths.H01);choose(c,'N06','full');choose(c,'N08','compare');c.click({storyPane:'decision'});c.click({storyChoice:'voluntary'});c.click({interview:'notebook'});c.click({storyPane:'check'});c.proofDraft('backfill',['han','sun']);c.click({storyCommand:'cancel'});
+ assert.deepEqual(c.state().storyEvidence,[]);assert.deepEqual(c.state().storyQuestions,[]);assert.equal(c.state().story.pending,null);assert.equal(c.state().story.facts.time,false);
+});

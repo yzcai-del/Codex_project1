@@ -32,10 +32,11 @@
  }
  function restore(s,raw){
   if(!eligible(s)||!raw||typeof raw!=='object')return null;
+  if(raw.format!==undefined&&raw.format!==1)return null;
   let run=begin(s);
   if(Array.isArray(raw.log))for(const step of raw.log.slice(0,model.nodes.length)){
    if(!step||run.ending||model.nodes[run.index]?.id!==step.node)break;
-   const updated=commit(run,step.choice,step.answer,step.evidence===undefined&&raw.format!==1?requiredEvidence(step.node,step.choice):step.evidence);if(!updated)break;run=updated;
+   const updated=commit(run,step.choice,step.answer,step.evidence===undefined&&raw.format===undefined?requiredEvidence(step.node,step.choice):step.evidence);if(!updated)break;run=updated;
   }
   if(!run.ending&&choices(run).some(o=>o.id===raw.pending))run.pending=raw.pending;
   if(run.ending&&['continue','bounded','distance'].includes(raw.relationship))run.relationship=raw.relationship;
