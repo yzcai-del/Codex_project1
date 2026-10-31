@@ -220,3 +220,29 @@ test('cancel and confirmed replay clear current interview and source draft, canc
  const c=prepared(paths.H01);choose(c,'N06','full');choose(c,'N08','compare');c.click({storyPane:'decision'});c.click({storyChoice:'voluntary'});c.click({interview:'notebook'});c.click({storyPane:'check'});c.proofDraft('backfill',['han','sun']);c.click({storyCommand:'cancel'});
  assert.deepEqual(c.state().storyEvidence,[]);assert.deepEqual(c.state().storyQuestions,[]);assert.equal(c.state().story.pending,null);assert.equal(c.state().story.facts.time,false);
 });
+
+
+test('limited contact ending does not invent a written reply for voluntary sources or a delivery for safe custody',()=>{
+ for(const lost of [false,true])for(const mode of ['scoped','formal']){
+  const path=['N01.read','N02.'+(lost?'stranger':'chen'),'N03.'+(lost?'courier':'chen'),'N04.now','N05.records'];
+  const b=prepared(path);choose(b,'N06','trace');choose(b,'N06T',mode);
+  assert.equal(b.state().story.ending,'E03');assert.equal(b.state().story.facts.scope,false);assert.equal(b.state().story.facts.time,false);
+  assert.doesNotMatch(b.view(),/书面说明送来|17:10补录|18:31/);
+  if(!lost)assert.doesNotMatch(b.view(),/姚斌/);
+  else assert.match(b.view(),/姚斌只确认自己这一单/);
+  b.click({storyPane:'archive'});b.click({storyRecord:'1'});
+  assert.match(b.view(),mode==='formal'?/11月06日|11月6日/:/10月27日/);
+  if(mode==='scoped')assert.doesNotMatch(b.view(),/书面回复|11月6日/);
+ }
+});
+
+test('early exits retain their evidence limits and never turn requesting return into recovered originals',()=>{
+ for(const id of ['E01','E02','E05','E09']){
+  const path=id==='E05'?[...paths.E05.slice(0,6),'N07.defer']:paths[id],b=prepared(path);
+  for(const step of path.slice(5)){const [n,c]=step.split('.');choose(b,n,c);}
+  assert.equal(b.state().story.ending,id);assert.equal(b.state().story.facts.scope,false);assert.equal(b.state().story.facts.time,false);
+  assert.doesNotMatch(b.view(),/18:31|A-02范围图|罗要求选较早时间/);
+  if(id==='E05'){assert.equal(b.state().story.facts.custody,'luo');assert.match(b.view(),/原单随袋，未留存/);}
+  if(id==='E09')assert.equal(b.state().story.facts.custody,'returned');
+ }
+});

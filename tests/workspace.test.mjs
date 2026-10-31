@@ -80,7 +80,7 @@ test('the immediately previous visual candidate save is copied without overwriti
 test('the prior interview candidate source draft is copied with questions and source selection intact',()=>{
  const b=meeting();decide(b,'full');b.click({storyCommand:'confirm'});decide(b,'compare');b.click({storyPane:'check'});b.proof('outside');decide(b,'voluntary');b.click({interview:'fill'});b.click({storyPane:'check'});b.proofDraft('backfill',['han','photo']);
  const prior=b.state();delete prior.storyRecord;
- for(const key of ['after-hours-midnight-v07-rc1','after-hours-midnight-v07-rc2']){const c=boot(undefined,prior,key);assert.deepEqual(c.state().storyQuestions,['fill']);assert.deepEqual(c.state().storyEvidence,['han','photo']);assert.equal(c.state().story.facts.time,false);assert.equal(c.state().storyRecord,null);assert.deepEqual(JSON.parse(c.stored(key)),prior);}
+ for(const key of ['after-hours-midnight-v07-rc1','after-hours-midnight-v07-rc2','after-hours-midnight-v07-rc3']){const c=boot(undefined,prior,key);assert.deepEqual(c.state().storyQuestions,['fill']);assert.deepEqual(c.state().storyEvidence,['han','photo']);assert.equal(c.state().story.facts.time,false);assert.equal(c.state().storyRecord,null);assert.deepEqual(JSON.parse(c.stored(key)),prior);}
 });
 
 
