@@ -206,7 +206,7 @@ test('legacy confirmed conclusions migrate, while a new-format save missing its 
 
 test('unrecognized save format cannot be treated as legacy proof of a closure conclusion',()=>{
  const b=prepared(paths.H01);for(const x of paths.H01.slice(5)){const [n,c]=x.split('.');choose(b,n,c);}
- for(const format of [2,'1',null]){
+ for(const format of [3,'1',null]){
   const bad=b.state();bad.story.format=format;delete bad.story.log.find(x=>x.node==='N09').evidence;
   const c=boot(bad);assert.equal(c.state().story,null);assert.equal(c.state().stage,'chapter2end');
   assert.deepEqual(c.state().storyEvidence,[]);assert.deepEqual(c.state().storyQuestions,[]);
@@ -245,4 +245,18 @@ test('early exits retain their evidence limits and never turn requesting return 
   if(id==='E05'){assert.equal(b.state().story.facts.custody,'luo');assert.match(b.view(),/原单随袋，未留存/);}
   if(id==='E09')assert.equal(b.state().story.facts.custody,'returned');
  }
+});
+
+
+test('format 1 retains its previously confirmed report conclusion without weakening format 2 or closure sources',()=>{
+ const b=prepared(paths.H01);for(const step of paths.H01.slice(5)){const [n,c]=step.split('.');choose(b,n,c);}
+ const prior=b.state();prior.story.format=1;prior.story.log.find(x=>x.node==='N08').evidence=[];
+ const c=boot(prior);assert.equal(c.state().story.ending,'H01');assert.equal(c.state().story.format,2);
+ assert.deepEqual(c.state().story.log.find(x=>x.node==='N08').evidence,['boundary','index']);
+ const damaged=b.state();damaged.story.log.find(x=>x.node==='N08').evidence=[];const d=boot(damaged);
+ assert.equal(d.state().story.ending,null);assert.equal(d.state().story.facts.scope,false);
+ delete prior.story.log.find(x=>x.node==='N09').evidence;const e=boot(prior);assert.equal(e.state().story.facts.time,false);assert.equal(e.state().story.ending,null);
+ const pending=prepared(paths.H01);choose(pending,'N06','full');pending.click({storyPane:'decision'});pending.click({storyChoice:'compare'});
+ const old=pending.state();old.story.format=1;old.storyEvidence=['han','boundary','index','register'];old.storyQuestions=['fill','scope-index'];
+ const f=boot(old);assert.deepEqual(f.state().storyEvidence,['boundary','index']);assert.deepEqual(f.state().storyQuestions,['scope-index']);assert.equal(f.state().story.facts.scope,false);
 });

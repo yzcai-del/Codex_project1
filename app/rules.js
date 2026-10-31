@@ -113,9 +113,12 @@
     if(s.story&&Number.isInteger(raw.storyRecord)&&raw.storyRecord>=0&&raw.storyRecord<s.story.log.length)s.storyRecord=raw.storyRecord;
     if(s.story && root.MidnightStory?.panes(s).includes(raw.storyView))s.storyView=raw.storyView;
     if(s.story?.pending){const challenge=root.MidnightStoryRules.challenge(root.MidnightStoryRules.model.nodes[s.story.index].id,s.story.pending);const quiz=root.MidnightStoryContent?.quizzes[challenge];if(quiz?.options.some(([id])=>id===raw.storyAnswer))s.storyAnswer=raw.storyAnswer;}
-    if(s.story?.pending&&root.MidnightStoryRules.model.nodes[s.story.index].id==='N09'){
-      if(Array.isArray(raw.storyEvidence))s.storyEvidence=[...new Set(raw.storyEvidence.filter(x=>['han','sun','register','photo'].includes(x)))];
-      if(s.story.pending==='voluntary'&&Array.isArray(raw.storyQuestions))s.storyQuestions=[...new Set(raw.storyQuestions.filter(x=>Object.hasOwn(root.MidnightStoryContent.nodes.N09.interviews,x)))];
+    if(s.story?.pending){
+      const node=root.MidnightStoryRules.model.nodes[s.story.index].id,choice=s.story.pending;
+      const check=root.MidnightStoryContent.sourceChecks[root.MidnightStoryRules.challenge(node,choice)];
+      if(check&&Array.isArray(raw.storyEvidence))s.storyEvidence=[...new Set(raw.storyEvidence.filter(x=>Object.hasOwn(check.options,x)))];
+      const interviews=root.MidnightStoryContent.nodes[node].interviews;
+      if(interviews&&(node==='N08'&&choice==='compare'||node==='N09'&&choice==='voluntary')&&Array.isArray(raw.storyQuestions))s.storyQuestions=[...new Set(raw.storyQuestions.filter(x=>Object.hasOwn(interviews,x)))];
     }
     for (const key of ['investigate', 'departure', 'locker', 'handoff', 'counter']) {
       const value = raw.hints?.[key];

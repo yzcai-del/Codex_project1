@@ -80,7 +80,7 @@ test('the immediately previous visual candidate save is copied without overwriti
 test('the prior interview candidate source draft is copied with questions and source selection intact',()=>{
  const b=meeting();decide(b,'full');b.click({storyCommand:'confirm'});decide(b,'compare');b.click({storyPane:'check'});b.proof('outside');decide(b,'voluntary');b.click({interview:'fill'});b.click({storyPane:'check'});b.proofDraft('backfill',['han','photo']);
  const prior=b.state();delete prior.storyRecord;
- for(const key of ['after-hours-midnight-v07-rc1','after-hours-midnight-v07-rc2','after-hours-midnight-v07-rc3']){const c=boot(undefined,prior,key);assert.deepEqual(c.state().storyQuestions,['fill']);assert.deepEqual(c.state().storyEvidence,['han','photo']);assert.equal(c.state().story.facts.time,false);assert.equal(c.state().storyRecord,null);assert.deepEqual(JSON.parse(c.stored(key)),prior);}
+ for(const key of ['after-hours-midnight-v07-rc1','after-hours-midnight-v07-rc2','after-hours-midnight-v07-rc3','after-hours-midnight-v07-rc4']){const c=boot(undefined,prior,key);assert.deepEqual(c.state().storyQuestions,['fill']);assert.deepEqual(c.state().storyEvidence,['han','photo']);assert.equal(c.state().story.facts.time,false);assert.equal(c.state().storyRecord,null);assert.deepEqual(JSON.parse(c.stored(key)),prior);}
 });
 
 
@@ -130,4 +130,27 @@ test('record replay requires confirmation, and confirmed rewind invalidates the 
  b.click({storyReplay:'1'});b.press('confirm-story-replay');assert.equal(b.state().storyRecord,null);
  assert.equal(b.state().story.facts.scope,false);assert.equal(b.state().story.log.length,1);
  b.click({storyPane:'archive'});b.click({storyRecord:'1'});assert.doesNotMatch(b.view(),/data-story-view="record"/);
+});
+
+
+test('report scope requires the boundary and attachment comparison, not an address or blue-circle substitute',()=>{
+ const b=scope();assert.match(b.view(),/报告副本／封面与附件目录摘录/);assert.match(b.view(),/项目交接索引／S1条目摘录/);
+ const before=b.state().story;b.click({storyPane:'check'});
+ for(const evidence of [[],['boundary'],['boundary','address'],['blue','index'],['boundary','boundary'],['boundary','index','address']]){
+  b.proof('outside',evidence);assert.deepEqual(b.state().story,before);assert.match(b.text('story-proof-error'),/超出/);
+ }
+ b.proof('destroyed',['boundary','index']);assert.equal(b.state().story.facts.scope,false);
+ b.proof('outside',['index','boundary']);assert.equal(b.state().story.facts.scope,true);
+ assert.deepEqual(b.state().story.log.at(-1).evidence,['index','boundary']);
+ b.click({storyPane:'archive'});b.click({storyRecord:'1'});assert.match(b.view(),/核对来源：报告附件目录与交接索引的对照；A-02实际边线与图例/);
+});
+
+test('report questions are optional and scene-local; the unfinished source comparison survives browsing and reload',()=>{
+ let b=scope();const before=b.state().story;
+ b.click({interview:'scope-origin'});assert.match(b.view(),/蓝笔盖上/);b.click({interview:'scope-index'});assert.match(b.view(),/得另查交接/);
+ b.click({interview:'fill'});assert.deepEqual(b.state().storyQuestions,['scope-origin','scope-index']);assert.deepEqual(b.state().story,before);
+ b.click({storyPane:'check'});b.proofDraft('outside',['boundary','blue']);b.click({storyPane:'archive'});
+ b=boot(b.state());assert.deepEqual(b.state().storyEvidence,['boundary','blue']);assert.deepEqual(b.state().storyQuestions,['scope-origin','scope-index']);
+ b.click({storyPane:'source'});assert.match(b.view(),/得另查交接/);b.click({storyPane:'check'});b.proof('outside');assert.deepEqual(b.state().storyQuestions,[]);
+ const c=scope();c.click({storyPane:'check'});c.proof('outside');assert.equal(c.state().story.facts.scope,true); // no question quota
 });

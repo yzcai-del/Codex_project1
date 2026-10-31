@@ -18,8 +18,8 @@
   'N06T.scoped':'contact','N06T.formal':'contact','N08.compare':'outside',
   'N09.voluntary':'backfill','N09.formal':'backfill','N09R.originals':'gap','N10.complete':'separate'
  })[node+'.'+choice]||null;
- const requiredEvidence=(node,choice)=>challenge(node,choice)==='backfill'?['han','sun']:[];
- function begin(s){return {format:1,facts:seed(s),index:0,log:[],pending:null,ending:null,relationship:null};}
+ const requiredEvidence=(node,choice)=>challenge(node,choice)==='backfill'?['han','sun']:challenge(node,choice)==='outside'?['boundary','index']:[];
+ function begin(s){return {format:2,facts:seed(s),index:0,log:[],pending:null,ending:null,relationship:null};}
  function choices(run){return run.ending?[]:model.nodes[run.index].options.filter(o=>match(o.requires,run.facts));}
  function commit(run,id,answer,evidence=[]){
   if(run.ending)return null;
@@ -32,17 +32,20 @@
  }
  function restore(s,raw){
   if(!eligible(s)||!raw||typeof raw!=='object')return null;
-  if(raw.format!==undefined&&raw.format!==1)return null;
+  if(raw.format!==undefined&&raw.format!==1&&raw.format!==2)return null;
   let run=begin(s);
   if(Array.isArray(raw.log))for(const step of raw.log.slice(0,model.nodes.length)){
    if(!step||run.ending||model.nodes[run.index]?.id!==step.node)break;
-   const updated=commit(run,step.choice,step.answer,step.evidence===undefined&&raw.format===undefined?requiredEvidence(step.node,step.choice):step.evidence);if(!updated)break;run=updated;
+   const legacyMissing=step.evidence===undefined&&raw.format===undefined;
+   const priorScope=raw.format===1&&challenge(step.node,step.choice)==='outside'&&(step.evidence===undefined||Array.isArray(step.evidence)&&step.evidence.length===0);
+   const evidence=legacyMissing||priorScope?requiredEvidence(step.node,step.choice):step.evidence;
+   const updated=commit(run,step.choice,step.answer,evidence);if(!updated)break;run=updated;
   }
   if(!run.ending&&choices(run).some(o=>o.id===raw.pending))run.pending=raw.pending;
   if(run.ending&&['continue','bounded','distance'].includes(raw.relationship))run.relationship=raw.relationship;
   return run;
  }
- function rewind(s,run,count){return restore(s,{log:run.log.slice(0,Math.max(0,Math.min(count,run.log.length)))});}
+ function rewind(s,run,count){return restore(s,{format:2,log:run.log.slice(0,Math.max(0,Math.min(count,run.log.length)))});}
  function date(run,pending=false){
   const n=model.nodes[run.index]?.id;
   if(n==='N17'&&pending&&run.pending==='site')return '12月 / 专业复核与整改';
