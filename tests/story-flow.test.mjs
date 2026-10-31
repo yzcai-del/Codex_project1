@@ -1,0 +1,113 @@
+
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {boot,collected,script} from './helpers/game.mjs';
+
+test('script compiles; evidence separates phone sources and avoids fictional scheduling logs',()=>{
+ const b=boot();
+ assert.match(b.view(),/工作号 → 你/);
+ assert.match(b.view(),/个人号短信/);
+ assert.match(b.view(),/相册里那张北站图也能看，别的先别翻/);
+ b.click({clue:'scheduled'});
+ assert.match(b.text('inspect-title'),/本地发送/);
+ assert.doesNotMatch(script,/19:02|任务建立|同步了刚才/);
+ b.tab('album');assert.match(b.view(),/2024年5月16日/);
+
+});
+test('Chen can be contacted before solving; denial survives a reload',()=>{
+ const b=boot();
+ b.click({command:'call-chen'});
+ assert.equal(b.state().contactVerified,true);
+ const loaded=boot(b.state());
+ assert.match(loaded.view(),/没托人拿/);
+});
+test('without location disclosure no courier appears or can receive the bag',()=>{
+ const b=collected();
+ b.click({route:'chen'});assert.equal(b.state().stage,'locker');
+ b.code('0000');assert.equal(b.state().stage,'locker');
+ b.code('2317');assert.equal(b.state().stage,'handoff');
+ assert.doesNotMatch(b.view(),/data-recipient="courier"/);
+ b.click({recipient:'courier'});assert.equal(b.state().stage,'handoff');
+ b.click({recipient:'chen'});
+ assert.equal(b.state().ending,'safe');
+ assert.equal(b.state().contactVerified,true);
+ assert.match(b.view(),/八张|数清八张/);
+ assert.match(b.view(),/原页别折/);
+ const loaded=boot(b.state());assert.equal(loaded.state().stage,'ending');
+});
+test('explicit disclosure precedes courier arrival and lost custody persists on reload',()=>{
+ const b=collected();
+ assert.match(b.view(),/回复陌生号码：青禾洗衣/);
+ b.click({route:'stranger'});b.code('2317');
+ assert.match(b.view(),/data-recipient="courier"/);
+ b.click({recipient:'courier'});
+ assert.equal(b.state().ending,'lost');
+ assert.match(b.view(),/签过字的那张纸也在袋里/);
+ assert.match(b.view(),/孟雪打印/);
+ assert.match(b.view(),/十一分钟后/);
+ assert.equal(boot(b.state()).state().ending,'lost');
+ b.click({command:'reconsider'});
+ assert.equal(b.state().stage,'departure');
+ assert.equal(b.state().ending,null);
+ assert.equal(b.state().departureRoute,null);
+});
+test('forged progress lacking disclosure or verified identity cannot restore an ending',()=>{
+ const b=boot();
+ const common={tab:'case',deduction:true,clues:['scheduled','photo','receipt'],stage:'ending',lockerOpened:true,handoffKnowledge:'verified'};
+ assert.equal(b.rules.normalize({...common,ending:'lost'}).stage,'departure');
+ assert.notEqual(b.rules.normalize({...common,ending:'lost',departureRoute:'chen'}).stage,'ending');
+ assert.notEqual(b.rules.normalize({...common,ending:'safe',departureRoute:'chen'}).stage,'ending');
+ assert.equal(b.rules.normalize({...common,ending:'safe',departureRoute:'chen',contactVerified:true}).stage,'ending');
+ assert.equal(b.rules.validCode(2317),false);
+});
+test('hints clamp, reset cancellation preserves progress, confirmed reset starts only the preview save',()=>{
+ const b=collected();
+ for(let i=0;i<5;i++)b.click({command:'hint'});
+ assert.equal(b.state().hints.departure,3);
+ b.press('reset');assert.equal(b.dialog('reset-dialog'),true);
+ b.press('cancel-reset');assert.equal(b.state().stage,'departure');
+ b.press('reset');b.press('confirm-reset');
+ assert.equal(b.state().stage,'investigate');
+ assert.deepEqual(b.state().clues,[]);
+ assert.equal(b.state().departureRoute,null);
+});
+
+test('calling Chen before delivery changes the dialogue and is preserved after reload',()=>{
+ const b=collected();
+ b.click({command:'call-chen'});
+ b.click({route:'stranger'});b.code('2317');b.click({recipient:'courier'});
+ assert.equal(b.state().handoffKnowledge,'verified');
+ assert.match(b.view(),/你没给他吧/);
+ assert.doesNotMatch(b.view(),/哪个司机/);
+ assert.match(boot(b.state()).view(),/你没给他吧/);
+});
+test('calling Chen after delivery does not rewrite the earlier scene',()=>{
+ const b=collected();
+ b.click({route:'stranger'});b.code('2317');b.click({recipient:'courier'});
+ b.tab('messages');b.click({command:'call-chen'});
+ b.tab('case');b.click({command:'show-clues'});
+ assert.match(b.view(),/回到本轮交接结果/);
+ b.click({command:'return-ending'});
+ assert.equal(b.state().handoffKnowledge,'unverified');
+ assert.match(b.view(),/哪个司机/);
+ assert.doesNotMatch(b.view(),/你没给他吧/);
+});
+
+
+test('player-facing narrative uses you while each quoted speaker keeps their own pronouns',()=>{
+ const b=boot();
+ assert.match(b.view(),/你的身份 · 许岑/);
+ assert.match(b.view(),/你拨了她的工作号/);
+ assert.match(b.view(),/你好，我替陈老师/);
+ b.click({command:'call-chen'});
+ assert.match(b.view(),/我还在地铁上/);
+ b.tab('album'); assert.match(b.view(),/你翻到2024年/);
+ b.tab('messages'); b.click({clue:'promise'});
+ assert.match(b.text('inspect-title'),/你保留/);
+ const safe=collected();safe.click({route:'chen'});safe.code('2317');safe.click({recipient:'chen'});
+ assert.match(safe.view(),/你把孟雪打印的凭证递过去/);
+ assert.match(safe.view(),/原页别折。我夹一下/);
+ const lost=collected();lost.click({route:'stranger'});lost.code('2317');lost.click({recipient:'courier'});
+ assert.match(lost.view(),/你把纸袋递进去/);
+ assert.doesNotMatch(lost.view(),/我把袋子|我手上|我说袋子/);
+});

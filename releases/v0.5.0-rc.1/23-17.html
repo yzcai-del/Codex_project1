@@ -1,0 +1,1032 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#131b27"><title>23:17 — 最后一条消息</title>
+  <style>:root{
+ color-scheme:dark;--bg:#131b27;--ink:#e9edf2;--muted:#a5b0bf;--accent:#e7bb78;
+ --panel:#202c3c;--line:#3c4b5e;--blue:#adc7eb;--paper:#ede2c9;--paper-ink:#39352f;
+ --mono:Consolas,'Courier New',monospace;--serif:Georgia,'Songti SC','SimSun',serif;--sans:'Segoe UI','Microsoft YaHei',sans-serif
+}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 9% 18%,#62503b55,transparent 48%),radial-gradient(ellipse at 84% 80%,#30436155,transparent 52%),#171a20;color:var(--ink);font-family:var(--sans);min-height:100vh}
+button,input{font:inherit}button{cursor:pointer;transition:background .15s,color .15s,transform .15s}button:hover{filter:brightness(1.12)}button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:3px}button:disabled{cursor:not-allowed;opacity:.4}
+.scene{max-width:1500px;margin:auto;min-height:100vh;padding:78px 56px 40px;display:grid;grid-template-columns:minmax(260px,1fr) 400px minmax(180px,.7fr);align-items:center;gap:58px}
+.editorial{position:relative}.edition{font:12px var(--mono);letter-spacing:3px;color:var(--accent);margin-bottom:50px}.edition span{display:block;font-size:9px;letter-spacing:1.3px;color:var(--muted);margin-top:9px}.eyebrow{font:11px var(--sans);letter-spacing:2px;color:var(--accent);margin-bottom:20px}.chapter-number{position:absolute;top:65px;right:12px;font:150px/1 var(--serif);color:#e7bb7809;pointer-events:none}
+.editorial h1{position:relative;font:72px/1.2 var(--serif);letter-spacing:-2px;margin:0 0 30px;font-weight:400}.editorial em{color:var(--accent);font-style:normal}.intro{font-size:14px;line-height:2.2;color:#c4c5c9}.divider{height:1px;width:55px;background:#9b7f59;margin:26px 0}.instruction{font-size:13px;line-height:2.1;color:var(--muted)}.meta{display:flex;gap:14px;flex-wrap:wrap;margin-top:25px;font-size:10px;color:#c9bba6}.meta span+span:before{content:'·';margin-right:14px;color:#9b7f59}.version{font:10px/1.9 var(--mono);color:var(--muted);margin-top:30px;max-width:280px}
+.phone{height:800px;max-height:calc(100vh - 88px);min-height:620px;width:400px;display:flex;flex-direction:column;border:1px solid #6d7787;border-radius:32px;background:var(--bg);overflow:hidden;box-shadow:0 36px 95px #0009,0 0 0 6px #0c1118,1px 0 0 7px #59617066}
+.statusbar{display:flex;justify-content:space-between;padding:18px 24px 10px;font:11px var(--mono);color:#d2d9e3}.statusbar>span+span{font-size:9px}.phonehead{padding:15px 23px 18px;display:flex;justify-content:space-between;align-items:center}.small-label{font:10px/1.6 var(--mono);letter-spacing:1.4px;color:var(--muted)}.phonehead h2{font-size:18px;font-weight:500;margin:6px 0 0}.live-dot{display:inline-block;background:var(--accent);width:5px;height:5px;border-radius:50%;vertical-align:middle;margin-left:6px}.iconbutton{background:none;border:1px solid var(--line);border-radius:50%;color:var(--muted);font-size:21px;min-width:36px;min-height:36px}
+.tabs{display:flex;border-bottom:1px solid var(--line);padding:0 15px;gap:6px}.tabs button{position:relative;flex:1;min-height:46px;border:0;background:none;color:var(--muted);font-size:13px;padding:12px 0 15px}.tabs button.active{color:var(--accent)}.tabs button.active:after{content:'';position:absolute;bottom:-1px;left:15px;right:15px;height:2px;background:var(--accent)}.tabs span{font:10px var(--mono);margin-left:2px}.screen{overflow-y:auto;flex:1;min-height:0;padding:20px;scrollbar-width:thin;scrollbar-color:#657187 transparent;overscroll-behavior:contain}.homebar{margin:12px auto 10px;background:#778395;border-radius:5px;width:100px;height:4px;flex-shrink:0}.section-label{font:10px/1.6 var(--mono);letter-spacing:1.4px;color:var(--muted);margin:3px 0 16px}
+.role-card{border:1px solid #947550;border-radius:3px;padding:15px 17px;margin:0 0 24px;background:linear-gradient(120deg,#3a3027,#25282e)}.role-card .small-label{color:#e7bb78}.role-card p{font-size:13px;line-height:1.95;color:#e3d9c8;margin:8px 0 0}.thread{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:15px;margin-bottom:15px}.thread-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:12px}.thread-head strong{font-size:13px;font-weight:500}.thread-head time{font:10px var(--mono);color:var(--muted);flex-shrink:0}.avatar{background:#485467;color:#e7e1d6;display:inline-grid;place-items:center;border-radius:7px;width:27px;height:27px;margin-right:9px;font-size:12px}.thread p{font-size:13px;line-height:2;color:#d6dde6;margin:8px 0}.chat-time{display:block;text-align:center;color:#aab8ca;font:10px/1.7 var(--mono);margin:18px 0 10px}
+.bubble{margin:0 18px 0 0;background:#344b68;border-radius:3px 12px 12px;padding:12px 14px;color:#edf2fa;font-size:13px;line-height:1.95}.bubble.me{background:#4b4234;color:#f3e9d6;margin:10px 0 0 18px;border-radius:12px 3px 12px 12px}.bubble.stranger{background:#353a47}.message-author{display:block;font:10px var(--mono);color:#d4c3a7;margin-bottom:8px}.inspect-button{display:block;width:100%;text-align:left;border:1px solid #60748c;background:#25364a;border-radius:7px;color:#d0e1f5;padding:12px;font-size:12px;line-height:1.7;margin-top:14px}.inspect-button small{display:block;font:10px var(--mono);letter-spacing:1px;color:#a5bbd4;margin-top:4px}.tip{color:var(--muted);font-size:12px;line-height:1.9}.thread .tip{color:var(--muted);font-size:11px}
+.memory{margin:24px 0 8px;border-top:1px solid var(--line);padding:18px 3px 0}.memory p,.memory blockquote{font-size:13px;line-height:2;color:#c6cfda}.memory blockquote{margin:8px 0;padding-left:14px;border-left:2px solid #937957}
+.photo{height:205px;position:relative;overflow:hidden;background:linear-gradient(#9aa4ac,#c3bfac 57%,#777c7c 58%,#3a4351);border-radius:5px;display:grid;place-items:center;margin:15px 0}.photo:before{content:'';position:absolute;inset:43% 0 0;background:repeating-linear-gradient(90deg,transparent 0 49px,#283646 50px 54px);transform:perspective(180px) rotateX(26deg)}.station-roof{position:absolute;inset:0 0 53%;background:repeating-linear-gradient(110deg,transparent 0 55px,#667481 56px 59px),linear-gradient(#414d60,#b6b7ad);border-bottom:6px solid #394655}.station-sign{position:relative;align-self:start;margin-top:32px;background:#1b4057;border:1px solid #c0d3d8;padding:10px 26px 8px;font:20px var(--sans);letter-spacing:7px;box-shadow:0 10px 20px #0005;color:#edf2ed}.station-sign small{position:static!important;display:block;font:7px var(--mono)!important;letter-spacing:1px;margin-top:5px;text-align:center}.station-bench{position:absolute;bottom:26px;right:16px;width:170px;height:23px;border-bottom:6px solid #313d4c;background:repeating-linear-gradient(90deg,#607083 0 35px,#273a4a 36px 39px);transform:skewX(-8deg)}.photo>small{position:absolute;bottom:7px;right:9px;font:9px var(--mono);color:#f2e9d9;background:#182331b8;padding:3px 5px}
+.luggage{position:absolute;bottom:4px;left:20px;width:48px;height:69px;border:2px solid #28384b;border-radius:7px;background:repeating-linear-gradient(90deg,#68747f 0 8px,#4c5967 9px 11px);transform:rotate(-7deg);box-shadow:8px 7px 9px #0005}.luggage:before{content:'';position:absolute;left:13px;top:-26px;width:15px;height:24px;border:3px solid #273441;border-bottom:0;border-radius:4px 4px 0 0}.luggage:after{content:'';position:absolute;top:-14px;left:12px;width:20px;height:7px;background:#e2bb51}
+.receipt{position:relative;background:#ede4d0;color:#343c41;padding:23px 19px 28px;margin:19px 4px;box-shadow:0 7px 15px #0004;font:12px/1.95 var(--mono);border-top:5px solid #d8cdb5;clip-path:polygon(0 0,100% 0,100% 98%,97% 100%,94% 98%,91% 100%,88% 98%,85% 100%,82% 98%,79% 100%,76% 98%,73% 100%,70% 98%,67% 100%,64% 98%,61% 100%,58% 98%,55% 100%,52% 98%,49% 100%,46% 98%,43% 100%,40% 98%,37% 100%,34% 98%,31% 100%,28% 98%,25% 100%,22% 98%,19% 100%,16% 98%,13% 100%,10% 98%,7% 100%,4% 98%,0 100%)}.receipt strong{font-size:19px}.receipt hr{border:0;border-top:1px dashed #938d7d;margin:13px 0}
+.note{position:relative;background:linear-gradient(105deg,#f1e7cf,#e4d7b8);border-left:3px solid #b77757;padding:21px 19px;margin:14px 0;color:var(--paper-ink);font:14px/2 var(--serif);box-shadow:0 5px 14px #0003}.note h3{font:18px var(--serif);color:#39332a;margin:0 0 14px}.note blockquote{border-color:#a16d4b;color:#40362a}.note .inspect-button{color:#354963;border:1px solid #87949e;background:#d4d9d6}.note .inspect-button small{color:#47586b}.note .small-label{color:#6f6250}
+.evidence{border:1px solid #4b5867;border-left:3px solid #be985f;background:#1c2734;padding:14px;margin:12px 0}.evidence strong{font-size:13px;font-weight:500;color:#e8c996}.evidence p{font-size:12px;line-height:1.9;color:#c6d1df;margin:8px 0 0}.empty{font-size:13px;line-height:2;color:var(--muted);padding:15px 0}
+.primary,.secondary{border:0;border-radius:7px;padding:13px 16px;font-size:13px;min-height:44px}.primary{background:var(--accent);color:#30271b}.secondary{border:1px solid #65768d;background:#283649;color:#e1e8f1}.wide{width:100%;margin-top:16px}.choice{width:100%;text-align:left;border:1px solid #5a6c82;background:#26364a;border-radius:8px;padding:15px;margin:8px 0;color:#e2eaf5;font-size:13px;line-height:1.7}.choice small{display:block;color:#b6c3d5;font-size:11px;line-height:1.8;margin-top:6px}.code{width:100%;background:#101824;border:1px solid #9e805a;border-radius:7px;color:#edc994;padding:14px;text-align:center;font:25px var(--mono);letter-spacing:13px;margin:9px 0}.error{color:#efb5a6;font-size:12px;line-height:1.8;min-height:20px}
+.ending{text-align:left;padding-top:12px}.ending h3{font:31px/1.5 var(--serif);margin:20px 0;color:var(--accent)}.ending p{font:14px/2.1 var(--serif);color:#d4dce6}.ending .ending-id{font:10px var(--mono);letter-spacing:2px;color:#d2ad78}blockquote{margin:18px 0;padding-left:15px;border-left:2px solid var(--accent);font-size:13px;line-height:2;color:#e2e8f1}.dialogue{border-left:2px solid #c39862;margin:20px 0;padding-left:14px}.dialogue p{font-family:var(--sans);font-size:13px;margin:9px 0}.dialogue span{display:block;font:10px var(--mono);color:#b9a184;margin-bottom:3px}
+.case-sidebar{position:relative;background:#d9ceb6;color:#39362f;padding:31px 25px 25px;box-shadow:0 15px 32px #0005;transform:rotate(1deg)}.case-sidebar:before{content:'';position:absolute;top:-12px;left:32%;width:68px;height:24px;background:#b5a78988;transform:rotate(-5deg);border-left:1px solid #cbbfa655;border-right:1px solid #cbbfa655}.case-sidebar .eyebrow{font:10px var(--mono);color:#726049;letter-spacing:1.5px}.case-sidebar h3{font:24px/1.6 var(--serif);font-weight:400;margin:0 0 20px}.case-sidebar p:not(.eyebrow){font-size:12px;line-height:2;color:#625b4f}.case-progress{border-top:1px solid #aaa087;border-bottom:1px solid #aaa087;padding:20px 0;margin:24px 0}.case-progress>span{font:32px var(--mono);color:#504a3f}.case-progress small{display:block;font-size:11px;color:#6b6253;margin-top:9px}.case-stamp{display:inline-block;float:right;border:1px solid #9a5547;color:#9a5547;padding:5px 8px;font:12px var(--serif);transform:rotate(-8deg);margin-bottom:10px}.quiet{font-size:11px!important}
+dialog{background:#e9dfc8;color:#39362f;border:1px solid #9b8b70;border-radius:5px;padding:29px;width:min(440px,calc(100vw - 32px));max-height:calc(100dvh - 40px);overflow-y:auto;box-shadow:0 20px 90px #0009;color-scheme:light}dialog::backdrop{background:#080e18c9;backdrop-filter:blur(5px)}dialog h3{font:23px/1.5 var(--serif);margin:18px 0}dialog p{font-size:13px;line-height:2;color:#514a3d}dialog .small-label{color:#685b46}dialog .primary{width:100%;margin-top:15px;background:#354a64;color:#f2eee6}dialog .secondary{background:transparent;color:#394b63}dialog button:focus-visible{outline-color:#354a64}.dialog-close{position:absolute;top:7px;right:9px;color:#625846;background:none;border:0;font-size:25px;min-width:40px;min-height:40px}.detail-row{display:grid;grid-template-columns:minmax(76px,.8fr) minmax(0,1.3fr);gap:15px;border-bottom:1px solid #b9ad95;padding:13px 0;font-size:12px;line-height:1.8;overflow-wrap:anywhere}.detail-row span{color:#6a5d49}.detail-row b{font-weight:400;text-align:right;color:#334b68}.actions{display:flex;gap:10px;align-items:stretch}.actions button{flex:1;margin-top:15px}.toast{position:fixed;bottom:28px;left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:#edc78f;color:#32291b;border-radius:8px;padding:12px 23px;z-index:20;font-size:13px;transition:opacity .2s,transform .2s}.toast.show{opacity:1;transform:translate(-50%,0)}
+.question-title{font-size:15px;font-weight:500;line-height:1.9;margin:20px 0 10px}.deduction-panel{border-top:1px solid var(--line);margin-top:18px;padding-top:4px}.evidence-option{display:flex;align-items:center;gap:11px;padding:14px 11px;margin:8px 0;background:#233247;border:1px solid #596e89;border-radius:7px;font-size:13px;cursor:pointer;line-height:1.8}.evidence-option input{accent-color:var(--accent);width:18px;height:18px;flex-shrink:0}.deduction-done{color:#bdd3e9;font-size:12px;line-height:1.9}.hint-box{margin-top:18px;padding-bottom:8px}.hint-box .secondary{font-size:12px}.hint-box .tip{border-left:1px solid #9a7c54;padding-left:12px}
+.laundry-scene{position:relative;overflow:hidden;height:180px;border:1px solid #6c6966;background:linear-gradient(#b3a08030 45%,#c6ad7c22 46%,#152330 47%),repeating-linear-gradient(90deg,#26394a 0 35px,#344759 36px 38px);margin:14px 0 20px;border-radius:4px;box-shadow:inset 0 0 45px #060e18}.shop-sign{position:absolute;top:16px;left:21px;color:#f0ddae;font:21px var(--serif);text-shadow:0 0 10px #d6b26a}.shop-sign small{font:8px var(--mono);display:block;letter-spacing:2px;margin-top:5px}.washer{position:absolute;bottom:27px;width:76px;height:83px;background:linear-gradient(110deg,#9b9b8c,#6d7c7b);border:2px solid #3d4a50;border-radius:3px;box-shadow:0 8px 12px #0006}.washer:before{content:'';position:absolute;top:22px;left:12px;width:48px;height:48px;border:6px solid #b2b3a6;border-radius:50%;background:radial-gradient(ellipse at 65% 65%,#b5aa86 0 20%,#344655 24%,#0f1b2b 67%);box-shadow:0 0 0 2px #3d4e59}.washer:after{content:'';position:absolute;top:9px;right:10px;width:16px;height:5px;background:#d6bb7f}.washer.one{left:20px}.washer.two{left:102px}.cabinet{position:absolute;right:20px;bottom:27px;height:108px;width:75px;border:2px solid #78858c;background:repeating-linear-gradient(#455968 0 34px,#8b9b9f 35px 36px);color:#e7d6b4;font:10px var(--mono);padding:80px 9px 0;text-align:right}.scene-caption{position:absolute;bottom:5px;left:12px;font:9px var(--mono);color:#ccc5b7}
+@media(min-width:1550px){.scene{gap:80px}.phone{height:850px}}
+@media(max-width:1190px){.scene{grid-template-columns:minmax(240px,1fr) 400px;gap:40px;padding:50px 40px 30px}.case-sidebar{display:none}.editorial h1{font-size:64px}}
+@media(max-width:760px){body{background:var(--bg)}.scene{display:block;padding:0;min-height:100dvh}.editorial,.case-sidebar{display:none}.phone{width:100%;height:100dvh;max-height:none;min-height:0;border:0;border-radius:0;box-shadow:none}.screen{padding:20px 22px}.phonehead{padding:12px 22px 16px}.statusbar{padding:15px 23px 9px}.thread{padding:15px}.homebar{margin-bottom:max(10px,env(safe-area-inset-bottom))}.toast{width:max-content;max-width:90vw;text-align:center}.ending{padding:12px 4px}.photo{height:210px}.edition{position:static}}
+@media(max-width:360px){.screen{padding:16px}.thread{padding:12px}.thread-head{flex-wrap:wrap}.cabinet{right:10px;width:65px}.washer.one{left:10px}.washer.two{left:90px}.detail-row{grid-template-columns:1fr;gap:3px}.detail-row b{text-align:left}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* Act two: a conversation, a shop's own records, and a bounded conclusion. */
+.call-card{padding:19px 17px;background:linear-gradient(130deg,#24364d,#1b2637);border:1px solid #5b7290;border-top:3px solid #adcae5;border-radius:10px;margin:12px 0 23px}
+.call-card h3{font:22px/1.6 var(--serif);color:#e8cfaa;margin:15px 0}
+.call-card p,.conversation-record p{font-size:13px;line-height:2;color:#d6dfe9}
+.conversation-record{padding:4px 14px;margin:17px 0;border-left:2px solid #8c7658;background:#1c2839}
+.note .dialogue span{color:#685b46}.note .dialogue p{color:#39352f}.note .dialogue{border-color:#a67850}
+.field-label,fieldset legend{display:block;font-size:13px;line-height:1.9;margin:17px 0 9px;color:#d9e3ee}
+select{width:100%;max-width:100%;font:13px/1.7 var(--sans);padding:13px 10px;border:1px solid #6b809c;border-radius:6px;background:#202f43;color:#edf1f5;min-height:46px}
+select:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+fieldset{border:0;padding:0;margin:15px 0;min-width:0}
+.counter-scene{height:176px;position:relative;overflow:hidden;background:linear-gradient(175deg,#66808b66 0 47%,#92816a 48%,#493d34);border:1px solid #72808b;border-radius:4px;box-shadow:inset 0 0 30px #1b243a66;margin:14px 0 21px}
+.desk-book{position:absolute;left:19px;top:25px;width:53%;height:113px;background:repeating-linear-gradient(#d8ccb2 0 24px,#ada18c 25px 26px);border-left:8px solid #6e6556;color:#4b4438;padding:15px 10px;transform:rotate(-5deg);box-shadow:3px 7px 12px #0004;font:17px var(--serif)}
+.desk-book span{display:block;font:10px var(--mono);margin-top:17px}
+.desk-slip{position:absolute;right:22px;top:39px;padding:13px 17px;background:#f0e8d5;color:#3f4244;box-shadow:2px 5px 9px #0004;font:11px/1.7 var(--mono);transform:rotate(7deg)}
+.desk-slip b{font-size:21px;font-weight:400}.counter-scene>small{position:absolute;bottom:7px;right:9px;color:#e8dfcc;font:9px var(--mono);background:#2b2826b0;padding:3px}
+.event-strip{border-left:2px solid #aa8454;padding-left:18px;margin:24px 0}
+.event-strip div{position:relative;margin:22px 0}.event-strip div:before{content:'';position:absolute;left:-23px;top:4px;background:#e6bd82;width:8px;height:8px;border-radius:50%}
+.event-strip time{display:block;color:#b4c4d8;font:11px var(--mono);margin-bottom:8px}
+.event-strip b{display:block;font-size:13px;line-height:1.8;color:#e4dfd4;font-weight:400}
+@media(max-width:360px){.desk-book{left:11px;width:56%;font-size:15px}.desk-slip{right:12px;padding:12px}.call-card{padding:15px}}
+
+/* Later investigation: paper sources, visible choices, and an equivalent text map. */
+.scope-map{margin:22px 0;padding:18px;background:#f1e5d0;color:#302b24;border:1px solid #8d806b;border-radius:8px}
+.scope-map figcaption{font-weight:700;margin-bottom:16px}.scope-map p{font-size:14px;line-height:1.8}
+.map-body{display:grid;gap:16px}.map-main{border:3px solid #4d5969;background:#e5e8ed;padding:18px;text-align:center}
+.map-side{border:2px dashed #795a32;padding:15px;line-height:2;background:#f5e6c9}
+.map-side small,.map-main small{display:block;color:#3d3d3d}.source-slip{padding:16px;margin:18px 0;border-left:4px solid #9b774b;background:#f4ead8;color:#302b24;line-height:1.9}
+.fact-summary,.choice-history{padding:18px;margin:20px 0;border:1px solid #52627b;border-radius:8px;background:#1b293b;color:#e2e9f3;line-height:1.9}
+.fact-summary summary,.choice-history summary{cursor:pointer;font-weight:700}.history-row{display:flex;gap:12px;align-items:center;justify-content:space-between;border-top:1px solid #536076;padding:14px 0}.history-row small{display:block;font-size:13px;color:#c3cddd}.history-row .secondary{min-height:44px;white-space:nowrap}.history-row .history-entry{min-width:0;flex:1}
+.story-result p,.note p{line-height:1.95}.story-choices .choice:disabled{opacity:1;color:#b7c1ce;border-style:dashed;background:#1b2636;cursor:not-allowed}.story-choices .choice:disabled small{color:#b7c1ce}.relationship-note{padding:15px;background:#213247;color:#f0e5d3}.choice[aria-pressed=true]{outline:2px solid #d8be8b;outline-offset:2px}
+#story-proof-form{padding:18px;border:1px solid #62718b;border-radius:8px;margin:20px 0}#story-proof-form fieldset{border:0;padding:0}#story-proof-form legend{font-weight:700;line-height:1.8;margin-bottom:12px}
+@media(max-width:560px){.scope-map{padding:12px}.history-row{align-items:flex-start}.history-row .history-entry{overflow-wrap:anywhere}.source-slip{padding:12px}.fact-summary,.choice-history{padding:14px}}
+
+.history-row .scope-map small{color:#3d3d3d}.statusbar{gap:10px}.statusbar>span:first-child{min-width:0;overflow-wrap:anywhere}
+</style>
+</head>
+<body>
+  <main class="scene">
+    <aside class="editorial">
+      <div class="edition">AFTER HOURS <span>INTERACTIVE FICTION / 001</span></div>
+      <p class="eyebrow">都市悬疑 / 你的第一份调查记录</p>
+      <div class="chapter-number" aria-hidden="true">01</div><h1>最后一条<br><em>消息。</em></h1>
+      <p class="intro">林遥的旧手机还在餐桌边充电。<br>她说下楼买包烟。<br>两小时后，你收到她的短信。</p>
+      <div class="divider"></div>
+      <p class="instruction">“到北站了。明早再说。”<br>你按亮桌上的旧机，<br>短信栏里也有这句话。</p>
+      <div class="meta"><span>证据推理</span><span>16种常规结局＋隐藏结局</span><span>无惊吓画面</span></div>
+      <p class="version">候选版 v0.5.0-rc.1 · 浏览器验收待完成 · 全部人物与事件均为虚构</p>
+    </aside>
+    <section class="phone" aria-label="你的记录和林遥授权的旧机资料">
+      <div class="statusbar"><span id="story-time">10/25 23:17</span><span>本地记录 <span aria-hidden="true">▂▄▆　▰</span></span></div>
+      <header class="phonehead"><div><span class="small-label">RECORDS / 23:17</span><h2>调查记录 <span class="live-dot"></span></h2></div><button id="reset" class="iconbutton" aria-label="重新开始">↺</button></header>
+      <nav class="tabs" aria-label="调查资料">
+        <button class="active" data-tab="messages" aria-selected="true">消息</button>
+        <button data-tab="album" aria-selected="false">资料</button>
+        <button data-tab="notes" aria-selected="false">便签</button>
+        <button data-tab="case" aria-selected="false">调查 <span id="count">0</span></button>
+      </nav>
+      <div id="screen" class="screen" tabindex="-1"></div>
+      <div class="homebar" aria-hidden="true"></div>
+    </section>
+    <aside class="case-sidebar"><div class="case-stamp" aria-hidden="true">待核对</div><p class="eyebrow">YOUR OBJECTIVE</p><h3 id="objective-title">她说去了北站。<br>你能确定吗？</h3><p>检查原始记录，<br>用证据回答问题。</p><div class="case-progress"><span id="progress">00 / 03</span><small id="progress-label">地点材料已记录</small></div><p class="quiet">记录信息后，进入「调查」。<br>需要时可以逐步查看提示。<br>进度保存在当前浏览器。</p></aside>
+  </main>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <dialog id="inspect"><button id="close-dialog" class="dialog-close" aria-label="关闭检查">×</button><span class="small-label">INSPECT / 检查原始信息</span><h3 id="inspect-title"></h3><div id="inspect-content"></div><button id="record" class="primary">记录线索</button></dialog>
+  <dialog id="reset-dialog"><h3>重新开始这次调查？</h3><p>这会清除当前浏览器中的样片进度。</p><div class="actions"><button id="cancel-reset" class="secondary">继续调查</button><button id="confirm-reset" class="primary">重新开始</button></div></dialog>
+  <dialog id="replay-dialog" aria-labelledby="replay-title" aria-describedby="replay-detail"><h3 id="replay-title">重选昨夜的交接？</h3><p id="replay-detail">这会清除本轮交接结果、次日问答、柜台核对以及之后的全部剧情、材料与结局，回到出门前。那时已记录的材料与联系情况会保留。</p><div class="actions"><button id="cancel-replay" class="secondary" autofocus>保留当前进度</button><button id="confirm-replay" class="primary">回到出门前</button></div></dialog>
+<dialog id="story-replay-dialog" aria-labelledby="story-replay-title"><h3 id="story-replay-title">回到这次选择之前？</h3><p>将清除这次选择及之后的后续知情、材料、说明与结局。昨夜交接和柜台核对保留。</p><div class="actions"><button id="cancel-story-replay" class="secondary" autofocus>保留当前进度</button><button id="confirm-story-replay" class="primary">确认回退</button></div></dialog>
+<script>// Pure story rules shared by the browser and Node checks.
+(function (root) {
+  'use strict';
+  const baseClues = ['scheduled', 'photo', 'receipt', 'promise', 'contact'];
+  const laterClues = ['cabinetLog', 'counterNote', 'camera'];
+  const clueIds = new Set([...baseClues, ...laterClues]);
+  const initial = () => ({
+    tab: 'messages', clues: [], stage: 'investigate', ending: null,
+    deduction: false, hints: {}, departureRoute: null,
+    contactVerified: false, lockerOpened: false, handoffKnowledge: null, departureCheckpoint: null,
+    morningStarted: false, morningQuestions: [], counterVisited: false, videoChoice: null, counterConclusion: null,
+    counterDraft: {event:"",evidence:[],limit:""}, story:null
+  });
+  const canVisitLocker = s => s.deduction === true && s.clues.includes('receipt');
+  const validCode = code => typeof code === 'string' && /^\d{4}$/.test(code) && code === '2317';
+  const endingFor = recipient => recipient === 'chen' ? 'safe' : recipient === 'courier' ? 'lost' : null;
+  const evaluateDeduction = selected => {
+    if (!Array.isArray(selected)) return false;
+    const values = [...new Set(selected)];
+    return values.length === 2 && values.includes('scheduled') && values.includes('photo');
+  };
+  const canHandoff = (s, recipient) =>
+    s.stage === 'handoff' && canVisitLocker(s) && s.lockerOpened === true &&
+    ['chen', 'stranger'].includes(s.departureRoute) &&
+    (recipient === 'chen' ? s.contactVerified === true :
+      recipient === 'courier' && s.departureRoute === 'stranger');
+  const completeHandoff = (s, recipient) => canHandoff(s, recipient) ? {
+    ending: endingFor(recipient),
+    handoffKnowledge: s.contactVerified ? 'verified' : 'unverified'
+  } : null;
+  const canStartMorning = s => ['safe','lost'].includes(s.ending) && s.lockerOpened === true && canVisitLocker(s);
+  const canInspectClue = (s,id) => baseClues.includes(id) ||
+    (s.counterVisited === true && (id === 'cabinetLog' || id === 'counterNote' ||
+      (id === 'camera' && s.videoChoice === 'view')));
+  const normalizeCounterDraft = (s,raw) => {
+    const draft={event:'',evidence:[],limit:''};
+    if (!s.counterVisited || !raw || typeof raw!=='object') return draft;
+    if (['arrival','stored','collected'].includes(raw.event)) draft.event=raw.event;
+    if (['box','custody-gap','safety'].includes(raw.limit)) draft.limit=raw.limit;
+    if (Array.isArray(raw.evidence)) draft.evidence=[...new Set(raw.evidence.filter(id=>
+      ['receipt','cabinetLog','counterNote','camera'].includes(id)&&s.clues.includes(id)&&canInspectClue(s,id)))];
+    return draft;
+  };
+  const evaluateCounter = (s,event,evidence,limit) => {
+    if (!s.counterVisited || event !== 'stored' || limit !== 'custody-gap' || !Array.isArray(evidence)) return null;
+    const ids=[...new Set(evidence)];
+    if (ids.length !== 2 || ids.some(id => !s.clues.includes(id) || !canInspectClue(s,id))) return null;
+    if (!ids.some(id => ['receipt','cabinetLog'].includes(id)) ||
+        !ids.some(id => ['counterNote','camera'].includes(id))) return null;
+    return {event:'stored',evidence:ids,limit:'custody-gap'};
+  };
+  const departureCheckpoint = s => ({
+    clues:s.clues.filter(id=>baseClues.includes(id)), contactVerified:s.contactVerified===true,
+    hints:Object.fromEntries(['investigate','departure'].map(k=>[k,s.hints[k]||0]))
+  });
+  const rewindToDeparture = s => {
+    if (!canStartMorning(s)) return null;
+    const checkpoint=s.departureCheckpoint || {clues:s.clues.filter(id=>['scheduled','photo','receipt'].includes(id)),contactVerified:false,hints:{}};
+    return {...initial(),tab:'case',stage:'departure',deduction:true,
+      clues:[...checkpoint.clues],contactVerified:checkpoint.contactVerified,hints:{...checkpoint.hints}};
+  };
+  const normalize = raw => {
+    const s = initial();
+    if (!raw || typeof raw !== 'object') return s;
+    if (['messages', 'album', 'notes', 'case'].includes(raw.tab)) s.tab = raw.tab;
+    if (Array.isArray(raw.clues)) s.clues = [...new Set(raw.clues.filter(id => clueIds.has(id)))];
+    s.contactVerified = raw.contactVerified === true;
+    if (['chen', 'stranger'].includes(raw.departureRoute)) s.departureRoute = raw.departureRoute;
+    s.deduction = raw.deduction === true && ['scheduled', 'photo'].every(id => s.clues.includes(id));
+    s.lockerOpened = raw.lockerOpened === true && Boolean(s.departureRoute) && canVisitLocker(s);
+    if (s.lockerOpened && ['verified', 'unverified'].includes(raw.handoffKnowledge))
+      s.handoffKnowledge = raw.handoffKnowledge;
+    if (s.lockerOpened && raw.ending === 'safe' && s.contactVerified && s.handoffKnowledge === 'verified')
+      s.ending = 'safe';
+    if (s.lockerOpened && raw.ending === 'lost' && s.departureRoute === 'stranger' && s.handoffKnowledge)
+      s.ending = 'lost';
+    if (canVisitLocker(s) && ['departure', 'locker', 'handoff', 'ending'].includes(raw.stage)) s.stage = raw.stage;
+    if (s.stage !== 'investigate' && s.stage !== 'departure' && !s.departureRoute) s.stage = 'departure';
+    if (['handoff', 'ending'].includes(s.stage) && !s.lockerOpened) s.stage = 'locker';
+    if (s.stage === 'ending' && !s.ending) s.stage = 'handoff';
+    const checkpoint=raw.departureCheckpoint;
+    if (checkpoint && typeof checkpoint==='object' && Array.isArray(checkpoint.clues)) {
+      const ids=[...new Set(checkpoint.clues.filter(id=>baseClues.includes(id)&&s.clues.includes(id)))];
+      if (['scheduled','photo','receipt'].every(id=>ids.includes(id))) {
+        s.departureCheckpoint={clues:ids,contactVerified:checkpoint.contactVerified===true&&s.contactVerified,
+          hints:Object.fromEntries(['investigate','departure'].map(k=>{
+            const v=checkpoint.hints?.[k];
+            return [k,Number.isFinite(v)?Math.max(0,Math.min(3,Math.floor(v))):0];
+          }))};
+      }
+    }
+    s.morningStarted = raw.morningStarted === true && canStartMorning(s);
+    if (s.morningStarted) {
+      s.morningQuestions = Array.isArray(raw.morningQuestions) ?
+        [...new Set(raw.morningQuestions.filter(id => ['station','where','silence'].includes(id)))] : [];
+      s.counterVisited = raw.counterVisited === true;
+      if (s.counterVisited && ['view','skip'].includes(raw.videoChoice)) s.videoChoice = raw.videoChoice;
+    }
+    s.clues = s.clues.filter(id => canInspectClue(s,id));
+    s.counterDraft = normalizeCounterDraft(s,raw.counterDraft);
+    if (raw.counterConclusion && typeof raw.counterConclusion === 'object')
+      s.counterConclusion = evaluateCounter(s,raw.counterConclusion.event,raw.counterConclusion.evidence,raw.counterConclusion.limit);
+    if (s.morningStarted && ['morning','counter','chapter2end'].includes(raw.stage)) {
+      s.stage = raw.stage;
+      if (s.stage !== 'morning' && !s.counterVisited) s.stage = 'morning';
+      if (s.stage === 'chapter2end' && !s.counterConclusion) s.stage = 'counter';
+    }
+    if (root.MidnightStoryRules && s.morningStarted && s.counterConclusion) {
+      s.story=root.MidnightStoryRules.restore(s,raw.story);
+      if(raw.stage==='story'&&s.story)s.stage='story';
+      else if(raw.stage==='story')s.stage='chapter2end';
+    }
+    for (const key of ['investigate', 'departure', 'locker', 'handoff', 'counter']) {
+      const value = raw.hints?.[key];
+      s.hints[key] = Number.isFinite(value) ? Math.max(0, Math.min(3, Math.floor(value))) : 0;
+    }
+    return s;
+  };
+  root.MidnightRules = Object.freeze({
+    initial, normalize, evaluateDeduction, canVisitLocker, validCode, endingFor, canHandoff, completeHandoff, canStartMorning, canInspectClue, evaluateCounter, departureCheckpoint, rewindToDeparture, normalizeCounterDraft
+  });
+})(globalThis);
+
+// Second-act views. Evidence here is what the player may read, not author truth.
+(function(root){
+ 'use strict';
+ const clues={
+  cabinetLog:{title:'孟雪出示的本单操作行',rows:[['来源','孟雪同意展示的本单业务记录'],['柜号','B17'],['操作','10月25日21:06 入柜出票'],['操作人','孟雪'],['与电子凭证的关系','同一笔业务的店内记录']],description:'21:06是孟雪办理入柜的操作时间。这一行与旧机里的凭证同源。',location:false},
+  counterNote:{title:'柜台暂存简记',rows:[['来源','孟雪自己的值班本，本单一行'],['原文','林，先存柜台；B17空出再转。'],['孟雪的说明','她傍晚交来的，我先放柜台里边。'],['时间边界','没有精确交袋分钟，也没有袋内清单']],description:'孟雪的简记与说明支持先交柜台、后转入B17；不保证暂存期间始终无人接触。',location:false},
+  camera:{title:'获准查看的两段门店画面',rows:[['取得范围','孟雪同意本单相关两段，仅现场查看'],['傍晚片段','你认出林遥把纸袋递进柜台'],['夜间片段','孟雪从柜台内侧取纸袋，放入B17'],['不可读内容','袋内文字、页数与夹层均看不清'],['时间边界','画面时钟未经校准；中间时段未连续查看'],['留存','没有复制视频']],description:'你看过傍晚交袋与夜间移袋的有限片段；没有看过中间全过程，也看不清袋内内容。',location:false}
+ };
+ const questionAnswers={
+  station:{label:'“北站那条短信，怎么回事？”',html:'<p>你把手机从耳边拿开，看了眼昨晚那条短信，又贴回去。</p><div class="dialogue"><p><span>你</span>“到北站了，是你发的？”</p><p><span>林遥</span>“我提前设的。昨晚没去北站。”</p><p><span>你</span>“那你后来为什么不取消？”</p><p><span>林遥</span>“我想拖到早上再说。对不起。”</p></div>'},
+  where:{label:'“何宁是谁？你们昨晚在哪里？”',html:'<div class="dialogue"><p><span>林遥</span>“之前装订店何阿姨的女儿。她有些单子，我过去跟她一起理。”</p><p><span>你</span>“所以买烟也是随口说的？”</p><p><span>林遥</span>“嗯。后来就没回去。”</p></div><p>你把何宁的名字记下来。昨晚的去向，目前是林遥自己的说法。</p>'},
+  silence:{label:'“工作号为什么一直不接？”',html:'<div class="dialogue"><p><span>林遥</span>“看见来电了。我把声音关了。”</p><p><span>你</span>“我问你人在哪里，袋子的事可以晚点说。”</p><p><span>林遥</span>“我知道。是我没回。”</p></div><p>电话那边有人拉开了椅子。林遥压低声音，问你九点半能不能见一面。</p>'}
+ };
+ const stages=['morning','counter','chapter2end'];
+ const isStage=s=>s.morningStarted&&stages.includes(s.stage);
+ const seen=(s,id)=>s.clues.includes(id);
+ function morning(s){
+  const custody=s.ending==='safe'
+   ?'<p>你说袋子已经交给陈默，八张纸点过，单也签了。</p><blockquote>“好。等见面，我把借出来的那两页跟你说清楚。”</blockquote>'
+   :'<p>你说袋子给了司机，陈默后来打来电话，说没有叫过车。</p><p>那边停了几秒。</p><blockquote>“我没让别人去拿。你把昨晚那个号码留着，先别删。”</blockquote>';
+  return `<p class="section-label">第二幕 / 21:06</p>
+   <article class="call-card"><span class="small-label">10月26日 · 08:10 / 林遥来电</span><h3>先回答你，人在哪里</h3>
+   <p>你正找杯子，手机在桌上震起来。是她的工作号。</p>
+   <div class="dialogue"><p><span>林遥</span>“袋子拿到了吗？”</p><p><span>你</span>“你人在哪？”</p><p><span>林遥</span>“何宁家。人没事。”</p></div>
+   ${custody}<p class="tip">通话仍在继续。你可以直接问她去向和短信。</p></article>
+   <h3 class="question-title">你还有话要问</h3>
+   ${Object.entries(questionAnswers).map(([id,q])=>`<button class="choice" data-morning-question="${id}" ${s.morningQuestions.includes(id)?'disabled':''}>${q.label}${s.morningQuestions.includes(id)?'<small>已问过，原话留在下面。</small>':''}</button>`).join('')}
+   ${s.morningQuestions.map(id=>`<article class="conversation-record">${questionAnswers[id].html}</article>`).join('')}
+   <article class="note"><h3>青禾那张小票</h3>你把凭证压在杯子下面。21:06。那会儿林遥还在你家，九点十二才说下楼。<br><br>电话快挂断时，她与你约了九点半，地点稍后发。你先去青禾，问清这张单记的究竟是哪一步。</article>
+   <button class="primary wide" data-command="visit-counter">09:00 / 带着凭证去青禾</button>
+   <p class="tip">可以不问完就继续。已问过的对话保留在记录里。</p>`;
+ }
+ function counter(s,{action,hint}){
+  const draft=s.counterDraft;
+  const evidence=['receipt','cabinetLog','counterNote','camera'].filter(id=>seen(s,id));
+  const options={receipt:'当晚收到的电子凭证',cabinetLog:clues.cabinetLog.title,counterNote:clues.counterNote.title,camera:clues.camera.title};
+  return `<p class="section-label">10月26日 · 09:00 / 青禾柜台</p>
+   <article class="counter-scene" role="img" aria-label="青禾早间柜台示意：值班本压着本单小票，其他客户记录未展示"><div class="desk-book">值班本<span>本单一行</span></div><div class="desk-slip">青禾 / B17<br><b>21:06</b><br>入柜操作</div><small>场景示意</small></article>
+   <article class="note"><h3>她先看了你的单</h3>孟雪正把洗好的床单装进袋里。你等她打完结，把昨晚的小票递过去。<div class="dialogue"><p><span>你</span>“这张写九点零六。她是那会儿来的？”</p><p><span>孟雪</span>“晚上九点零六。我放进柜子的时间。”</p><p><span>你</span>“她交给你的时候呢？”</p><p><span>孟雪</span>“傍晚。柜子没空，我先放里边了。柜台有记。”</p></div></article>
+   <article class="thread"><div class="thread-head"><strong>只核对你的这一单</strong><time>店主同意展示</time></div>
+   <p>她把值班本翻过来，手掌压住旁边几行。</p>
+   ${action('cabinetLog','查看B17的入柜操作行')}
+   ${action('counterNote','查看柜台暂存那一行')}</article>
+   <article class="thread"><div class="thread-head"><strong>门店画面</strong><time>可选</time></div>
+   <blockquote>“要看我收袋子那段也行。就这两段，别的客人不看，也别录屏。”</blockquote>
+   ${s.videoChoice==='view'?`<p>孟雪调出两段。傍晚那段，你认出林遥把纸袋递进柜台；夜间那段，孟雪从柜台内侧拿出纸袋，放进最下一排的柜子。</p><p class="tip">中间不是连续画面。画面上的时钟没有校准，袋内文字也看不清。</p>${action('camera','记录你获准看见的内容')}`:
+   `<button class="secondary wide" data-video-choice="view">只看这单的两段，不复制</button><button class="secondary wide" data-video-choice="skip">先不看画面，核对业务单和简记</button>${s.videoChoice==='skip'?'<p class="tip">你没有查看视频。可以依据业务记录和孟雪的说明整理，结论要注明来源。</p>':''}`}</article>
+   <article class="memory"><span class="small-label">昨夜你能确认的部分</span>${s.ending==='safe'?'<p>你取袋、清点，再交给陈默。孟雪没见证袋内八张纸的内容；那是你与陈默核对的。</p>':'<p>孟雪只记得你带着袋子走出店。她没看清车里的人，也没有司机姓名或车牌可补给你。签过姓的单子仍随袋离开。</p>'}</article>
+   ${s.counterConclusion?'<button class="secondary wide" data-command="return-counter-result">返回已保存的核对结果</button>':''}<div class="deduction-panel"><h3 class="question-title">把这单的过程写清楚</h3>
+   <p class="tip">先检查并记录材料。回看原始信息不会清除当前选择；电子凭证和店内操作行来自同一笔业务。</p>
+   <form id="counter-form"><label class="field-label" for="counter-event">21:06对应哪一步？</label>
+   <select id="counter-event" name="event" required><option value="">请选择</option><option value="arrival" ${draft.event==='arrival'?'selected':''}>林遥本人到店交袋</option><option value="stored" ${draft.event==='stored'?'selected':''}>孟雪将暂存袋转入柜并出票</option><option value="collected" ${draft.event==='collected'?'selected':''}>你从B17领取文件袋</option></select>
+   <fieldset><legend>选两份能连起“先收柜台 → 后入柜”的材料</legend>
+   ${evidence.map(id=>`<label class="evidence-option"><input type="checkbox" name="counter-evidence" value="${id}" ${draft.evidence.includes(id)?'checked':''}><span>${options[id]}</span></label>`).join('')}</fieldset>
+   <label class="field-label" for="counter-limit">哪一栏仍不能填成“已经确认”？</label>
+   <select id="counter-limit" name="limit" required><option value="">请选择</option><option value="box" ${draft.limit==='box'?'selected':''}>本单入的是哪只柜子</option><option value="custody-gap" ${draft.limit==='custody-gap'?'selected':''}>暂存全程无人接触，袋内未变</option><option value="safety" ${draft.limit==='safety'?'selected':''}>林遥现在是否已经主动报平安</option></select>
+   <p id="counter-error" class="error" role="status"></p><button class="primary wide" type="submit">保存本次核对</button></form></div>${hint()}`;
+ }
+ function outcome(s){
+  const camera=s.counterConclusion?.evidence.includes('camera');
+  return `<article class="ending"><span class="ending-id">第二幕 / 本单核对完成</span><h3>柜台与柜子之间</h3>
+   <div class="event-strip"><div><time>傍晚 / 分钟未定</time><b>林遥交袋，柜台暂存</b></div><div><time>21:06 / 业务记录</time><b>孟雪移入B17，出票</b></div><div><time>23:38 / 你的领取</time><b>取出纸袋，核对八张</b></div></div>
+   <p>你在自己的笔记里补上一行：“21:06，孟雪入柜。”原凭证上的字没有动。</p>
+   <p>${camera?'你在笔记旁写下：看过两段相关画面，没有复制；交袋与移袋之间，仍有没看过的时段。':'你在笔记旁写下：依据本单业务记录、暂存简记和孟雪的说明。没有把这次核对写成连续影像证明。'}</p>
+   <p>你问她，柜台里边这段时间，袋子有没有被人动过。</p><blockquote>“我还要看机器、收衣服。没法一直盯着。”</blockquote>
+   ${s.ending==='safe'?'<p>原页已经交给陈默。你给他发消息，说明小票上的21:06需要按入柜记录理解。</p>':'<p>你的笔记停在“带袋出店”之后。孟雪不能替你补上车里那段，你也没有那张签收单。</p>'}
+   <p>离约好的时间还有一会儿。你把小票折回原来的折痕，林遥发来的见面地点压在通知栏上。</p>
+   <div class="divider"></div><p class="tip">第二幕核对完成 / 继续会面、材料取证与后续选择。</p>
+   <button class="primary wide" data-command="start-story">继续 / 09:30的会面与后续调查</button>
+   ${s.story?'<p class="tip">后续进度已保存。继续按钮返回当前场景；若要改写昨夜交接，请使用下方带确认的入口。</p>':'<button class="secondary wide" data-command="review-counter">回看这次核对与材料</button><button class="secondary wide" data-command="replay-morning">回看08:10那通电话</button>'}
+   <button class="secondary wide" data-command="request-night-replay">重选昨夜交接…</button>
+   <p class="tip">候选版 v0.5.0-rc.1 / 真实浏览器验收待完成</p></article>`;
+ }
+ root.MidnightChapter2=Object.freeze({clues,questionAnswers,isStage,render:(s,helpers)=>s.stage==='morning'?morning(s):s.stage==='chapter2end'?outcome(s):counter(s,helpers)});
+})(globalThis);
+
+// Implemented choice rules. No author notes or future chapters are bundled.
+(function(root){
+ 'use strict';
+ const model={"initial":{"early_call":false,"address":"chen","custody":"chen","asked":"now","counter":"records","participation":"unknown","custody_policy":"none","scope":false,"time":false,"time_source":"none","delay":false,"permission":"minimum","disclosure":"private","corrected_claim":false,"privacy_repaired":false,"misdelivery_reported":false,"own_statement":"truthful","ownership":"unconfirmed","followup":"none","cost_requested":false,"trace_proven":false},"nodes":[{"id":"N06","when":null,"options":[{"id":"leave","set":{},"end":"E01","requires":null},{"id":"witness","set":{},"end":"E02","requires":null},{"id":"trace","set":{"participation":"trace"},"end":null,"requires":null},{"id":"full","set":{"participation":"full"},"end":null,"requires":null}]},{"id":"N06T","when":{"field":"participation","eq":"trace"},"options":[{"id":"scoped","set":{"trace_proven":true},"end":"E03","requires":null},{"id":"formal","set":{"trace_proven":true,"delay":true},"end":"E03","requires":null}]},{"id":"N07","when":{"field":"custody","eq":"luo"},"options":[{"id":"recover","set":{"custody_policy":"requested","misdelivery_reported":true},"end":null,"requires":null},{"id":"defer","set":{"custody_policy":"defer"},"end":"E05","requires":null},{"id":"deal","set":{"custody":"returned","custody_policy":"deal"},"end":"E09","requires":null}]},{"id":"N08","when":null,"options":[{"id":"compare","set":{"scope":true},"end":null,"requires":null},{"id":"limited","set":{"scope":false},"end":null,"requires":null}]},{"id":"N09","when":null,"options":[{"id":"voluntary","set":{"time":true,"time_source":"voluntary"},"end":null,"requires":null},{"id":"formal","set":{"time":true,"time_source":"formal","delay":true},"end":null,"requires":null},{"id":"limited","set":{"time":false,"time_source":"limited"},"end":null,"requires":null}]},{"id":"N09R","when":{"field":"custody_policy","eq":"requested"},"options":[{"id":"originals","set":{"custody":"returned","custody_policy":"recovered"},"end":null,"requires":null},{"id":"copies","set":{"custody_policy":"defer"},"end":"E05","requires":null}]},{"id":"N10","when":null,"options":[{"id":"scope_only","set":{},"end":"E04","requires":{"field":"scope","eq":true}},{"id":"time_only","set":{},"end":"E07","requires":{"field":"time","eq":true}},{"id":"gaps","set":{},"end":"LIMITED","requires":{"not":{"all":[{"field":"scope","eq":true},{"field":"time","eq":true}]}}},{"id":"complete","set":{"scope":true,"time":true,"delay":true},"end":null,"requires":{"not":{"all":[{"field":"scope","eq":true},{"field":"time","eq":true}]}}},{"id":"continue","set":{},"end":null,"requires":{"all":[{"field":"scope","eq":true},{"field":"time","eq":true}]}}]},{"id":"N11","when":null,"options":[{"id":"minimum","set":{"permission":"minimum"},"end":null,"requires":null},{"id":"summary","set":{"permission":"summary"},"end":null,"requires":null}]},{"id":"N12","when":null,"options":[{"id":"private","set":{"disclosure":"private"},"end":null,"requires":null},{"id":"summary","set":{"disclosure":"summary"},"end":null,"requires":{"field":"permission","eq":"summary"}},{"id":"accuse","set":{"disclosure":"accuse"},"end":null,"requires":null},{"id":"expose","set":{"disclosure":"expose"},"end":null,"requires":null}]},{"id":"N13","when":{"any":[{"field":"disclosure","eq":"accuse"},{"field":"disclosure","eq":"expose"}]},"options":[{"id":"correct","set":{"disclosure":"private","corrected_claim":true},"end":null,"requires":{"field":"disclosure","eq":"accuse"}},{"id":"redact","set":{"disclosure":"private","privacy_repaired":true},"end":null,"requires":{"field":"disclosure","eq":"expose"}},{"id":"insist","set":{},"end":"HARM","requires":null}]},{"id":"N14","when":null,"options":[{"id":"truth","set":{"own_statement":"truthful"},"end":null,"requires":null},{"id":"cover","set":{"own_statement":"cover"},"end":null,"requires":null}]},{"id":"N15","when":{"field":"own_statement","eq":"cover"},"options":[{"id":"amend","set":{"own_statement":"amended"},"end":null,"requires":null},{"id":"insist","set":{},"end":"E13","requires":null}]},{"id":"N16","when":null,"options":[{"id":"owners","set":{"ownership":"confirmed","cost_requested":true},"end":null,"requires":null},{"id":"notes","set":{"ownership":"unconfirmed","cost_requested":true},"end":null,"requires":null}]},{"id":"N17","when":null,"options":[{"id":"cost","set":{"followup":"cost"},"end":"E10","requires":{"field":"cost_requested","eq":true}},{"id":"close","set":{"followup":"close"},"end":"E14","requires":null},{"id":"public","set":{"followup":"public"},"end":"E15","requires":{"field":"permission","eq":"summary"}},{"id":"site","set":{"followup":"site"},"end":"E16","requires":null}]}],"endings":{"E01":{"title":"人已经平安","hidden":false,"requires":{"field":"participation","eq":"unknown"}},"E02":{"title":"签完这一页","hidden":false,"requires":{"field":"participation","eq":"unknown"}},"E03":{"title":"陌生号码有了名字","hidden":false,"requires":{"all":[{"field":"participation","eq":"trace"},{"field":"trace_proven","eq":true}]}},"E04":{"title":"只到这条边线","hidden":false,"requires":{"field":"scope","eq":true}},"E05":{"title":"迟到的归还","hidden":false,"requires":{"all":[{"field":"custody","eq":"luo"},{"field":"custody_policy","eq":"defer"}]}},"E06":{"title":"暂缓的证言","hidden":false,"requires":{"all":[{"field":"scope","eq":true},{"field":"time","eq":false}]}},"E07":{"title":"改掉17:10","hidden":false,"requires":{"field":"time","eq":true}},"E08":{"title":"缺项清单","hidden":false,"requires":{"all":[{"field":"scope","eq":false},{"field":"time","eq":false}]}},"E09":{"title":"归还就到这里","hidden":false,"requires":{"all":[{"field":"custody","eq":"returned"},{"field":"custody_policy","eq":"deal"}]}},"E10":{"title":"先把这个月过完","hidden":false,"requires":{"all":[{"all":[{"field":"scope","eq":true},{"field":"time","eq":true}]},{"field":"followup","eq":"cost"}]}},"E11":{"title":"没有撤回的那句话","hidden":false,"requires":{"field":"disclosure","eq":"accuse"}},"E12":{"title":"你替谁公开","hidden":false,"requires":{"field":"disclosure","eq":"expose"}},"E13":{"title":"替她写下的名字","hidden":false,"requires":{"field":"own_statement","eq":"cover"}},"E14":{"title":"各自那一栏","hidden":false,"requires":{"all":[{"all":[{"field":"scope","eq":true},{"field":"time","eq":true}]},{"field":"followup","eq":"close"}]}},"E15":{"title":"获准公开的一页","hidden":false,"requires":{"all":[{"all":[{"field":"scope","eq":true},{"field":"time","eq":true}]},{"field":"permission","eq":"summary"},{"field":"followup","eq":"public"}]}},"E16":{"title":"重新划出的线","hidden":false,"requires":{"all":[{"all":[{"field":"scope","eq":true},{"field":"time","eq":true}]},{"field":"followup","eq":"site"}]}},"H01":{"title":"不用你再替我们说","hidden":true,"requires":{"all":[{"all":[{"field":"scope","eq":true},{"field":"time","eq":true}]},{"field":"followup","eq":"close"},{"field":"custody","eq":"chen"},{"field":"permission","eq":"minimum"},{"field":"disclosure","eq":"private"},{"field":"corrected_claim","eq":false},{"field":"privacy_repaired","eq":false},{"field":"own_statement","eq":"truthful"},{"field":"ownership","eq":"confirmed"}]}},"H02":{"title":"把错的一段补回来","hidden":true,"requires":{"all":[{"all":[{"field":"scope","eq":true},{"field":"time","eq":true}]},{"field":"followup","eq":"close"},{"field":"custody","eq":"returned"},{"field":"custody_policy","eq":"recovered"},{"field":"misdelivery_reported","eq":true},{"field":"corrected_claim","eq":true},{"field":"privacy_repaired","eq":false},{"field":"own_statement","eq":"truthful"}]}}}};
+ const match=(p,s)=>!p?true:p.all?p.all.every(x=>match(x,s)):p.any?p.any.some(x=>match(x,s)):p.not?!match(p.not,s):s[p.field]===p.eq;
+ const eligible=s=>s.morningStarted&&s.counterVisited&&s.counterConclusion&&['safe','lost'].includes(s.ending);
+ function seed(s){return {...model.initial,early_call:s.departureCheckpoint?.contactVerified===true,address:s.departureRoute,
+  custody:s.ending==='lost'?'luo':'chen',asked:s.morningQuestions.length?'now':'meeting',counter:s.videoChoice==='view'?'scoped_video':'records'};}
+ function next(index,facts){while(index<model.nodes.length&&!match(model.nodes[index].when,facts))index++;return index;}
+ function terminal(base,facts){
+  if(base==='LIMITED')base=facts.scope&&!facts.time?'E06':facts.time?'E07':'E08';
+  if(base==='HARM')base=facts.disclosure==='accuse'?'E11':'E12';
+  if(base==='E14')for(const id of ['H01','H02'])if(match(model.endings[id].requires,facts)){base=id;break;}
+  if(!model.endings[base]||!match(model.endings[base].requires,facts))throw new Error('Invalid ending gate');
+  return base;
+ }
+ const challenge=(node,choice)=>({
+  'N06T.scoped':'contact','N06T.formal':'contact','N08.compare':'outside',
+  'N09.voluntary':'backfill','N09.formal':'backfill','N09R.originals':'gap','N10.complete':'separate'
+ })[node+'.'+choice]||null;
+ function begin(s){return {facts:seed(s),index:0,log:[],pending:null,ending:null,relationship:null};}
+ function choices(run){return run.ending?[]:model.nodes[run.index].options.filter(o=>match(o.requires,run.facts));}
+ function commit(run,id,answer){
+  if(run.ending)return null;
+  const node=model.nodes[run.index],option=choices(run).find(o=>o.id===id);
+  if(!option||challenge(node.id,id)&&answer!==challenge(node.id,id))return null;
+  const facts={...run.facts,...option.set},log=[...run.log,{node:node.id,choice:id,answer:answer||null}];
+  return {...run,facts,log,pending:null,index:option.end?run.index:next(run.index+1,facts),ending:option.end?terminal(option.end,facts):null,relationship:null};
+ }
+ function restore(s,raw){
+  if(!eligible(s)||!raw||typeof raw!=='object')return null;
+  let run=begin(s);
+  if(Array.isArray(raw.log))for(const step of raw.log.slice(0,model.nodes.length)){
+   if(!step||run.ending||model.nodes[run.index]?.id!==step.node)break;
+   const updated=commit(run,step.choice,step.answer);if(!updated)break;run=updated;
+  }
+  if(!run.ending&&choices(run).some(o=>o.id===raw.pending))run.pending=raw.pending;
+  if(run.ending&&['continue','bounded','distance'].includes(raw.relationship))run.relationship=raw.relationship;
+  return run;
+ }
+ function rewind(s,run,count){return restore(s,{log:run.log.slice(0,Math.max(0,Math.min(count,run.log.length)))});}
+ function date(run,pending=false){
+  const n=model.nodes[run.index]?.id;
+  const upcoming=pending?model.nodes[run.index]?.options.find(o=>o.id===run.pending):null;
+  if(run.facts.delay||upcoming?.set.delay)return '11月06日 / 资料核对';
+  if(n==='N17')return '11月 / 更正后的后续';
+  if(pending&&n==='N10'&&['scope_only','time_only'].includes(run.pending))return '11月 / 本次请求的回复';
+  if(pending&&n==='N06'&&run.pending==='witness')return '10月26日—11月 / 本人说明';
+  if(pending&&n==='N07'&&run.pending==='deal')return '10月28日 / 实际归还';
+  if(pending&&n==='N09'&&run.pending==='voluntary')return '10月27—28日 / 分别核对';
+  return ['N06'].includes(n)?'10月26日 09:30':n==='N06T'?'10月27日 / 联络核对':n==='N07'?'10月26日下午':n==='N08'?'10月26日 14:30':n==='N09'?'10月27日': '10月28日';
+ }
+ root.MidnightStoryRules=Object.freeze({model,match,eligible,begin,choices,commit,restore,rewind,challenge,date});
+})(globalThis);
+
+// Playable scenes and epilogues. All people, records and events are fictional.
+(function(root){
+'use strict';
+root.MidnightStoryContent={
+ "nodes": {
+  "N06": {
+   "title": "九点半的会面",
+   "place": "江桥社区会面室",
+   "intro": "<p>林遥站起来，把靠门的椅子拉开。你没坐，先把昨晚的凭证放到桌上。</p><p>何宁看了眼她：“你说不惊动同事，我没答应让你朋友找一夜。”</p><p>林遥把手从椅背上收回去。“我怕你们直接找单位，把东西先收回去了。北站那句是我设的，工作机也是我关的声音。”</p><p>“袋子可以让我帮你送。”你说，“人在哪里，你总能回。”</p><p>她点头，没接着解释。何宁从帆布包里拿出一个文件夹，停在桌边，等你答复。</p>",
+   "question": "接下来，你愿意参与到哪一步？",
+   "options": {
+    "leave": {
+     "label": "人没事就好。我说完昨夜的交接，到这里为止。",
+     "note": "结束个人参与。其他人的核对仍可继续。",
+     "result": "<p>你把取件经过说完，告诉她们可以怎样联系陈默。何宁收起文件夹，没有把母亲的材料递给你。</p><p>林遥问：“手机我晚上去拿？”你说可以，约了个你在家的时间。</p>"
+    },
+    "witness": {
+     "label": "我只整理自己收到和交过的东西。",
+     "note": "提交自己的记录并取得确认，不替别人作证。",
+     "result": "<p>你把短信的来源分开写：自己的收件箱、林遥授权的旧机、孟雪打印的小票。交接一栏只写亲眼见过的事。</p><p>陈默核对自己经手的部分，收件处给了确认。何宁留的是你同意转交的副本，没有拿走你的手机。</p>"
+    },
+    "trace": {
+     "label": "先弄清楚，昨晚是谁冒陈默的名。",
+     "note": "只查联络和取件，不承诺调查旧厂全部问题。",
+     "result": "<p>你把陌生来信的界面转过去：“他怎么有我的号码？”</p><p>陈默在电话里重说了一遍，没有委托别人。林遥说孙悦也存过你的号码，但她不知道后来转给了谁。</p><p>你记下要问的问题，没有在发送者后面填名字。</p>"
+    },
+    "full": {
+     "label": "我可以继续。但再要我做什么，先把事情说清楚。",
+     "note": "继续核对不等于原谅；关系最后单独决定。",
+     "result": "<p>何宁打开文件夹。最上面是母亲伤后留下的费用单，她把那几张压回下面，先拿出旧厂入口的照片。</p><p>“我妈以前在那儿装订。八月回去取东西摔了。后来给我们的说明写着，那边五点十分就封了。”</p><p>林遥说：“我八月底才进组。查的是他们留下的资料，不是我见过现场。”</p><p>你在纸上画了三栏：谁说的，哪张纸，缺什么。</p>"
+    }
+   }
+  },
+  "N06T": {
+   "title": "谁给了他你的号码",
+   "place": "本单联络核对",
+   "intro": "<p>你只把23:16的来信和陈默的否认放在一起。知道同事的称呼，仍不能证明是谁发的。</p><p>孙悦先问你想看什么。你说只核对自己号码的转发，以及这一次取件，不查她其他会话。她答应晚些时候带原记录来。</p>",
+   "question": "取得来源后，怎样核对这次冒名联系？",
+   "options": {
+    "scoped": {
+     "label": "按同意的范围，分别核对转号和取件说明。",
+     "note": "只看有关段落；未发生取送的路线没有司机订单。",
+     "result": "<p>孙悦遮住无关会话，出示把你号码转给罗启成的那一段。“他说材料要收回来，我就给了。”</p><p>你与她一起核对接收账号及单位已有的联络记录，陈默另行确认自己没委托。罗随后通过经核对的联络方式承认，那个取件消息是他发的。</p><blockquote>“借出来的东西，总得先回来。我以为你认识。”</blockquote><p>你把这句话按原话记下，没有替他补上授权。</p>"
+    },
+    "formal": {
+     "label": "把本次联络的问题交去核对，等书面回复。",
+     "note": "叙事推进到11月，收到回复后才形成结论。",
+     "result": "<p>你提交陌生来信、陈默否认委托的说明，并明确只申请核对自己的联络和交接。当天得到的是收件记录。</p><p>11月6日，单位就本项送来核对回复：孙悦确认转号，罗确认发信。附件列明所核原记录和各自说明；陈默的答复另列，没有混成一个人的证明。</p><p>你读完，逐一核对自己的号码、消息时间和收件经过。</p>"
+    }
+   }
+  },
+  "N07": {
+   "title": "袋子现在不在你手里",
+   "place": "原件追索",
+   "intro": "<p>陈默把手机放到桌上。林遥之前传给他的扫描只拍到正文，边栏裁掉了一截。</p><p>“原页两张，复印三张，对照稿两张。”他念完，停了一下，“最后那张收件单也跟着走了？”</p><p>你说是。司机签过一个姓，你没留住单子，也没有拍照。</p><p>林遥说两张原页是借出来核对的，借阅登记还在单位。现在能申请核对归还，不能拿扫描件抵掉。</p>",
+   "question": "这两张原页，你打算怎样处理？",
+   "options": {
+    "recover": {
+     "label": "如实写明误交，申请核对取送并追还原页。",
+     "note": "这里只提交请求；原件到手须等后面的实际出示。",
+     "result": "<p>你在说明里写下自己发地址、交袋和事后接到陈默电话的顺序。签字一栏注明“只看见一个姓，原单未留存”。</p><p>经单位联络，姚斌同意核对自己的这一单。你只看到本次收送：00:08在罗办公室楼下交付；付款账户和其他客户没有展示。孙悦分别确认转号，罗确认收袋。</p><p>单位登记了追还请求。答复写的是“待核对原页”，没有写“原件已归还”。</p>"
+    },
+    "defer": {
+     "label": "保留这些扫描与缺项，结束我个人的追索。",
+     "note": "扫描不全，原页仍未归还。可以返回另选继续追还。",
+     "result": "<p>你把裁掉的边栏圈在自己的缺项表上，没有往扫描件上补字。陈默问要不要继续申请看原页，你说这一步自己不再跟了。</p><p>收件记录注明原页去向仍需核实。你留下能联系到的号码，没在归还栏签已完成。</p>"
+    },
+    "deal": {
+     "label": "接受罗只办归还、不再由我提出补录问题的条件。",
+     "note": "缩小的是你的请求，不是何家的权利。确认后有实际交接。",
+     "result": "<p>罗在约好的交接处把纸袋放到收件员面前：“先把借的还了，其他的别再绕。”</p><p>你看清楚这次条件，只要求办归还，不再由自己提交补录疑点。两张原页经有权人员逐张核对，归还登记写明这次收到的日期。</p><p>何宁没有在这张单上签任何放弃。她自己的消息和照片，也没有交给罗。</p>"
+    }
+   }
+  },
+  "N08": {
+   "title": "同一个地址",
+   "place": "报告副本核对",
+   "intro": "<p>陈默带来自己经手、获准出示的报告副本。封面是榆平街17号，何宁的照片也在这个地址。</p><p>“他们说之前检过。”何宁用手指按住封面，“可我妈走的是东边。”</p><p>林遥把蓝圈对照稿摆在旁边：“圈是我画的。原页上没有。十月十九我还挂错过一条索引，后来改了，不能拿我这张当原报告。”</p><p>陈默说自己十月二十三日问过罗17:10的来源，没先告诉林遥。你把这条也记进各人的说明，没把陈的做法写成罗的授权。</p>",
+   "question": "只凭封面的同一地址，能判断报告覆盖哪里吗？",
+   "options": {
+    "compare": {
+     "label": "展开范围图、附件目录，再对照何家的入口位置。",
+     "note": "看原图和编号，判断这份报告的范围。",
+     "result": "<p>陈默把副本展平。你沿着A-02的实线看了一圈，边线停在主楼外墙；S1从东门往里拐，整段在边线外。</p><p>何宁把17:45的入口照片放到右侧。照片只能看到转折前，坑和围挡都不在画面里。</p><p>附件目录列着A区项目，交接索引却另列S1-01。陈默核对自己经手的目录：“S1这项没有签进这份A报告。”</p>"
+    },
+    "limited": {
+     "label": "先留封面和地址，范围问题暂不下结论。",
+     "note": "不把尚未核对的范围写成事实；稍后可申请补齐。",
+     "result": "<p>你抄下报告编号和地址，在范围栏写“未核”。何宁想说那就是整栋楼，你请她先留住这句，等看到图和目录再说。</p><p>陈默把可申请的材料名列给你。封面被夹回去，没有升级成S1的检测证明。</p>"
+    }
+   }
+  },
+  "N09": {
+   "title": "五点十分",
+   "place": "旧厂安全边界／分别约谈",
+   "intro": "<p>你们只到东门外的安全边界，没有进入转折后的维修段。何秀芳选择在社区坐着说明。她说当时想取回装订工具，问过能不能走。</p><blockquote>“他说有人来接。我走到那儿，没有人。”</blockquote><p>她说过了转折，脚下忽然落空，后来人把她扶离维修段。检修坑约1.4米深；当日救助之后才完成临时封闭。她不记得准确分钟。何宁出示当日原会话：17:02，韩维允许取物，要求18:30前。17:45的照片仍只证明入口那一小段。</p><p>登记写着17:10已封闭；你需要分别核对“发生过什么”和“后来怎么填”。</p>",
+   "question": "补录指令的依据，从哪里取得？",
+   "options": {
+    "voluntary": {
+     "label": "分别约韩和孙，只核对他们自己的记录。",
+     "note": "每人决定可展示的范围，不要求交出全部设备。",
+     "result": "<p>韩维在东门外说，长料过不去，围挡挪过一阵；答应接何秀芳的人没落实。他拿出自己当日向罗报告封闭的消息，时间在18:22前后，说明是事后完成。</p><p>孙悦当天不愿出示会话，让你第二天再联系。她问过自己的顾虑后，只同意展示相关上下文，其他内容遮住。</p><div class=\"source-slip\"><b>孙悦原接收的工作消息／8月13日约18:31</b><p>罗：封闭单补上。时间用17:10，别用18:22。</p><b>孙悦自有任务本</b><p>补封闭单一份。</p></div><p>“我问过用哪个。”孙悦说，“最后是我照着写的。”韩只确认自己的现场安排，没有替孙证明她收到哪句话。</p>"
+    },
+    "formal": {
+     "label": "不要求私人展示，列出具体矛盾，请求正式核对。",
+     "note": "取得材料需要叙事时间。申请本身不是证据。",
+     "result": "<p>你提交17:02取物许可、登记17:10和目前口述的差异，申请核对封闭记录的填写及来源。当日回执只确认收到。</p><p>11月6日，复核回复附来相应记录：韩分别确认约18:22完成封闭及自己的上报；孙确认事后填写，并提交罗要求用17:10的原接收会话供核对。答复标明来源及各人的确认范围。</p><p>你没有拿到他们全部私人聊天。你读的是本项核对材料，不是替他们作电子鉴定。</p>"
+    },
+    "limited": {
+     "label": "只记现有口述，不再取得指令和交叉记录。",
+     "note": "可以列疑点；不能据此确认是谁要求提前补录。",
+     "result": "<p>你把何秀芳的话按她允许的方式记下：“六点前后，具体分钟不记得。”</p><p>韩的口头解释也单独留着。没有原消息或正式交叉结果，你在“谁要求填17:10”后面留了空。</p>"
+    }
+   }
+  },
+  "N09R": {
+   "title": "回复里先来的是复印件",
+   "place": "单位原页核对处",
+   "intro": "<p>追还请求的初次答复只附了复印。正文能读，借阅原页的边栏仍不完整。</p><p>你问能不能核对原页，收件员查过登记后，把需要继续申请的项目写下来：两张完整原页、归还时间，以及谁交到谁手里。</p><p>现在还不能在你的记录里写“已追回”。</p>",
+   "question": "接下来怎样处理这次答复？",
+   "options": {
+    "originals": {
+     "label": "继续追加原页核对，直到实际出示并办理归还。",
+     "note": "经过后续核对场景才算追回；中间空档仍保留。",
+     "result": "<p>你继续提出原页申请。约定的后续核对日，有权的资料人员将两张完整原页放到桌上，依借阅目录逐项核对。</p><div class=\"source-slip\"><b>此次实际出示</b><p>巡查原页：8月13日14:20，S1需临时封闭。</p><p>封闭登记原页：记载17:10；边栏及签记完整可见。</p><p>另附此次交还记录。原页入单位保管，不交给你私存。</p></div><p>你对照自己开柜时的清单，记录本次实际所见。收件员问是否还有缺项，你指出司机的签单和此前保管空档依然没有补齐。</p>"
+    },
+    "copies": {
+     "label": "目前这些副本就到这里；标明缺项，停止个人追索。",
+     "note": "原件仍未追回。上一个选项可继续正式追索。",
+     "result": "<p>你在复印件清单上注明“未见完整原页”。对方问是否追加，你说这次个人参与到此。</p><p>你的说明随缺项表收存，归还栏仍写待核，没有把复印件算成原页。</p>"
+    }
+   }
+  },
+  "N10": {
+   "title": "哪句话有来源",
+   "place": "你的整理桌／收件处",
+   "intro": "<p>你把材料分成两摞。一摞核对报告到底画到哪里，一摞核对17:10是怎样写上的。</p><p>何宁看着你的草稿，问能不能写“他们早就知道会出事”。你把这句移到未证实的问题里：现有记录支持具体安排和补录，不能读出每个人当时所有想法。</p>",
+   "question": "这次提交，你把结论写到哪里？",
+   "options": {
+    "scope_only": {
+     "label": "只请求更正已经核实的报告范围。",
+     "note": "限定目标为范围，不宣称全案所有责任已定。",
+     "result": "<p>你只提交报告编号、范围图和目录的对应关系，说明同址不等于同一检测范围。</p><p>11月的回复更正索引：A报告不能作为S1已经检测的依据。你没有让这份范围答复替补录指令作结论。</p>"
+    },
+    "time_only": {
+     "label": "只提交已经交叉核实的事后补录问题。",
+     "note": "核对填写和下令分别发生了什么。",
+     "result": "<p>你将原会话、韩的封闭说明、孙的填写说明分别列出。</p><p>11月的核对结果不再采用17:10作为事故前已封闭的依据，另记实际封闭与补录过程。报告覆盖范围不包含在你这次请求的结论里。</p>"
+    },
+    "gaps": {
+     "label": "按已有来源提交，并以缺项清单结束个人调查。",
+     "note": "尚有缺项。可返回选择补齐，不强迫此时结束。",
+     "result": "<p>你把已核对和待核对分开。收件处没有让你在未知的一栏填上肯定答案。</p><p>你留下补充材料的具体名称，确认之后不再由自己继续访谈或追索。其他人的请求仍由他们自己决定。</p>"
+    },
+    "complete": {
+     "label": "把缺项逐项申请补齐，收到正式材料再核对。",
+     "note": "叙事推进至11月，实际取得材料后才可继续。",
+     "result": "<p>你提交的是具体缺项，不是笼统要求所有资料。当天先留下收件记录。</p><p>11月6日，陈默获准协助核对回复：范围副本列明A-02边线、目录与S1-01归属；另一部分列明韩的封闭消息、孙接收的补录指令和各自确认。你逐页核对来源和附件。</p><p>两组结论分开填写。原件的归还沿既有链另记，不因这份回复就抹掉空档。</p>"
+    },
+    "continue": {
+     "label": "两条链已经核对，接着处理提交范围与各人说明。",
+     "note": "结论有来源，公开授权仍须另问。",
+     "result": "<p>你把“这份报告没覆盖S1”和“17:10系事后按指令补录”分别落在对应材料后。没有把两句话缩成“所有东西都是假的”。</p><p>何宁把费用单拿回来：“这些要交给谁，交多少，我还得跟我妈说。”</p>"
+    }
+   }
+  },
+  "N11": {
+   "title": "她们自己的资料",
+   "place": "何家同意的资料会面",
+   "intro": "<p>何秀芳听何宁读完材料清单，问病历是不是也要让别人看。</p><p>“处理费用的人需要哪些，我们可以给。”她说，“别把我家的事都贴出去。”</p><p>何宁把能提交、只许核对、不许公开的项目分开写。你没有把一次看过当成以后都能用。</p>",
+   "question": "你请求哪一项具体授权？",
+   "options": {
+    "minimum": {
+     "label": "只限定提交给处理人员，不作公开稿。",
+     "note": "何家同意这个范围，家庭细节不公开。",
+     "result": "<p>何宁逐项确认收件对象和用途，何秀芳同意。你在副本清单上标明“限定处理，不作公开”。</p><p>她把原件收回包里，你只保留获准提交的部分。</p>"
+    },
+    "summary": {
+     "label": "提出脱敏摘要，由她们逐项删改、确认。",
+     "note": "同意的是确认后的摘要，病历和无关家庭信息除外。",
+     "result": "<p>你先起草只含报告边线、记录更正的摘要，删去地址细项和病历。何宁划掉一段家中近况，何秀芳也要求不放照片。</p><p>你按意见改好，两人逐项确认这份稿件。授权仅限此稿，后续实质改动还要重问。</p>"
+    }
+   }
+  },
+  "N12": {
+   "title": "发送之前",
+   "place": "你的图文店／手机",
+   "intro": "<p>电脑上还开着客户的名片文件，你把调查草稿缩到右边。有人问你最近查到了什么。</p><p>已核实的范围和补录，是一回事。罗昨晚为什么急着取袋，你有相关记录；说他预谋伤人，却没有这样的来源。</p><p>何家的同意清单放在键盘旁。接下来都是故事内的行为选择，不会通过游戏向外部账号发帖。</p>",
+   "question": "你怎样向外表述？",
+   "options": {
+    "private": {
+     "label": "只向有权处理的人提交有来源的事实。",
+     "note": "保持现有授权，不扩成公开传播。",
+     "result": "<p>你回复“材料已经按来源交去核对”，没有把何家的文件转给问话的人。</p><p>提交清单逐项对应来源；疑问仍以疑问列出。</p>"
+    },
+    "summary": {
+     "label": "使用当事人已经确认的脱敏摘要。",
+     "note": "仅在取得摘要授权后可选。",
+     "result": "<p>你再次核对稿件版本，使用的是何家确认过的那份。病历、住处和未证实的指控没有加回去。</p><p>故事中的公开说明注明范围，没把一次记录更正写成所有责任已经裁决。</p>"
+    },
+    "accuse": {
+     "label": "把“他早有预谋伤人”也写成确定指控。",
+     "note": "高风险：这句没有来源。之后有撤回、更正机会。",
+     "result": "<p>你把这句未经证实的话写进故事中的公开表述。何宁很快联系你：“我没这样说过。你有证据吗？”</p><p>陈默让你指出对应材料，你找出的仍是补录指令。它证明不了预谋造成事故。</p>"
+    },
+    "expose": {
+     "label": "把未获准的家庭材料也附出去。",
+     "note": "越过既有授权。之后有撤下机会，但伤害不会自动消失。",
+     "result": "<p>在故事中，你把何家没允许公开的材料也附了出去。何宁来电，先问是不是你发的。</p><blockquote>“我把这些给你，是办事用的。不是让你替我们决定给谁看。”</blockquote><p>她要求撤下并停止传播。你还有机会采取实际修正。</p>"
+    }
+   }
+  },
+  "N13": {
+   "title": "要求撤回的消息",
+   "place": "手机／质疑回复",
+   "intro": "<p>回复停在你的屏幕上。对方指出的是具体一句话、具体一份附件。</p><p>你可以修改并留下更正记录，也可以坚持。选择修正，不代表对方必须恢复信任。</p>",
+   "question": "你怎么处理？",
+   "options": {
+    "correct": {
+     "label": "撤回没有依据的指控，说明错在哪里。",
+     "note": "保留原错误和更正记录，不装成从未发过。",
+     "result": "<p>你撤回“预谋伤人”，在原表述的位置说明：目前能核对的是事后补录，不能证明预谋事故。</p><p>何宁确认看到了更正，只说“后面的材料分开写”。你没有要求她马上说没关系。</p>"
+    },
+    "redact": {
+     "label": "撤下未授权资料，停止继续转发。",
+     "note": "家庭可仍拒绝直接访谈，后续改由指定联系人。",
+     "result": "<p>你撤下附件，说明此前超出了授权，向接收者要求停止传播。你不声称已经收回所有副本。</p><p>何宁指定之后通过陈默联系。你同意，余下核对只走获准的材料和指定渠道。</p>"
+    },
+    "insist": {
+     "label": "维持表述，拒绝修正或撤下。",
+     "note": "确认坚持会结束你与他们的这一段合作。",
+     "result": "<p>你回复不改。何宁没有再与你争论措辞，发来一条明确通知：后续由指定人员联系，你的这部分表述不代表她家。</p><p>你读完通知，没有获得新的访谈或家庭材料。</p>"
+    }
+   }
+  },
+  "N14": {
+   "title": "谁作的安排",
+   "place": "本人说明稿",
+   "intro": "<p>林遥在你的说明旁坐了很久。</p><p>“取件这段，能不能少写一点？”她问，“我借资料这事已经够乱了。”</p><p>你把便签调出来，上面是她指定陈默本人、要留凭证的安排。你能写自己做过什么，不能代替她签，也不能把发生过的事挪到别人身上。</p>",
+   "question": "你的本人说明怎样写？",
+   "options": {
+    "truth": {
+     "label": "写自己收件、取袋和交接的真实经过。",
+     "note": "她的安排由她自己说明；原谅与否不改变事实。",
+     "result": "<p>你按实际过程写，引用便签时注明来源，不猜林遥当时全部的想法。</p><p>林遥把自己的说明另起一页。她需要解释借阅、假短信和回避，不由你代签。</p>"
+    },
+    "cover": {
+     "label": "把她的取件安排省去，说是你临时决定的。",
+     "note": "与原便签有矛盾，提交前仍有修改机会。",
+     "result": "<p>你把“她让我交给陈默”改成“我临时决定去取”。陈默核对附件时停在这句，指了指便签。</p><blockquote>“这两处不一样。你到底是后来决定的，还是照她写的去？”</blockquote><p>这处矛盾还没提交，你可以改回实际经过。</p>"
+    }
+   }
+  },
+  "N15": {
+   "title": "没有对上的两句话",
+   "place": "说明核对桌",
+   "intro": "<p>便签没有变，你刚写的说明也在桌上。争议不是你愿不愿意帮朋友，是这句话能不能与自己提供的材料相互核对。</p>",
+   "question": "要修改自己的说明吗？",
+   "options": {
+    "amend": {
+     "label": "改回真实经过，保留修改记录。",
+     "note": "承认这次改动，不抹去原稿。",
+     "result": "<p>你划去那句话，另写林遥的安排与自己实际做的事，注明修改原因。</p><p>林遥说不用你再替她改。她带走自己的那一页，接着填写。</p>"
+    },
+    "insist": {
+     "label": "仍坚持全部由你决定。",
+     "note": "这份矛盾说明会被要求撤回或排除相关说法。",
+     "result": "<p>你没有改。核对人员将矛盾处标出，要求撤回或排除无法对应的说法，另外向林遥核对。</p><p>你多写的承担没有让她的便签消失，也没有让那两张借阅原页变成你借的。</p>"
+    }
+   }
+  },
+  "N16": {
+   "title": "各人确认自己的部分",
+   "place": "说明核对／何家指定渠道",
+   "intro": "<p>几个人的材料摊开，占了桌面大半。孙悦写的是填表，韩维写的是现场安排。何秀芳的话按她允许记录的原意保留，约数没有改成精确分钟。</p><p>林遥另行说明借阅、十月的索引错挂和假短信。你不把她十月的错误写成八月事故的起因。</p><p>何家通过约好的渠道提出，眼前最急的是下个月的康复和生活费用；她们希望先落实这部分，其他异议不因此撤掉。</p>",
+   "question": "你怎样整理别人说过的话？",
+   "options": {
+    "owners": {
+     "label": "请每个人只确认自己那一部分。",
+     "note": "实际逐人确认；不以你的一张表代替所有人签字。",
+     "result": "<p>你分别把对应部分送回来源本人。孙悦改正一个用词，只确认自己收到的指令和填写；韩维确认许可、挪围挡与事后封闭，不替孙确认会话。</p><p>何家通过既定渠道核对自己的材料；陈默确认经手、联络与签收，林遥交自己的说明。未由他们见证的段落仍注明来自你。</p><p>返回的确认一份份夹回对应页后，没有合成全员保证书。</p>"
+    },
+    "notes": {
+     "label": "提交自己的访谈笔记，明确哪些尚未经本人确认。",
+     "note": "不伪签；正式核对仍需回到原来源。",
+     "result": "<p>你把“你整理的笔记”写在页首，原话和归纳分开。没有让别人签过的地方仍空着。</p><p>收件人员据出处另行联系来源核对。你没有把他们收下材料当成已经认可每一个字。</p>"
+    }
+   }
+  },
+  "N17": {
+   "title": "之后的事",
+   "place": "复核与后续约定",
+   "intro": "<p>资料分别进入核对。补录说明、报告范围、原件归还和费用安排各有单子，不是一张签收就全结束。</p><p>到了11月，你收到书面更正：A报告不能覆盖S1；17:10不能再作为事故前已封闭的依据。罗的补录指令和冒名联系、韩的现场安排、孙的填写分别列明处理，具体责任按各自行为核对。</p><p>林遥也补交了借阅说明。她的岗位后续另谈，陈默没许诺替她保住合同。</p>",
+   "question": "你还愿意继续哪一件事？",
+   "options": {
+    "cost": {
+     "label": "按何家的请求，先协助落实眼前费用。",
+     "note": "她们决定节奏，不以费用换撤回异议。",
+     "result": "<p>何宁带着母亲确认的费用清单来，你只帮忙核对票据和文字。协商稿中出现一句“其他事项一并结束”，她划掉，你照她意见重排。</p><p>后来的书面安排列明本月康复和生活费用，并保留既有异议。你核对实际执行的收件和付款记录，没有替她们签收未到的款项。</p>"
+    },
+    "close": {
+     "label": "完成自己的交接和说明，结束这次参与。",
+     "note": "完整主线可正常收束，关系另选。",
+     "result": "<p>你核对自己留下的收件记录、来源和归还说明。原页回到单位，副本各有去向，中间不能证明的段落仍留着。</p><p>你告诉大家自己的这一部分做完了。林遥约了时间来取回旧手机，没把后续的每一个问题再留给你。</p>"
+    },
+    "public": {
+     "label": "与何家一起完成获准公开的案例说明。",
+     "note": "须已有脱敏摘要授权，新增共同修订过程。",
+     "result": "<p>何宁逐页看稿，删去康复近况；何秀芳决定不用自己的照片。你用清楚的边线画出A和S1，把来源和更正内容留在旁边。</p><p>正式公开前她们再次确认这一稿。后来有人想拿病历做配图，何宁拒绝，你把相应附件从发送清单排除。</p>"
+    },
+    "site": {
+     "label": "继续提出S1现场整改与专业复核请求。",
+     "note": "由有资质人员复核，叙事推进至12月。",
+     "result": "<p>你把原有图例和已更正索引附在整改请求后，没有自行走进维修段测试。</p><p>12月，项目交来专业复核与整改完成记录，明确可进入的范围、隔离和陪同要求。何家另核对其关切的项目；你收到的是有来源的结果，自己没有签安全鉴定。</p>"
+    }
+   }
+  }
+ },
+ "endings": {
+  "E01": "<p>12月，林遥给你发来一句：“手机拿回去了，这边的事我自己接着办。”你回了个“好”。</p><p>你没有参加后来的核对会，也不知道每份材料最后走到哪一步。何宁不再往你这里发文件。偶尔经过青禾，你进去烘件外套，孟雪问要不要袋子，你说不用。</p><p>这次帮忙停在你答应的地方。旧手机不在餐桌上，充电线收回抽屉。明早还有客户来取印件。</p>",
+  "E02": "<p>11月，陈默按约发来你那份说明的收件确认。你逐项看过：消息从哪个号收到，袋子怎样取出，后来交给谁。</p><p>别人的说法没有写在你的名字下面。对方再问事故现场，你回答没有去过，材料里也一样写着。</p><p>你把确认件存进自己的文件夹，随后打开客户的排版稿。参与过的部分有了去向，没见过的事仍由亲历的人说明。</p>",
+  "E03": "<p>书面说明送来后，你把23:16那条来信和罗确认的联系记录放在一起。发送者这一栏终于不再写“陌生号码”。</p><p>孙悦转了号，罗借陈默的称呼联系，陈默没有委托；每一项都有各自来源。姚斌只与实际发生的本单有关，保住袋子的路线没有他的订单。</p><p>你不再替任何人接下旧厂全部调查。关掉这一页前，你把缺失和归还的项目照实交回，没有因为知道名字就填满整夜空档。</p>",
+  "E04": "<p>11月的更正件到了。封面地址没变，索引却不能再把S1挂到A报告后面。何宁把这页放进母亲的文件夹，问旁边那项时间争议怎么办。</p><p>你说这次提交只到范围。她点点头，接着在自己的清单上列下一项。</p><p>你拿到的是一处明确更正，没拿到可以包办所有问题的一句话。图上那条线，现在与目录对得上了。</p>",
+  "E05": "<p>12月，你最后整理一次缺项表。扫描还在，边栏依然缺着；归还栏写“未完成完整原页核对”。</p><p>你知道能继续申请，也知道这次自己没有继续。收件处留住的是有出处的副本和问题清单，不是一份假装齐全的原件目录。</p><p>何家仍有自己的照片和会话。你没替她们撤回什么，只把个人追索停在这里。那张随袋离开的签单，没有重新出现在口袋里。</p>",
+  "E06": "<p>回复里确认了A报告的范围，另把封闭时间列为待核。孙悦没有在你这份材料后补一条已经交出的指令会话；你确实还没取得它。</p><p>何宁读到“待补充来源”，拿笔在旁边记下要补的项目。你说自己不再去催孙。</p><p>这次争议被记下，却没有由此证明是谁下了补录指令。你的最后一页写着这个区别，后面没有擅自加结论。</p>",
+  "E07": "<p>17:10从“事前完成封闭”的依据里撤下，补录经过另列。孙确认自己填写，韩说明现场过程，罗的指令按相应来源记录。</p><p>何秀芳听何宁读到这里，说：“我那时候问能不能进去，他们是答应过的。”女儿把原消息留在同一夹层。</p><p>你本次没有取得或没有提交完整范围请求，A报告与S1仍是另一项。你在自己的结束说明里写清楚，没有把一处更正夸成所有事情都结束了。</p>",
+  "E08": "<p>两项请求都退回了具体的补充清单：范围图与目录的对应，补录指令的原来源。封面地址和几段口述，没有被收件处拼成确定事实。</p><p>你把材料按原归属交回，通知她们自己不再继续访谈。何宁收下清单，没说你查明了，也没说你一无所知。</p><p>你留住实际见过的记录，停下没有依据的传播。12月再翻开笔记时，未知的栏仍空着。</p>",
+  "E09": "<p>交还记录写完，罗把自己的那联折好。你带走收件确认，没有再递出补录问题。</p><p>回店后，何宁问你是否还要参加接下来的核对。你说这次只办了归还，她回：“知道了，我们自己的材料还会交。”</p><p>原页回去了，这不等于疑问不存在。你把没提交的那页留在笔记本里，清楚自己这次省下了什么，也停下了什么。</p>",
+  "E10": "<p>12月，何宁发来费用安排的执行确认，关掉消息前又问了一次下个月材料怎么交。你把对方给出的收件方式原样转给她。</p><p>她说母亲可以少为这笔钱跑一趟。没有谁因此拿到替何家撤回全部异议的签名。</p><p>图文店里的清单少了一项，你把已经核对的票据放回她的袋子。其他问题由她们按自己的节奏继续，生活先有了一点能落实的安排。</p>",
+  "E11": "<p>你没有撤回那句话。之后送来的核对通知，将你的推测与实际采用的材料分开。</p><p>有些具体记录得到更正，也没有替你的所有指控背书。何宁不再请你整理她家的说明，你只能看到按约发给自己的通知。</p><p>你仍可以说补录确实存在，不能因此说当时每一句夸大都正确。屏幕上那条拒绝更正的回复留着，和别人不再往来的消息一起。</p>",
+  "E12": "<p>何宁把指定联系人的方式发过来，随后不再回答你的直接询问。她母亲的材料，不再出现在你的新文件里。</p><p>之后的核对仍能通过各自合法的来源推进。寄给你的只是与你本人说明有关的通知，没有一场你未经允许又走进何家的会面。</p><p>你曾以为材料是真的就可以发。关系停下的原因，写在她第一次要求撤下的消息里。</p>",
+  "E13": "<p>你的说明被要求撤回矛盾部分，林遥仍单独接受借阅和安排的核对。她在便签上的字不会因为你改了主语而消失。</p><p>后来你又解释一次自己为什么那样写。解释添了一页，原本的事情没有少一件。</p><p>你没替她保住一个没有承诺过的岗位，自己的材料却先失去了可直接采用的部分。关掉文档前，你看见那句话还停在修改痕迹里。</p>",
+  "E14": "<p>11月，报告索引和封闭记录分别完成更正。罗、韩、孙的说明没有合成一句“大家都有问题”，各人做过的事列在各自名下。原页归还，缺过的签收与保管空档照样保留。</p><p>林遥交清借阅资料，另行面对岗位和隐瞒的后果。你没有替她许诺，也没有让朋友关系决定哪一条记录是真的。</p><p>12月，她来取旧手机，带了根新线。你从抽屉里拿出旧线，一并放到袋边。自己的这一部分，到这里做完了。</p>",
+  "E15": "<p>12月，稿件最后一页由何家确认。图里的A区边线与S1用不同线型标清，正文写明更正过什么、还有什么不能由此推出。</p><p>何宁拿走一份印好的，母亲没有出镜，病历也不在附件里。有人问能不能再写她家近况，她说先不写，你没有替她答应。</p><p>桌上留下的是获准的一页。它能说明流程问题，也容得下当事人决定什么时候不再公开讲述。</p>",
+  "E16": "<p>12月，专业复核与整改记录一起送到。S1的隔离边界、进入条件和现场责任都有了对应项目，旧索引也已更正。</p><p>你站在可进入区域外，按资料核对编号，没有跨过去测试。何秀芳决定不回现场，何宁替母亲收下她关心部分的书面结果。</p><p>照片里新边线清楚可见。你在说明后附的是专业人员的结论和整改记录，最后签自己的收件日期，没有签鉴定人。</p>",
+  "H01": "<p>12月，手机里来了一个合并收件通知。各份确认都已经返回，后面列着谁补了哪一页。</p><p>你没再挨个催。孙把自己的填写改成准确措辞，韩补明陪同没有落实；何家确认费用和自己那部分说明，陈默补齐交接，林遥另交借阅。</p><p>你发消息问林遥还有没有需要自己确认的。她回：“你那页已经齐了。剩下的我们自己交。”</p><p>你看了看桌上腾出的空处，把客户的样张放上去。大家还在联系，事情却不必再从你这里转一遍。</p>",
+  "H02": "<p>12月送回的确认件里，误交说明和更正记录都在。你曾发过的夸大指控没有被剪掉，旁边是撤回原因及后来取得的实际来源。</p><p>两张原页经核对归还，司机的签单仍不能变成你当夜留过的副本。空档保留，缺项怎样补到这一步也写着。</p><p>何宁只回了“收到”，没有说恢复如初。你没再追问。林遥拿走手机时，你提醒她检查卡；她当面拨了一次，屏幕上亮起你的名字。</p><p>你接起电话，说听得到。</p>"
+ },
+ "quizzes": {
+  "contact": {
+   "question": "这些来源交叉后，能确认哪一项？",
+   "options": [
+    [
+     "contact",
+     "罗安排本次冒名联系，陈未委托；不因此证明预谋事故。"
+    ],
+    [
+     "all",
+     "知道发信者，就能证明旧厂所有责任。"
+    ],
+    [
+     "driver",
+     "司机一定事先知道假授权。"
+    ]
+   ]
+  },
+  "outside": {
+   "question": "根据边线和目录，这份A报告能说明什么？",
+   "options": [
+    [
+     "outside",
+     "A区实际边线不含S1；同一地址不能扩展报告范围。"
+    ],
+    [
+     "address",
+     "同址即全部通道已检。"
+    ],
+    [
+     "destroyed",
+     "目录没有S1，就能证明当晚有人销毁了一页。"
+    ]
+   ]
+  },
+  "backfill": {
+   "question": "把原消息和各自说明分开，能形成哪项结论？",
+   "options": [
+    [
+     "backfill",
+     "实际封闭与17:10补录分开；有来源支持罗要求选较早时间。"
+    ],
+    [
+     "accident",
+     "17:10登记直接证明现场当时已封。"
+    ],
+    [
+     "motive",
+     "可以确定所有人预谋何秀芳摔伤。"
+    ]
+   ]
+  },
+  "gap": {
+   "question": "这次实际核对原页后，哪一项仍然存在？",
+   "options": [
+    [
+     "gap",
+     "此次原页已核对归还，但误交后的保管空档与签单缺失仍在。"
+    ],
+    [
+     "erase",
+     "追回就等于从未误交。"
+    ],
+    [
+     "copy",
+     "复印件与原页从来没有区别。"
+    ]
+   ]
+  },
+  "separate": {
+   "question": "正式回复补齐后，应怎样记录这两组事实？",
+   "options": [
+    [
+     "separate",
+     "分别列范围与补录来源，保管链和授权另记。"
+    ],
+    [
+     "everything",
+     "所有副本都可当原件，全部家庭信息都可公开。"
+    ],
+    [
+     "earlier",
+     "回到10月补写一份当时已经知道的说明。"
+    ]
+   ]
+  }
+ }
+};
+})(globalThis);
+
+// Narrative UI: scene -> proposed action -> observed result -> explicit confirmation.
+(function(root){
+ 'use strict';
+ const R=root.MidnightStoryRules,C=root.MidnightStoryContent;
+ const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const btn=(id,label,secondary=false)=>`<button class="${secondary?'secondary wide':'primary wide'}" data-story-command="${id}">${label}</button>`;
+ const map=`<figure class="scope-map"><figcaption>A-02范围图／经允许的副本示意</figcaption><div class="map-body"><div class="map-main">A区主楼<br><small>实线内：本报告范围</small></div><div class="map-side">东门 → 等候处 → 转折<br><b>S1维修段 → 储物间</b><small>虚线：范围外，不进入维修段</small></div></div><p>同址：榆平街17号。A-02实线止于主楼外墙，S1在实线外。</p><p>报告JC-JC-260807-A／8月7日；附件目录未列S1。交接索引另列S1-01，不是这份报告的已签附页。</p></figure>`;
+ const requirement=(id,o,f)=>{
+  if(id==='N10')return o.id==='scope_only'?'尚未核实范围；可选择补齐材料。':o.id==='time_only'?'尚未取得补录指令的交叉来源；可申请补齐。':o.id==='continue'?'两条链尚有缺项；请补齐或按现有范围结束。':'两条链均已核实，可限定提交或继续。';
+  if(id==='N12'&&o.id==='summary'||id==='N17'&&o.id==='public')return '当前没有公开摘要授权。可在选择记录中返回授权问题，重新取得同意。';
+  if(id==='N13')return f.disclosure==='accuse'?'此处需要更正的是无依据指控。':'此处需要撤下的是未授权资料。';
+  return '当前未满足此项前提，可返回此前选择核对。';
+ };
+ function intro(run,s){
+  const id=R.model.nodes[run.index].id;
+  let html=C.nodes[id].intro;
+  if(id==='N06')html=(s.morningQuestions.includes('station')?'<p class="tip">你在08:10已问过北站短信。现在她解释为何那样安排，不再当作新的失联谜题。</p>':'<p class="tip">08:10已确认人平安。短信的解释留到现在，她应当直接说清。</p>')+html;
+  if(id==='N08')html+=s.ending==='safe'?'<div class="source-slip"><b>陈默签收的两张借阅原页／许可核对</b><p>陈依清单出示完整页，只在旁做自己的对照，不往原页添字。14:20巡查记S1需临时封闭；另一张登记载17:10。蓝圈在林的对照稿，不在原页上。核对后仍按借还登记归还单位。</p></div>':'<p class="tip">以下报告副本来自陈经手的获准材料。两张借阅原页仍在罗处，林的局部扫描不替代完整原页。</p>';
+  if(id==='N09')html+='<div class="source-slip"><b>目前可读的登记来源</b><p>'+(s.ending==='safe'?'陈许可核对的借阅原页。':'林所留的局部扫描，缺边栏，完整原页尚待追还。')+'登记正文记17:10，不自证何时填写或何时真的封闭。</p></div>';
+  if(id==='N10')html+=`<div class="fact-summary"><p>报告范围：${run.facts.scope?'已核对图例与目录':'未完成核对'}</p><p>补录指令：${run.facts.time?'已有交叉来源':'仍缺必要来源'}</p><p>原件：${custody(run.facts)}</p></div>`;
+  if(id==='N16'&&run.facts.privacy_repaired)html='<p class="tip">何家仍通过指定联系人。以下由获准渠道核对，你没有再直接到访。</p>'+html;
+  return html;
+ }
+ function custody(f){return f.custody==='luo'?'误交后尚未追回，完整去向以实际核对为准':f.custody==='returned'?'有权人员已核对归还；误交空档仍在':'陈的签收链可核；归还以本轮实际场景为准';}
+ function result(run,s){
+  const node=R.model.nodes[run.index],id=node.id,o=C.nodes[id].options[run.pending];
+  let html=o.result;
+  if(id==='N09'&&['voluntary','formal'].includes(run.pending)||id==='N10'&&run.pending==='complete')html+='<p>另就昨夜联络，孙出示把你号码转给罗的相关原会话，罗经单位核对的联络方式确认发出代收消息。陈分别确认从未委托。冒名联系有这一组来源，不由八月的补录消息推出来。</p>'+(s.ending==='lost'?'<p>实际取送还由姚斌本单说明与单位收到纸袋的记录交叉核对，未补造遗失签单。</p>':'<p>你昨夜保住了文件，没有司机收送可查。这里核对的是发信与转号，不生成订单。</p>');
+  if(id==='N06T')html+=s.ending==='lost'?'<p>姚斌经本单核对说明00:08在罗办公室楼下交袋。你看到限定的取送记录，没看到付款账户实名；司机默认只接一趟普通订单。缺的签单不由这份说明补造。</p>':'<p>昨夜没有向司机交袋。单位核对的是罗本人确认的联系、孙的转号及陈的否认，没有编出一张不存在的取送订单。原页依陈的签收链办理归还。</p>';
+  if(id==='N08'&&run.pending==='compare')html=map+html;
+  if(id==='N10'&&run.pending==='complete')html=map+html;
+  if(id==='N06'&&run.pending==='witness')html+=s.ending==='lost'?'<p>本人的说明注明签单随袋离开，只有当时见过一个姓。不存在你持有的签单副本。</p>':'<p>本人的说明附陈00:03的清点与签收来源，不能据此证明柜台暂存全程未变。</p>';
+  if(id==='N10'&&run.pending==='gaps')html+=`<div class="fact-summary"><p>范围：${run.facts.scope?'已核实，可请求更正':'缺范围图／目录交叉来源'}</p><p>补录：${run.facts.time?'已有交叉来源':'指令来源待核，不能确认罗下令'}</p></div>`;
+  return html;
+ }
+ function history(run,s){
+  if(!run.log.length)return '';
+  return `<details class="choice-history"><summary>本轮选择记录 / 回到此前场景</summary><p class="tip">回退会清除所选场景之后的后续知情、材料与结局。确认前保留当前进度。</p>${run.log.map((x,i)=>`<div class="history-row"><div class="history-entry">${esc(C.nodes[x.node].title)}<small>${esc(C.nodes[x.node].options[x.choice].label)}</small><details><summary>回看当时所见</summary>${result({...R.restore(s,{log:run.log.slice(0,i)}),pending:x.choice},s)}</details></div><button class="secondary" data-story-replay="${i}">重选</button></div>`).join('')}</details>`;
+ }
+ function ending(run,s){
+  const e=R.model.endings[run.ending];
+  const relationships={continue:'你答应以后还可以来往。要你承担风险的事，林遥得事先说明；这次的记录不会因此改写。',bounded:'你告诉林遥，必要事项仍可联系，私人往来先缓一缓。她把这个约定记下来，没有再让陈默替她劝你。',distance:'你约好交还手机和物品，随后各自生活。她仍要完成自己的说明，你也不再替她保管新的材料。'};
+  let epilogue=C.endings[run.ending];
+  if(run.ending==='E03')epilogue=epilogue.replace('姚斌只与实际发生的本单有关，保住袋子的路线没有他的订单。',s.ending==='lost'?'姚斌只确认自己这一单收送，不替罗保证授权。':'当夜没有发生司机取送，你核对的仍只是罗本人联络和孙的转号。');
+  return `<article class="ending"><span class="ending-id">${e.hidden?'隐藏结局':'本轮结局'} ${esc(run.ending)}</span><h3>${esc(e.title)}</h3><p class="section-label">后续与尾声 / 按本轮参与范围</p>${epilogue}<div class="divider"></div><p class="tip">本轮已结束。可保留这个终点，也可以在记录中选择此前场景回放。其他未见结局不会在这里提前展开。</p></article>
+  <details class="fact-summary"><summary>本轮依据与保管边界</summary><p>报告范围：${run.facts.scope?'已核实':'未完成核对／未进入该项'}</p><p>补录指令：${run.facts.time?'有交叉来源':'未完成核对／未进入该项'}</p><p>本轮原件依据：${custody(run.facts)}</p><p>你的说明：${run.facts.own_statement==='cover'?'保留了矛盾说法':run.facts.own_statement==='amended'?'已修改并保留痕迹':'按实际参与范围说明'}</p></details>
+  <article class="note"><h3>与林遥的往来</h3><p>这是独立的关系尾声，不更改本轮调查结果。你不必为查清事情选择原谅。</p>${Object.entries(relationships).map(([id,text])=>`<button class="choice" data-story-relationship="${id}" aria-pressed="${run.relationship===id}">${id==='continue'?'继续来往，风险先说':id==='bounded'?'只保留必要联系':'交还物品，各自生活'}</button>${run.relationship===id?`<p class="relationship-note">${text}</p>`:''}`).join('')}</article>${history(run,s)}${btn('review-start','回看第二幕完成处',true)}`;
+ }
+ function render(s){
+  const run=s.story;
+  if(run.ending)return ending(run,s);
+  const node=R.model.nodes[run.index],c=C.nodes[node.id];
+  if(run.pending){
+   const challenge=R.challenge(node.id,run.pending),q=challenge&&C.quizzes[challenge];
+   return `<p class="section-label">${esc(R.date(run,true))} / ${esc(c.place)}</p><article class="note story-result"><span class="small-label">这项选择之后</span><h3>${esc(c.options[run.pending].label)}</h3>${result(run,s)}</article>${q?`<form id="story-proof-form"><fieldset><legend>${esc(q.question)}</legend>${q.options.map(([id,text])=>`<label class="evidence-option"><input type="radio" name="story-proof" value="${id}" required><span>${esc(text)}</span></label>`).join('')}</fieldset><p id="story-proof-error" class="error" role="status"></p><button class="primary wide" type="submit">记下核对结果，继续</button></form>`:btn('confirm','确认这项结果，继续')}${btn('cancel','返回本题，换一个选择',true)}${history(run,s)}`;
+  }
+  return `<p class="section-label">${esc(R.date(run))} / ${esc(c.place)}</p><article class="note"><h3>${esc(c.title)}</h3>${intro(run,s)}</article><h3 class="question-title">${esc(c.question)}</h3><div class="story-choices">${node.options.map(o=>{const yes=R.match(o.requires,run.facts),v=c.options[o.id];return `<button class="choice" data-story-choice="${o.id}" ${yes?'':'disabled'}>${esc(v.label)}<small>${esc(yes?v.note:requirement(node.id,o,run.facts))}</small></button>`;}).join('')}</div>${history(run,s)}<p class="tip">选择后先阅读实际后果，再确认。进度保存在当前浏览器。故事中的提交和公开不连接任何外部服务。</p>`;
+ }
+ root.MidnightStory=Object.freeze({render,history,result});
+})(globalThis);
+
+'use strict';
+(() => {
+ const R=globalThis.MidnightRules, C2=globalThis.MidnightChapter2, SR=globalThis.MidnightStoryRules, S=globalThis.MidnightStory, KEY='after-hours-midnight-v05-rc1';
+ const definitions={
+  scheduled:{title:'旧机的本地发送记录',rows:[['来源','餐桌上的林遥旧机'],['号码','林遥的个人号'],['发出时间','10月25日23:17'],['收件人','你（许岑）'],['短信','到北站了。明早再说。']],description:'你在23:17收到短信；留在餐桌上的旧机里有同一条已发送记录。',location:true},
+  photo:{title:'照片与你2024年的会话',rows:[['相册文件','IMG_20240516_1829.jpg'],['文件显示拍摄日','2024-05-16'],['最近保存','10月25日18:54'],['另一处记录','你保存的2024-05-16会话'],['当时收到的附件','同一幅候车厅照片']],description:'旧机相册在10月25日存入这幅图。你2024年的会话里，也有同一幅候车厅照片。',location:true},
+  receipt:{title:'青禾洗衣入柜凭证',rows:[['来源','青禾发到林遥个人号的凭证'],['商户','青禾24h自助洗衣'],['入柜时间','10月25日21:06'],['柜号','B17'],['附注','可先放柜台，腾柜后入柜出票']],description:'青禾洗衣，B17，21:06入柜。附注写着可以先在柜台暂存。',location:true},
+  promise:{title:'你保留的2021年旧会话',rows:[['来源','你自己的旧会话记录'],['日期','2021 年 11 月 02 日'],['你：修好了，明天拿给你。','23:16'],['林遥：行，晚安。','23:17']],description:'修手机那天，林遥在 23:17 说了晚安。',location:false},
+  contact:{title:'林遥授权的交接便签',rows:[['来源','她允许你查的旧机便签'],['本机显示修改时间','10月25日18:36'],['接收人','陈默，档案组'],['补充','让他本人拿。收件凭证一并给他。']],description:'便签指定陈默本人取件，并要保留收件凭证。',location:false}
+ };
+ Object.assign(definitions,C2.clues);
+ const hints={
+  investigate:['先分清每条记录从哪部手机取得。','对照旧机发送记录，以及你在2024年已收到的同图会话。','选「旧机的本地发送记录」和「照片与你2024年的会话」。取件地点另看青禾凭证。'],
+  departure:['你要把地址发给谁？','知道陈老师的称呼，不等于有他的委托。','可以先回拨陈的既存号码，只把地址发给确认过的人。'],
+  locker:['便签里写了取码约定。再找找以前的会话。','林遥说「晚安」的时间值得留意。','输入 2317。'],
+  counter:['把交袋、入柜和领取分开记。','电子凭证和店内操作行是同笔业务；另找一份能说明柜台暂存的材料。','21:06对应入柜。选凭证或操作行，再配暂存简记或获准看过的片段；中间保管与袋内内容仍未连续核实。'],
+  handoff:['取件人的身份，手机里有没有约定？','再看未命名便签，留意“本人”两个字。','陈默是指定接收人，陌生号码的身份尚未核实。']
+ };
+ let state=R.initial(),activeClue=null,toastTimer,storyReplayIndex=null;
+ try{state=R.normalize(JSON.parse(localStorage.getItem(KEY)||'null'));}catch{}
+ const screen=document.querySelector('#screen');
+ const placeCount=()=>state.clues.filter(id=>definitions[id].location).length;
+ const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(state));}catch{}};
+ const action=(id,label)=>`<button class="inspect-button" data-clue="${id}">${state.clues.includes(id)?'✓ 已记录 · ':''}${label}<small>检查记录</small></button>`;
+ function notify(message){const el=document.querySelector('#toast');el.textContent=message;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2600);}
+ function hint(){const key=state.stage,level=state.hints[key]||0;return `<div class="hint-box"><button class="secondary wide" data-command="hint">${level===3?'提示已全部展开':level?'再给一点提示':'需要一点提示'}</button><div aria-live="polite">${(hints[key]||[]).slice(0,level).map(t=>`<p class="tip">${t}</p>`).join('')}</div></div>`;}
+ function chenContact(){if(state.morningStarted)return '<article class="thread"><div class="thread-head"><strong>昨夜通话 / 陈默</strong><time>已有号码</time></div><p>陈默已明确说过，没有委托司机取件。这里保留的是昨夜的回拨与回电记录。</p></article>';return `<article class="thread">
+ <div class="thread-head"><strong>你的通讯录 / 陈默</strong><time>原来存的号码</time></div>
+ <p>你替档案组印培训材料时，陈默来取过。你见过他两次，号码一直存着。</p>
+ ${state.contactVerified?'<blockquote>「我还在地铁上。没托人拿。地址发我，出站就过去。」</blockquote>':'<button class="secondary wide" data-command="call-chen">给陈默打电话</button>'}
+ </article>`;}
+ function messages(){return `<p class="section-label">第一幕 / 最后一条消息</p><article class="role-card"><span class="small-label">你的身份 · 许岑</span>${state.morningStarted?'<p>以下保留10月25日当晚的消息与记录。林遥已在次日08:10来电报平安。</p>':'<p>你和林遥从2019年就认识。下午，她来你家给旧手机充电。现在快午夜了，她还没回来。</p>'}</article><p class="section-label">你的手机 / 收到的消息</p>
+ <article class="thread"><div class="thread-head"><strong><span class="avatar" aria-hidden="true">遥</span>林遥</strong><time>10月25日</time></div>
+ <p>她的旧手机还在餐桌边充电，个人号的卡也留在里面。下楼时，她只拿了工作机。</p>
+ <div class="chat-time">21:12 · 工作号 → 你</div><div class="bubble">下楼买包烟。门别反锁。</div>
+ <div class="chat-time">23:17 · 个人号短信 → 你</div><div class="bubble">到北站了。明早再说。</div>
+ <p>你拨了她的工作号。铃声响到自动挂断。<br>餐桌边的旧手机还连着充电线。你按亮屏幕，短信栏里也有刚才那句话。</p>${action('scheduled','核对旧机的发送记录')}</article>
+ <article class="thread"><div class="thread-head"><strong>陌生号码 / 发给你</strong><time>23:16</time></div><div class="bubble stranger">你好，我替陈老师拿点材料。林遥手机一直占线。你要是见到她，麻烦跟她说一声。</div><p class="tip">你的拨号记录：两通，均未接听。</p></article>
+ ${chenContact()}
+ <article class="thread"><div class="thread-head"><strong>你的旧会话 / 林遥</strong><time>2021</time></div><p>2021年，你替她送修过这部手机。取回来那天，你们聊了几句。</p>${action('promise','查看修机那天的聊天')}</article>
+ <article class="memory"><span class="small-label">下午 / 她离开前</span><p>她把旧手机放到充电线旁，说：</p><blockquote>“陈默来拿东西，要单子就看便签和那几条记录。相册里那张北站图也能看，别的先别翻。”</blockquote></article>`;}
+ function album(){return `<p class="section-label">授权相册 / 你的旧会话</p>
+  <article class="thread"><div class="thread-head"><strong>北站</strong><time>1 / 2</time></div>
+  <div class="photo" role="img" aria-label="北站候车厅示意图，左下方有贴黄色胶带的行李箱"><div class="station-roof" aria-hidden="true"></div><div class="station-sign">北 站<small>NORTH STATION</small></div><div class="station-bench" aria-hidden="true"></div><div class="luggage" aria-hidden="true"></div><small>场景示意</small></div>
+  <p>左下角的行李箱贴着黄胶带。你翻到2024年5月16日的会话：同一个箱子，胶带也在同一处。</p><div class="bubble"><span class="chat-time">你的旧会话 · 2024-05-16</span><br>林遥：北站这边还有座。<br><small>附件：同一幅候车厅图（场景示意）</small></div>${action('photo','核对照片与旧会话')}</article>
+  <article class="thread"><div class="thread-head"><strong>旧个人号 / 商户凭证</strong><time>2 / 2</time></div>
+  <div class="receipt"><strong>青禾 24h</strong><br>自 助 洗 衣 · 临 时 寄 存<hr>入柜操作　10月25日21:06<br>ITEM　寄存服务<br>BOX　 B17<hr>可先放柜台，腾柜后入柜出票<br>请保留凭证</div>${action('receipt','展开寄存凭证')}</article>`;}
+ function notes(){return `<p class="section-label">便签 / 未命名</p>
+  <article class="note"><h3>取件</h3>陈默，档案组。让他本人拿。<br>收件凭证别扔，他那边要留底。<br><br>柜码：修好旧手机那天，第一次说晚安的时间。<br>四位，不加冒号。${action('contact','记录接收人约定')}</article>
+  <p class="tip">页脚显示，这张便签最后改于10月25日18:36。</p>`;}
+ function laundryArt(){return '<div class="laundry-scene" role="img" aria-label="夜里的青禾洗衣店示意：暖灯下有两台滚筒洗衣机，寄存柜在右侧"><span class="shop-sign">青禾 <small>24h LAUNDRY</small></span><div class="washer one"></div><div class="washer two"></div><div class="cabinet">B17</div><span class="scene-caption">23:36 / 青禾洗衣 · 场景示意</span></div>';}
+ function investigation(){
+  if(state.stage==='story'&&state.story)return S.render(state);
+  if(C2.isStage(state))return C2.render(state,{action,hint});
+  if(state.stage==='ending')return ending();
+  if(state.stage==='departure')return `<p class="section-label">23:24 / 出门前</p><article class="note"><h3>青禾洗衣，B17</h3>你从椅背上拿起外套，摸到口袋里的钥匙。刚走到门边，手机又亮了，是那个陌生号码。<blockquote>“在哪儿碰面？”</blockquote></article>${chenContact()}<h3 class="question-title">把取件地址发给谁？</h3><button class="choice" data-route="chen">只发给通讯录里的陈默<small>陌生号码没有得到青禾位置。</small></button><button class="choice" data-route="stranger">回复陌生号码：青禾洗衣，B17<small>把凭证上的商户和柜号发过去。</small></button>${hint()}<button class="secondary wide" data-command="back">先回看材料</button>`;
+  if(state.stage==='locker')return `<p class="section-label">青禾洗衣 / B17</p>${laundryArt()}
+   <article class="note"><h3>柜门</h3>23:36，你推开青禾的玻璃门。烘干机里的外套翻了一圈，袖子贴在玻璃上。<br><br>店主从账本上抬头。柜台立着一块服务牌：孟雪。<br><br>B17在最下一排。柜旁贴着“柜台先收，腾柜后入柜”。你蹲下，按亮数字面板。</article>
+   <form id="code-form"><label class="tip" for="locker-code">四位柜码</label><input id="locker-code" class="code" type="text" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" autocomplete="off" aria-describedby="code-error" required placeholder="····"><p id="code-error" class="error" role="status"></p><button class="primary wide" type="submit">开柜</button></form>${hint()}<button class="secondary wide" data-command="back">返回调查</button>`;
+  if(state.stage==='handoff')return `<p class="section-label">B17 / 文件袋</p>
+   <article class="note"><h3>八张纸</h3>纸袋没有封口。袋面写着：“原页2，报告复印3，对照稿2，收件单1。”<br><br>你照着数了八张。蓝圈都在对照稿上，两张标作原页的另夹在里面。<br><br>孟雪看了你手机上的柜号，打印机吐出一张小票。<blockquote>“这个拿好。”</blockquote></article>
+   ${state.departureRoute==='stranger'?'<p class="tip">你发过青禾地址。玻璃门外，一辆车停在路边。陌生号码又发来：“交给司机就行。”</p>':'<p class="tip">你只把地址发给了陈默。陌生号码还在问在哪儿碰面。</p>'}<h3 class="question-title">你怎么交接？</h3>
+   <button class="choice" data-recipient="chen">回拨陈的既存号码，等本人来取<small>核实有无委托，再按清单交接。</small></button>
+   ${state.departureRoute==='stranger'?`<button class="choice" data-recipient="courier">交给已到路边的司机<small>${state.contactVerified?'陈已否认委托，继续交付仍有风险。':'代收授权尚未核实。'}</small></button>`:''}${hint()}`;
+  const evidence=state.clues.length?state.clues.map(id=>`<article class="evidence"><strong>${definitions[id].title}</strong><p>${definitions[id].description}</p></article>`).join(''):'<p class="empty">还没记下材料。<br>先看看消息、图片和便签。</p>';
+  const question=state.deduction?`<p class="deduction-done">✓ 这些记录还不能确认她此刻在北站。</p>
+   <h3 class="question-title">当晚的记录支持去哪里取件？</h3>
+   ${state.clues.includes('receipt')?`<button class="choice" data-location="station">北站<small>23:17 消息提及的地点。</small></button><button class="choice" data-location="laundry">青禾洗衣店<small>寄存凭证上的商户。</small></button><button class="choice" data-location="home">林遥住处<small>这份材料没有指向她家。</small></button><p id="location-feedback" class="error" role="status"></p>`:'<p class="tip">还需要一份当晚产生的记录。相册里是否还有别的材料？</p>'}`:
+   `<h3 class="question-title">找出两份看似指向北站、却不能确认当晚行程的材料。</h3><p class="tip">选两项。核对设备来源，以及同图何时已经出现。</p>
+   ${placeCount()>=2?`<form id="deduction-form">${state.clues.filter(id=>definitions[id].location).map(id=>`<label class="evidence-option"><input type="checkbox" name="evidence" value="${id}"><span>${definitions[id].title}</span></label>`).join('')}<p id="deduction-error" class="error" role="status"></p><button class="primary wide" type="submit">核对推断</button></form>`:'<p class="tip">至少记录两份有关地点的材料后，再作判断。</p>'}`;
+  return `<p class="section-label">调查 / 原始记录</p>${state.ending?'<button class="secondary wide" data-command="return-ending">回到本轮交接结果</button>':''}${evidence}<div class="deduction-panel">${question}</div>${hint()}`;
+ }
+ function ending(){
+  const safe=state.ending==='safe',warned=state.handoffKnowledge==='verified';
+  return `<article class="ending"><span class="ending-id">当夜交接 ${safe?'01 / 签收':'02 / 代收'}</span>
+  <h3>${safe?'签收单':'车已经开走了'}</h3>
+  ${safe?`<p>你拨通陈默的电话，报出青禾的地址。</p><blockquote>“我没叫人。你等一下，我出站就过去。”</blockquote>
+  <p>23:59，店门响了一下。陈默站在门口收伞，裤脚湿到脚踝。是上次来取印件的人。</p>
+  <p>他把对照稿摊在凳上，拿出手机看了看，又把两张标着原页的纸翻到背面。</p>
+  <div class="dialogue"><p><span>陈默</span>“一共八张？”</p><p><span>你</span>“八张。”</p><p><span>陈默</span>“原页别折。我夹一下。”</p></div>
+  <p>00:03，他在单上写下时间和名字。你把孟雪打印的凭证递过去，他指了指你的手机。</p>
+  <blockquote>「你手机上那份留着。」</blockquote>
+  <p>你问他联系上林遥没有。他摇头，把袋子放进包里，又拿起手机拨了一次。</p>
+  <p>回到家，餐桌上的充电线还插着。你给林遥发了一条消息。</p><div class="bubble me"><span class="message-author">你 → 林遥</span>看到回电话，人先回来。</div>`:
+  `<p>23:38，副驾车窗降了下来。你把纸袋递进去。</p>
+  <p>司机在收件单上写了一个姓。你还没看清下面那一笔，他就把单子塞回袋里，搁到了后座。</p>
+  ${warned?'<p>十一分钟后，陈默又打来。</p><blockquote>「你没给他吧？」</blockquote><p>你看着路边空出来的停车位，没有马上回答。</p>':'<p>十一分钟后，陈默打来电话。你告诉他，袋子已经给了司机。</p><blockquote>「哪个司机？我还在地铁上。没叫过车。」</blockquote>'}
+  <p>陌生号码没人接。签过字的那张纸也在袋里。你翻了翻外套口袋，只有孟雪打印的寄存凭证。</p>`}
+  <div class="divider"></div><p class="tip">第一幕停点 · 林遥去向仍待确认</p>
+  <button class="primary wide" data-command="start-morning">继续 / 次日08:10的来电</button>
+  <button class="secondary wide" data-command="reconsider">重看通知对象与交接选择</button>
+  <button class="secondary wide" data-command="show-clues">回看材料</button>
+  <p class="tip">候选版 v0.5.0-rc.1 · 实际浏览器验收待完成</p></article>`;
+ }
+ function render(){const later=state.morningStarted;document.querySelector('#story-time').textContent=later?(state.stage==='morning'?'10/26 08:10':'10/26 09:00'):'10/25 23:17';document.querySelector('#objective-title').innerHTML=later?'21:06记下了什么？<br>把人的行程与柜台操作分开。':'她说去了北站。<br>你能确定吗？';document.querySelector('#progress-label').textContent=later?'本单新材料 / 画面可选':'地点材料已记录';document.querySelectorAll('[data-tab]').forEach(b=>{const on=b.dataset.tab===state.tab;b.classList.toggle('active',on);b.setAttribute('aria-selected',String(on));});document.querySelector('#count').textContent=state.clues.length;document.querySelector('#progress').textContent=`${String(later?state.clues.filter(id=>Object.hasOwn(C2.clues,id)).length:placeCount()).padStart(2,'0')} / 03`;if(state.stage==='story'&&state.story){document.querySelector('#story-time').textContent=state.story.ending?'后续 / 尾声':SR.date(state.story,!!state.story.pending);document.querySelector('#objective-title').textContent=state.story.ending?'本轮结束，可回看选择':SR.model.nodes[state.story.index].id==='N06'?'你愿意参与到哪里？':'核对来源，再决定下一步';document.querySelector('#progress-label').textContent='本轮后续已确认选择';document.querySelector('#progress').textContent=String(state.story.log.length).padStart(2,'0');}screen.dataset.view=state.tab;screen.dataset.stage=state.stage;screen.innerHTML=({messages,album,notes,case:investigation})[state.tab]();save();}
+ function go(stage){state.stage=stage;render();screen.scrollTop=0;screen.focus?.({preventScroll:true});}
+ function captureCounterDraft(){
+  if(state.stage!=='counter'||state.tab!=='case'||!state.counterVisited)return;
+  state.counterDraft=R.normalizeCounterDraft(state,{
+   event:document.querySelector('#counter-event').value,
+   evidence:Array.from(screen.querySelectorAll('input[name="counter-evidence"]:checked'),x=>x.value),
+   limit:document.querySelector('#counter-limit').value});
+  save();
+ }
+ screen.addEventListener('change',e=>{if(e.target.closest('#counter-form'))captureCounterDraft();});
+ document.querySelector('.tabs').addEventListener('click',e=>{const b=e.target.closest('[data-tab]');if(!b)return;state.tab=b.dataset.tab;render();screen.scrollTop=0;});
+ screen.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+  if(b.dataset.command==='start-story'&&SR.eligible(state)){state.story=state.story||SR.begin(state);state.tab='case';go('story');return;}
+  if(state.stage==='story'&&state.story){
+   const run=state.story;
+   if(b.dataset.storyChoice&&SR.choices(run).some(o=>o.id===b.dataset.storyChoice)){run.pending=b.dataset.storyChoice;render();screen.scrollTop=0;screen.focus?.({preventScroll:true});return;}
+   if(b.dataset.storyCommand==='cancel'){run.pending=null;render();screen.scrollTop=0;screen.focus?.({preventScroll:true});return;}
+   if(b.dataset.storyCommand==='confirm'&&run.pending){const updated=SR.commit(run,run.pending);if(updated){state.story=updated;render();screen.scrollTop=0;}return;}
+   if(b.dataset.storyCommand==='review-start'){go('chapter2end');return;}
+   if(b.dataset.storyRelationship&&run.ending&&['continue','bounded','distance'].includes(b.dataset.storyRelationship)){run.relationship=b.dataset.storyRelationship;render();return;}
+   if(b.dataset.storyReplay!==undefined&&/^\d+$/.test(b.dataset.storyReplay)){const i=Number(b.dataset.storyReplay);if(i<run.log.length){storyReplayIndex=i;document.querySelector('#story-replay-dialog').showModal();}return;}
+  }
+  if(b.dataset.clue&&definitions[b.dataset.clue]&&R.canInspectClue(state,b.dataset.clue)){activeClue=b.dataset.clue;const d=definitions[activeClue];document.querySelector('#inspect-title').textContent=d.title;document.querySelector('#inspect-content').innerHTML=d.rows.map(([a,b])=>`<div class="detail-row"><span>${a}</span><b>${b}</b></div>`).join('');document.querySelector('#record').textContent=state.clues.includes(activeClue)?'已记录 · 返回':'记录材料';document.querySelector('#inspect').showModal();}
+  if(b.dataset.location&&R.canVisitLocker(state)){if(b.dataset.location==='laundry')go('departure');else document.querySelector('#location-feedback').textContent=b.dataset.location==='station'?'这两份北站记录都不能确定当晚行程。还有哪份记录发生在今晚？':'目前没有当晚去住处的记录。再核对凭证。';}
+  if(b.dataset.command==='call-chen'){state.contactVerified=true;render();notify('陈默说没有委托别人取件');}
+  if(b.dataset.route&&state.stage==='departure'&&['chen','stranger'].includes(b.dataset.route)){state.departureCheckpoint=R.departureCheckpoint(state);state.departureRoute=b.dataset.route;state.ending=null;state.handoffKnowledge=null;state.lockerOpened=false;go('locker');}
+  if(b.dataset.recipient&&state.stage==='handoff'){
+   if(b.dataset.recipient==='chen')state.contactVerified=true;
+   const result=R.completeHandoff(state,b.dataset.recipient);
+   if(result){Object.assign(state,result);go('ending');}
+  }
+  if(b.dataset.command==='start-morning'&&R.canStartMorning(state)){state.morningStarted=true;go('morning');}
+  if(b.dataset.morningQuestion&&state.stage==='morning'&&Object.hasOwn(C2.questionAnswers,b.dataset.morningQuestion)){
+   if(!state.morningQuestions.includes(b.dataset.morningQuestion))state.morningQuestions.push(b.dataset.morningQuestion);
+   const scroll=screen.scrollTop;render();screen.scrollTop=scroll;
+  }
+  if(b.dataset.command==='visit-counter'&&state.morningStarted&&R.canStartMorning(state)){state.counterVisited=true;go('counter');}
+  if(b.dataset.videoChoice&&state.stage==='counter'&&state.counterVisited&&['view','skip'].includes(b.dataset.videoChoice)){
+   state.videoChoice=b.dataset.videoChoice;
+   if(state.videoChoice!=='view')state.clues=state.clues.filter(id=>id!=='camera');
+   state.counterDraft=R.normalizeCounterDraft(state,state.counterDraft);
+   const prior=state.counterConclusion;
+   state.counterConclusion=prior?R.evaluateCounter(state,prior.event,prior.evidence,prior.limit):null;
+   const scroll=screen.scrollTop;render();screen.scrollTop=scroll;
+  }
+  if(b.dataset.command==='request-night-replay'&&C2.isStage(state)&&R.canStartMorning(state))document.querySelector('#replay-dialog').showModal();
+  if(b.dataset.command==='return-counter-result'&&state.counterConclusion)go('chapter2end');
+  if(b.dataset.command==='review-counter'&&state.counterVisited&&!state.story)go('counter');
+  if(b.dataset.command==='replay-morning'&&state.morningStarted&&!state.story)go('morning');
+  if(b.dataset.command==='back'||b.dataset.command==='show-clues')go('investigate');
+  if(b.dataset.command==='reconsider'){const replay=R.rewindToDeparture(state);if(replay){state=replay;render();screen.scrollTop=0;}}
+  if(b.dataset.command==='return-ending'&&state.ending)go('ending');
+  if(b.dataset.command==='hint'){const key=state.stage,level=state.hints[key]||0,scroll=screen.scrollTop;if(level<3){state.hints[key]=level+1;render();screen.scrollTop=scroll;}else notify('全部提示已展开');}
+ });
+ screen.addEventListener('submit',e=>{e.preventDefault();
+  if(e.target.id==='story-proof-form'&&state.stage==='story'&&state.story?.pending){const answer=screen.querySelectorAll('input[name="story-proof"]:checked')[0]?.value;const updated=SR.commit(state.story,state.story.pending,answer);if(updated){state.story=updated;render();screen.scrollTop=0;}else document.querySelector('#story-proof-error').textContent='这项结论超出了所见来源。请对照材料与边界，再选一次。';return;}
+  if(e.target.id==='deduction-form'){const selected=Array.from(screen.querySelectorAll('input[name="evidence"]:checked'),x=>x.value);if(R.evaluateDeduction(selected)){state.deduction=true;render();notify('推断已核实');}else document.querySelector('#deduction-error').textContent=selected.length!==2?'这次需要选择两份材料。':'再核对发送记录来自哪部设备，以及你2024年旧会话里的同一幅照片。';}
+  if(e.target.id==='counter-form'&&state.stage==='counter'){
+   captureCounterDraft();
+   const selected=Array.from(screen.querySelectorAll('input[name="counter-evidence"]:checked'),x=>x.value);
+   const event=document.querySelector('#counter-event').value,limit=document.querySelector('#counter-limit').value;
+   const conclusion=R.evaluateCounter(state,event,selected,limit);
+   if(conclusion){state.counterConclusion=conclusion;go('chapter2end');}
+   else document.querySelector('#counter-error').textContent=event!=='stored'?'凭证写的是入柜操作。把人的到场与柜台的操作分开。':
+    selected.length!==2?'请选两份已记录的材料，一份对应入柜，另一份对应此前的柜台暂存。':
+    limit!=='custody-gap'?'这次没有连续看过暂存全过程，孟雪也没清点过袋内八张。哪一栏应留空？':
+    '这两份材料没有连起两个步骤。电子凭证和店内操作行是同源记录；再核对柜台简记，或获准看过的片段。';
+  }
+  if(e.target.id==='code-form'){if(state.stage==='locker'&&state.departureRoute&&R.validCode(document.querySelector('#locker-code').value)){state.lockerOpened=true;go('handoff');}else document.querySelector('#code-error').textContent='柜门没开。可以回看旧会话，或逐步展开提示。';}
+ });
+ document.querySelector('#record').addEventListener('click',()=>{if(activeClue&&R.canInspectClue(state,activeClue)&&!state.clues.includes(activeClue)){state.clues.push(activeClue);notify('材料已记录');}document.querySelector('#inspect').close();render();});
+ document.querySelector('#close-dialog').addEventListener('click',()=>document.querySelector('#inspect').close());
+ document.querySelector('#cancel-replay').addEventListener('click',()=>document.querySelector('#replay-dialog').close());
+ document.querySelector('#confirm-replay').addEventListener('click',()=>{
+  const dialog=document.querySelector('#replay-dialog');
+  if(!dialog.open)return;
+  const replay=R.rewindToDeparture(state);
+  dialog.close();
+  if(replay){state=replay;render();screen.scrollTop=0;notify('已回到昨夜出门前');}
+ });
+ document.querySelector('#cancel-story-replay').addEventListener('click',()=>{storyReplayIndex=null;document.querySelector('#story-replay-dialog').close();});
+ document.querySelector('#confirm-story-replay').addEventListener('click',()=>{const dialog=document.querySelector('#story-replay-dialog');if(!dialog.open||storyReplayIndex===null||!state.story)return;state.story=SR.rewind(state,state.story,storyReplayIndex);storyReplayIndex=null;dialog.close();go('story');});
+ document.querySelector('#reset').addEventListener('click',()=>document.querySelector('#reset-dialog').showModal());
+ document.querySelector('#cancel-reset').addEventListener('click',()=>document.querySelector('#reset-dialog').close());
+ document.querySelector('#confirm-reset').addEventListener('click',()=>{state=R.initial();document.querySelector('#reset-dialog').close();render();screen.scrollTop=0;notify('调查已重新开始');});
+ render();
+})();
+</script></body>
+</html>

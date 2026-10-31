@@ -22,7 +22,7 @@ test('code check rejects coercion and partially matching values',()=>{
 });
 test('save normalization rejects impossible advancement and unknown clues',()=>{
  assert.equal(R.normalize({stage:'handoff',deduction:true,clues:[]}).stage,'investigate');
- const good=R.normalize({stage:'ending',ending:'safe',deduction:true,clues:['scheduled','photo','receipt','receipt','fake'],hints:{locker:200}});
+ const good=R.normalize({stage:'ending',ending:'safe',deduction:true,clues:['scheduled','photo','receipt','receipt','fake'],hints:{locker:200},departureRoute:'chen',contactVerified:true,lockerOpened:true,handoffKnowledge:'verified'});
  assert.equal(good.stage,'ending');assert.equal(good.hints.locker,3);
  assert.deepEqual(good.clues,['scheduled','photo','receipt']);
  assert.equal(R.normalize({tab:'unknown'}).tab,'messages');
@@ -30,4 +30,29 @@ test('save normalization rejects impossible advancement and unknown clues',()=>{
 test('only the two explicit recipients map to endings',()=>{
  assert.equal(R.endingFor('chen'),'safe');assert.equal(R.endingFor('courier'),'lost');
  assert.equal(R.endingFor('unknown'),null);
+});
+
+test('incomplete saves return to the locker instead of inventing a successful unlock',()=>{
+ const s=R.normalize({stage:'handoff',deduction:true,clues:['scheduled','photo','receipt'],departureRoute:'stranger'});
+ assert.equal(s.stage,'locker');
+ assert.equal(s.lockerOpened,false);
+ assert.equal(s.ending,null);
+});
+test('handoff requires an open locker and courier address disclosure',()=>{
+ const s=R.initial();
+ Object.assign(s,{stage:'handoff',deduction:true,clues:['scheduled','photo','receipt'],departureRoute:'chen',contactVerified:true});
+ assert.equal(R.completeHandoff(s,'chen'),null);
+ s.lockerOpened=true;
+ assert.equal(R.completeHandoff(s,'courier'),null);
+ assert.equal(R.completeHandoff(s,'chen').ending,'safe');
+ s.departureRoute='stranger';s.contactVerified=false;
+ assert.equal(R.completeHandoff(s,'courier').handoffKnowledge,'unverified');
+});
+test('later contact does not rewrite knowledge at the moment of delivery',()=>{
+ const raw={stage:'ending',ending:'lost',deduction:true,clues:['scheduled','photo','receipt'],departureRoute:'stranger',
+  lockerOpened:true,contactVerified:true,handoffKnowledge:'unverified'};
+ const s=R.normalize(raw);
+ assert.equal(s.ending,'lost');
+ assert.equal(s.contactVerified,true);
+ assert.equal(s.handoffKnowledge,'unverified');
 });
